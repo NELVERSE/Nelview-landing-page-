@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "None",
     "moduleResolution": "Node",
     "outDir": "public/js",
@@ -15,12 +11,7 @@
     "removeComments": false,
     "sourceMap": false,
     "skipLibCheck": true,
-    "typeRoots": [
-      "./src/types"
-    ]
+    "typeRoots": ["./src/types"]
   },
-  "include": [
-    "src/scripts/**/*.ts",
-    "src/types/**/*.d.ts"
-  ]
+  "include": ["src/scripts/**/*.ts", "src/types/**/*.d.ts"]
 }

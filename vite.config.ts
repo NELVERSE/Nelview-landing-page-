@@ -1,5 +1,12 @@
-import { defineConfig } from "vite";
-import { existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
+import { defineConfig, type ViteDevServer } from "vite";
+import react from "@vitejs/plugin-react";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+} from "node:fs";
 import { parse, resolve } from "node:path";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { fileURLToPath } from "node:url";
@@ -14,7 +21,9 @@ function responsiveWebp() {
     name: "nelview-responsive-webp",
     apply: "build" as const,
     async transformIndexHtml(html: string) {
-      const tags = [...html.matchAll(/<img\b[^>]*\bsrc=(["'])(assets\/[^"']+)\1[^>]*>/gi)];
+      const tags = [
+        ...html.matchAll(/<img\b[^>]*\bsrc=(["'])(assets\/[^"']+)\1[^>]*>/gi),
+      ];
       let output = html;
 
       for (const match of tags.reverse()) {
@@ -77,6 +86,53 @@ function resolveAssetPath(directory: string, name: string, width: number) {
   return `${directory}/${name}-${width}.webp`;
 }
 
+function demoFiles() {
+  const source = resolve(root, "src", "demo");
+
+  return {
+    name: "nelview-demo-files",
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use("/demo", (req, res, next) => {
+        if (!req.url || (req.method !== "GET" && req.method !== "HEAD")) {
+          next();
+          return;
+        }
+
+        const pathname = new URL(req.url, "http://localhost").pathname;
+        if (pathname !== "/index.html") {
+          next();
+          return;
+        }
+
+        const html = readFileSync(resolve(source, "index.html"), "utf8");
+        server
+          .transformIndexHtml("/demo/index.html", html)
+          .then((transformed) => {
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.end(req.method === "HEAD" ? undefined : transformed);
+          })
+          .catch(next);
+      });
+    },
+    generateBundle: {
+      order: "post",
+      handler(_options, bundle) {
+        const sourcePath = "src/demo/index.html";
+        const demoHtml = bundle[sourcePath];
+        if (!demoHtml || demoHtml.type !== "asset") return;
+
+        demoHtml.fileName = "demo/index.html";
+        demoHtml.source = String(demoHtml.source).replaceAll(
+          "../../assets/",
+          "../assets/",
+        );
+        delete bundle[sourcePath];
+        bundle[demoHtml.fileName] = demoHtml;
+      },
+    },
+  };
+}
+
 // Every .html file in the project root is a page.
 const pages = Object.fromEntries(
   readdirSync(root)
@@ -87,6 +143,7 @@ const pages = Object.fromEntries(
 export default defineConfig({
   base: "./", // relative URLs: works on a custom domain, Vercel, Netlify or GitHub Pages sub-paths
   plugins: [
+    react(),
     ViteImageOptimizer({
       includePublic: true,
       logStats: true,
@@ -96,11 +153,17 @@ export default defineConfig({
       webp: { quality: 80 },
     }),
     responsiveWebp(),
+    demoFiles(),
   ],
   build: {
     outDir: "dist",
     emptyOutDir: true,
-    rollupOptions: { input: pages },
+    rollupOptions: {
+      input: {
+        ...pages,
+        "demo/index": resolve(root, "src", "demo", "index.html"),
+      },
+    },
   },
   server: { open: "/index.html" },
 });
