@@ -464,7 +464,9 @@
       mark("#FFFFFF") +
       "</span>Nelview</a><p>The pre-submission audit for research. An AI peer-review platform by <b style='color:#fff;font-weight:560'>Nelverse</b>, built in Africa for researchers everywhere.</p><div class='ct'><a href='mailto:team@nelview.com'>" +
       ic("mail", 15) +
-      "team@nelview.com</a><a href='tel:+233256809108'>" +
+      "team@nelview.com</a><a href='mailto:nelviewai@gmail.com'>" +
+      ic("mail", 15) +
+      "nelviewai@gmail.com</a><a href='tel:+233256809108'>" +
       ic("phone", 15) +
       "+233 25 680 9108</a><span style='display:inline-flex;gap:8px;align-items:center'>" +
       ic("pin", 15) +
