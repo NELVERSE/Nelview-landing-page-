@@ -461,8 +461,8 @@
   if (f) {
     f.outerHTML =
       "<footer class='ftr'><div class='wrap'><div class='ftr-top'><div><a class='brand' href='index.html'><span class='mk'>" +
-      mark("#FFFFFF") +
-      "</span>Nelview</a><p>The pre-submission audit for research. An AI peer-review platform by <b style='color:#fff;font-weight:560'>Nelverse</b>, built in Africa for researchers everywhere.</p><div class='ct'><a href='mailto:team@nelview.com'>" +
+      mark("#0A0D14") +
+      "</span>Nelview</a><p>The pre-submission audit for research. An AI peer-review platform by <b>Nelverse</b>, built in Africa for researchers everywhere.</p><div class='ct'><a href='mailto:team@nelview.com'>" +
       ic("mail", 15) +
       "team@nelview.com</a><a href='tel:+233256809108'>" +
       ic("phone", 15) +

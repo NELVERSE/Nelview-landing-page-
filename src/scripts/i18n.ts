@@ -360,6 +360,16 @@
     "is desk-rejected before peer review. Not for lack of ideas, for lack of":
       "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback.": "retours rigoureux.",
+    "Know where your paper stands.": "Sachez où en est votre article.",
+    "A 0–100 readiness score, with the fixes that move it.": "Un score de préparation de 0 à 100, avec les corrections qui le font progresser.",
+    "Catch a predatory journal before you submit.": "Repérez une revue prédatrice avant de soumettre.",
+    "Add a named human expert when it matters.": "Ajoutez un expert humain identifié quand c'est important.",
+    "See what Nelview can review": "Ce que Nelview peut évaluer",
+    "Publish rigorous findings and explore paths from prototype to enterprise.": "Publiez des résultats rigoureux et explorez les voies du prototype à l'entreprise.",
+    "A share of every Nelview subscription funds early-stage research, from prototype to data collection.": "Une part de chaque abonnement Nelview finance la recherche débutante, du prototype à la collecte de données.",
+    "6 document types": "6 types de documents",
+    "Expert reviews in 5–7 days": "Évaluations d'experts en 5 à 7 jours",
+    "English and French": "Anglais et français",
     "is desk-rejected before peer review begins. Not for lack of ideas, but for lack of":
       "est rejeté d'emblée avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback before submission.":

@@ -49,7 +49,7 @@ test.describe("waitlist", () => {
 
   test("the hero's Get started button opens the waitlist", async ({ page }) => {
     await page.goto("/");
-    await page.locator(".hero-cta a", { hasText: "Get started" }).click();
+    await page.locator(".hero2 .hero-cta a", { hasText: "Get started" }).click();
     await expect(page).toHaveURL(/waitlist/);
     await expect(page.locator("#f_email")).toBeVisible();
   });
