@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-animations="off">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <style id="nv-guard">
@@ -31,9 +31,9 @@
       crossorigin
     />
     <link rel="stylesheet" href="assets/fonts/fonts.css" />
-    <link rel="stylesheet" href="src/styles/site.css" />
-    <link rel="stylesheet" href="src/styles/pages.css" />
-    <link rel="stylesheet" href="src/styles/color.css" />
+    <link rel="stylesheet" href="../styles/site.css" />
+    <link rel="stylesheet" href="../styles/pages.css" />
+    <link rel="stylesheet" href="../styles/color.css" />
     <style>
       .jg-hero {
         padding: clamp(72px, 9vw, 120px) 0 clamp(56px, 7vw, 96px);
@@ -1106,111 +1106,9 @@
       </section>
     </main>
     <div data-site-footer></div>
-    <script>
-      (function () {
-        var qs = [].slice.call(document.querySelectorAll("#jgList .jg-q")),
-          N = document.getElementById("jgN"),
-          V = document.getElementById("jgV"),
-          T = document.getElementById("jgT"),
-          Ms = [].slice.call(document.querySelectorAll("#jgM i"));
-        var S = {
-          en: [
-            [
-              "No flags yet",
-              "Tick anything that applies. Then run the five-minute check below to confirm.",
-            ],
-            [
-              "Low risk",
-              "One flag on its own can be innocent. Still run the five-minute check before submitting.",
-            ],
-            [
-              "Caution",
-              "Two or more flags. Verify the journal in DOAJ and the ISSN Portal before you send anything.",
-            ],
-            [
-              "High risk",
-              "This looks like a predatory journal. Don't submit or pay. Look for a legitimate alternative.",
-            ],
-          ],
-          fr: [
-            [
-              "Aucun signal",
-              "Cochez ce qui s'applique, puis faites la vérification en cinq minutes ci-dessous.",
-            ],
-            [
-              "Risque faible",
-              "Un seul signal peut être anodin. Faites tout de même la vérification en cinq minutes.",
-            ],
-            [
-              "Prudence",
-              "Deux signaux ou plus. Vérifiez la revue dans DOAJ et le portail ISSN avant tout envoi.",
-            ],
-            [
-              "Risque élevé",
-              "Cette revue semble prédatrice. Ne soumettez rien et ne payez rien. Cherchez une alternative légitime.",
-            ],
-          ],
-        };
-        function upd() {
-          var n = qs.filter(function (q) {
-              return q.getAttribute("aria-pressed") === "true";
-            }).length,
-            l = document.documentElement.lang === "fr" ? "fr" : "en",
-            lv = n === 0 ? 0 : n === 1 ? 1 : n < 4 ? 2 : 3,
-            col = ["", "#F2A516", "#F2A516", "#E0484F"][lv];
-          N.textContent = n;
-          Ms.forEach(function (m, i) {
-            m.style.background = i < n ? col : "";
-          });
-          V.textContent = S[l][lv][0];
-          T.textContent = S[l][lv][1];
-          V.style.color = lv === 3 ? "#FF9A9E" : lv ? "#F5C25A" : "";
-        }
-        qs.forEach(function (q) {
-          q.addEventListener("click", function () {
-            q.setAttribute(
-              "aria-pressed",
-              q.getAttribute("aria-pressed") === "true" ? "false" : "true",
-            );
-            upd();
-          });
-        });
-        document.getElementById("jgR").addEventListener("click", function () {
-          qs.forEach(function (q) {
-            q.setAttribute("aria-pressed", "false");
-          });
-          upd();
-        });
-        new MutationObserver(upd).observe(document.documentElement, {
-          attributes: true,
-          attributeFilter: ["lang"],
-        });
-      })();
-    </script>
-    <script src="js/site.js"></script>
-    <script src="js/i18n.js"></script>
-    <!-- Temporarily disabled site animations:
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"
-    ></script>
-    <script defer src="js/motion.js"></script>
-    -->
-    <template id="__bundler_thumbnail"
-      ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <rect width="100" height="100" fill="#1BB35C"></rect>
-        <text
-          x="50"
-          y="66"
-          text-anchor="middle"
-          font-family="sans-serif"
-          font-size="46"
-          font-weight="700"
-          fill="#fff"
-        >
-          N
-        </text>
-      </svg></template
-    >
+    <script type="module" src="../scripts/site.ts"></script>
+    <script type="module" src="../scripts/i18n.ts"></script>
+    <script type="module" src="../scripts/pages/journal-guide.ts"></script>
+    <script type="module" src="../scripts/motion.ts"></script>
   </body>
 </html>

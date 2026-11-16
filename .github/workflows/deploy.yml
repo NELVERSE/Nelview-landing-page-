@@ -32,7 +32,12 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run typecheck
+      - run: pnpm test
       - run: pnpm run build
+      - name: Browser tests against the built site
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          pnpm run test:e2e
       - name: Upload production site for GitHub Pages
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v4

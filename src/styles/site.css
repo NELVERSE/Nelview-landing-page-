@@ -3311,17 +3311,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* smooth page-to-page navigation */
-@view-transition {
-  navigation: auto;
-}
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.18s;
-}
-.hdr {
-  view-transition-name: site-hdr;
-}
 [data-site-header] {
   display: block;
   height: 64px;
@@ -3441,21 +3430,6 @@ html:not(.nv-ready) body::after {
   }
 }
 
-/* TEMPORARY: Remove site motion while retaining the original styles for restoration. */
-html[data-animations="off"] *,
-html[data-animations="off"] *::before,
-html[data-animations="off"] *::after {
-  animation: none !important;
-  transition: none !important;
-  scroll-behavior: auto !important;
-}
-html[data-animations="off"] body {
-  opacity: 1 !important;
-}
-html[data-animations="off"] body::before,
-html[data-animations="off"] body::after {
-  content: none !important;
-}
 /* language switch */
 .lsw {
   display: inline-flex;

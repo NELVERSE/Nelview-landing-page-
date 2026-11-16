@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-animations="off">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <style id="nv-guard">
@@ -31,9 +31,9 @@
       crossorigin
     />
     <link rel="stylesheet" href="assets/fonts/fonts.css" />
-    <link rel="stylesheet" href="src/styles/site.css" />
-    <link rel="stylesheet" href="src/styles/pages.css" />
-    <link rel="stylesheet" href="src/styles/color.css" />
+    <link rel="stylesheet" href="../styles/site.css" />
+    <link rel="stylesheet" href="../styles/pages.css" />
+    <link rel="stylesheet" href="../styles/color.css" />
   </head>
   <body data-page="exp">
     <div data-site-header></div>
@@ -452,56 +452,9 @@
       </section>
     </main>
     <div data-site-footer></div>
-    <script src="js/site.js"></script>
-    <script src="js/i18n.js"></script>
-    <!-- Temporarily disabled site animations:
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"
-    ></script>
-    <script defer src="js/motion.js"></script>
-    -->
-    <script>
-      (function () {
-        var rv = document.getElementById("rv"),
-          rt = document.getElementById("rt");
-        function f(n) {
-          return "$" + n.toLocaleString("en-US");
-        }
-        function up() {
-          var n = +rv.value,
-            r = +rt.value;
-          document.getElementById("rvV").textContent = n;
-          document.getElementById("rtV").textContent = f(r);
-          document.getElementById("mo").textContent = f(n * r);
-          document.getElementById("yr").textContent = f(n * r * 12);
-          document.getElementById("hr").textContent = n * 6;
-          [rv, rt].forEach(function (i) {
-            i.style.setProperty(
-              "--p",
-              ((i.value - i.min) / (i.max - i.min)) * 100 + "%",
-            );
-          });
-        }
-        rv.oninput = rt.oninput = up;
-        up();
-      })();
-    </script>
-    <template id="__bundler_thumbnail"
-      ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <rect width="100" height="100" fill="#1BB35C"></rect>
-        <text
-          x="50"
-          y="66"
-          text-anchor="middle"
-          font-family="sans-serif"
-          font-size="46"
-          font-weight="700"
-          fill="#fff"
-        >
-          N
-        </text>
-      </svg></template
-    >
+    <script type="module" src="../scripts/site.ts"></script>
+    <script type="module" src="../scripts/i18n.ts"></script>
+    <script type="module" src="../scripts/pages/experts.ts"></script>
+    <script type="module" src="../scripts/motion.ts"></script>
   </body>
 </html>

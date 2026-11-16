@@ -1,5 +1,5 @@
 // @ts-nocheck
-// posts.ts: ported from the static Nelview site. Runs as a classic browser script (compiled by tsc to public/js).
+// posts.ts: loaded as a module from the pages in src/pages and bundled by Vite.
 // Shared globals are declared in src/types/globals.d.ts. Remove @ts-nocheck and tighten types incrementally.
 window.NV_CATS = {
   review: "Peer review",

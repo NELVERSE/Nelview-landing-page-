@@ -1,5 +1,5 @@
 // @ts-nocheck
-// site.ts: ported from the static Nelview site. Runs as a classic browser script (compiled by tsc to public/js).
+// site.ts: loaded as a module from the pages in src/pages and bundled by Vite.
 // Shared globals are declared in src/types/globals.d.ts. Remove @ts-nocheck and tighten types incrementally.
 (function () {
   var PORTAL_BASE = "https://app.nelview.com"; // change to your portal domain

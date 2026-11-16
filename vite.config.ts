@@ -1,6 +1,7 @@
 import {
   defineConfig,
   type HtmlTagDescriptor,
+  type Plugin,
   type ViteDevServer,
 } from "vite";
 import react from "@vitejs/plugin-react";
@@ -8,84 +9,21 @@ import {
   existsSync,
   mkdirSync,
   readdirSync,
-  readFileSync,
   statSync,
   writeFileSync,
 } from "node:fs";
-import { parse, resolve } from "node:path";
+import { join, parse, relative, resolve } from "node:path";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
-const root = fileURLToPath(new URL(".", import.meta.url));
-
-function responsiveWebp() {
-  const images = new Map<string, number>();
-
-  return {
-    name: "nelview-responsive-webp",
-    apply: "build" as const,
-    async transformIndexHtml(html: string) {
-      const tags = [
-        ...html.matchAll(/<img\b[^>]*\bsrc=(["'])(assets\/[^"']+)\1[^>]*>/gi),
-      ];
-      let output = html;
-
-      for (const match of tags.reverse()) {
-        const image = match[0];
-        const source = match[2];
-        if (source.startsWith("assets/team/")) continue;
-        const input = resolve(root, "public", source);
-        if (!existsSync(input)) continue;
-
-        const metadata = await sharp(input).metadata();
-        if (!metadata.width || statSync(input).size < 200_000) continue;
-
-        images.set(source, metadata.width);
-        const { dir, name } = parse(source);
-        const widths = [480, 960, 1440].filter(
-          (width) => width < metadata.width!,
-        );
-        if (metadata.width <= 1440) widths.push(metadata.width);
-        const srcset = widths
-          .map((width) => `${resolveAssetPath(dir, name, width)} ${width}w`)
-          .join(", ");
-        const picture = `<picture><source type="image/webp" srcset="${srcset}" sizes="(max-width: 720px) 100vw, 50vw">${image}</picture>`;
-
-        output =
-          output.slice(0, match.index) +
-          picture +
-          output.slice(match.index! + image.length);
-      }
-
-      return output;
-    },
-    async closeBundle() {
-      const output = resolve(root, "dist", "assets");
-      for (const [source, originalWidth] of images) {
-        const input = resolve(root, "public", source);
-        const { dir, name } = parse(source);
-        const widths = [480, 960, 1440].filter(
-          (width) => width < originalWidth,
-        );
-        if (originalWidth <= 1440) widths.push(originalWidth);
-
-        for (const width of widths) {
-          const destination = resolve(
-            output,
-            dir.replace(/^assets[\\/]/, ""),
-            `${name}-${width}.webp`,
-          );
-          mkdirSync(resolve(destination, ".."), { recursive: true });
-          await sharp(input)
-            .resize({ width, withoutEnlargement: true })
-            .webp({ quality: 78, effort: 4 })
-            .toFile(destination);
-        }
-      }
-    },
-  };
-}
+// Layout: src/ is the Vite root, src/pages/ holds the HTML pages, public/ holds
+// files copied as they are, dist/ is the build output.
+const repo = fileURLToPath(new URL(".", import.meta.url));
+const src = resolve(repo, "src");
+const pagesDir = resolve(src, "pages");
+const publicDir = resolve(repo, "public");
+const outDir = resolve(repo, "dist");
 
 // Public address of the production site, used for canonical and share-card URLs.
 const SITE_URL = (process.env.SITE_URL || "https://www.nelview.com").replace(
@@ -103,38 +41,95 @@ const isPreview =
     process.env.VERCEL_ENV === "preview" ||
     (process.env.NETLIFY === "true" && process.env.CONTEXT !== "production"));
 
-function seoMeta() {
+/** Every .html file under src/pages, as paths relative to it ("about.html", "demo/index.html"). */
+function listPages(dir = pagesDir): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return listPages(full);
+    return entry.name.endsWith(".html")
+      ? [relative(pagesDir, full).replace(/\\/g, "/")]
+      : [];
+  });
+}
+
+/** The site path a page is served at: "/pages/about.html" -> "/about.html". */
+const sitePath = (htmlPath: string) => htmlPath.replace(/^\/pages\//, "/");
+
+/**
+ * Pages live in src/pages but are served from the site root, so
+ * src/pages/about.html is /about.html in development and dist/about.html in
+ * the build. /about (no extension) works in development too, as it does on the
+ * hosts.
+ */
+function pagesAtRoot(): Plugin {
+  const known = new Set(listPages().map((page) => `/${page}`));
+
+  return {
+    name: "nelview-pages-at-root",
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url && (req.method === "GET" || req.method === "HEAD")) {
+          const [path, query = ""] = req.url.split("?");
+          const page = path.endsWith("/")
+            ? `${path}index.html`
+            : path.endsWith(".html")
+              ? path
+              : `${path}.html`;
+          if (known.has(page))
+            req.url = `/pages${page}${query ? `?${query}` : ""}`;
+        }
+        next();
+      });
+    },
+    generateBundle: {
+      order: "post",
+      handler(_options, bundle) {
+        for (const [key, file] of Object.entries(bundle)) {
+          if (file.type !== "asset" || !key.startsWith("pages/")) continue;
+          // One folder shallower, so built-asset URLs lose one "../".
+          file.fileName = key.slice("pages/".length);
+          file.source = String(file.source).replace(
+            /(["'(\s,])\.\.\/((?:\.\.\/)*assets\/)/g,
+            "$1./$2",
+          );
+          delete bundle[key];
+          bundle[file.fileName] = file;
+        }
+      },
+    },
+  };
+}
+
+/** Canonical and share-card tags on every page; noindex on previews. */
+function seoMeta(): Plugin {
   // Never indexed, on any build: error page, referral redirect, embedded demo.
-  const neverIndexed = new Set([
-    "/404.html",
-    "/beta.html",
-    "/src/demo/index.html",
-  ]);
-  // One file serves many URLs (article.html?p=...), so no single canonical URL.
+  const neverIndexed = new Set(["/404.html", "/beta.html", "/demo/index.html"]);
+  // One file serves many URLs (article.html?p=...), so it sets its own canonical.
   const noCanonical = new Set(["/article.html"]);
 
   return {
     name: "nelview-seo-meta",
-    apply: "build" as const,
-    transformIndexHtml(html: string, ctx: { path: string }) {
+    apply: "build",
+    transformIndexHtml(html, ctx) {
+      const path = sitePath(ctx.path);
       const tags: HtmlTagDescriptor[] = [];
       const meta = (attrs: Record<string, string>) =>
         tags.push({ tag: "meta", attrs, injectTo: "head" });
 
-      if (isPreview || neverIndexed.has(ctx.path)) {
+      if (isPreview || neverIndexed.has(path)) {
         if (!/<meta[^>]+name=["']robots["']/i.test(html))
           meta({ name: "robots", content: "noindex, nofollow" });
       }
-      if (neverIndexed.has(ctx.path)) return tags;
+      if (neverIndexed.has(path)) return tags;
 
       const title = html.match(/<title>([^<]*)<\/title>/i)?.[1].trim();
       const description = html
         .match(/<meta[^>]+name=["']description["'][^>]*>/i)?.[0]
         .match(/content="([^"]*)"/i)?.[1];
-      const page = ctx.path.replace(/^\//, "").replace(/\.html$/, "");
+      const page = path.replace(/^\//, "").replace(/\.html$/, "");
       const url = `${SITE_URL}/${page === "index" ? "" : page}`;
 
-      if (!noCanonical.has(ctx.path)) {
+      if (!noCanonical.has(path)) {
         tags.push({
           tag: "link",
           attrs: { rel: "canonical", href: url },
@@ -154,78 +149,81 @@ function seoMeta() {
     closeBundle() {
       if (!isPreview) return;
       writeFileSync(
-        resolve(root, "dist", "robots.txt"),
+        resolve(outDir, "robots.txt"),
         "# Preview build: keep out of search engines.\nUser-agent: *\nDisallow: /\n",
       );
     },
   };
 }
 
-function resolveAssetPath(directory: string, name: string, width: number) {
-  return `${directory}/${name}-${width}.webp`;
-}
-
-function demoFiles() {
-  const source = resolve(root, "src", "demo");
+/** Wraps large local images in <picture> with responsive WebP sources. */
+function responsiveWebp(): Plugin {
+  const images = new Map<string, number>();
+  const widthsFor = (original: number) => {
+    const widths = [480, 960, 1440].filter((width) => width < original);
+    if (original <= 1440) widths.push(original);
+    return widths;
+  };
 
   return {
-    name: "nelview-demo-files",
-    configureServer(server: ViteDevServer) {
-      server.middlewares.use("/demo", (req, res, next) => {
-        if (!req.url || (req.method !== "GET" && req.method !== "HEAD")) {
-          next();
-          return;
-        }
+    name: "nelview-responsive-webp",
+    apply: "build",
+    async transformIndexHtml(html) {
+      const tags = [
+        ...html.matchAll(/<img\b[^>]*\bsrc=(["'])(assets\/[^"']+)\1[^>]*>/gi),
+      ];
+      let output = html;
 
-        const pathname = new URL(req.url, "http://localhost").pathname;
-        if (pathname !== "/index.html") {
-          next();
-          return;
-        }
+      for (const match of tags.reverse()) {
+        const image = match[0];
+        const source = match[2];
+        if (source.startsWith("assets/team/")) continue;
+        const input = resolve(publicDir, source);
+        if (!existsSync(input)) continue;
 
-        const html = readFileSync(resolve(source, "index.html"), "utf8");
-        server
-          .transformIndexHtml("/demo/index.html", html)
-          .then((transformed) => {
-            res.setHeader("Content-Type", "text/html; charset=utf-8");
-            res.end(req.method === "HEAD" ? undefined : transformed);
-          })
-          .catch(next);
-      });
+        const metadata = await sharp(input).metadata();
+        if (!metadata.width || statSync(input).size < 200_000) continue;
+
+        images.set(source, metadata.width);
+        const { dir, name } = parse(source);
+        const srcset = widthsFor(metadata.width)
+          .map((width) => `${dir}/${name}-${width}.webp ${width}w`)
+          .join(", ");
+        const picture = `<picture><source type="image/webp" srcset="${srcset}" sizes="(max-width: 720px) 100vw, 50vw">${image}</picture>`;
+
+        output =
+          output.slice(0, match.index) +
+          picture +
+          output.slice(match.index! + image.length);
+      }
+
+      return output;
     },
-    generateBundle: {
-      order: "post",
-      handler(_options, bundle) {
-        const sourcePath = "src/demo/index.html";
-        const demoHtml = bundle[sourcePath];
-        if (!demoHtml || demoHtml.type !== "asset") return;
-
-        demoHtml.fileName = "demo/index.html";
-        demoHtml.source = String(demoHtml.source).replaceAll(
-          "../../assets/",
-          "../assets/",
-        );
-        delete bundle[sourcePath];
-        bundle[demoHtml.fileName] = demoHtml;
-      },
+    async closeBundle() {
+      for (const [source, originalWidth] of images) {
+        const { dir, name } = parse(source);
+        for (const width of widthsFor(originalWidth)) {
+          const destination = resolve(outDir, dir, `${name}-${width}.webp`);
+          mkdirSync(resolve(destination, ".."), { recursive: true });
+          await sharp(resolve(publicDir, source))
+            .resize({ width, withoutEnlargement: true })
+            .webp({ quality: 78, effort: 4 })
+            .toFile(destination);
+        }
+      }
     },
   };
 }
 
-// Every .html file in the project root is a page.
-const pages = Object.fromEntries(
-  readdirSync(root)
-    .filter((f) => f.endsWith(".html"))
-    .map((f) => [f.replace(/\.html$/, ""), resolve(root, f)]),
-);
-
 export default defineConfig({
+  root: src,
+  publicDir,
   base: "./", // relative URLs: works on a custom domain, Vercel, Netlify or GitHub Pages sub-paths
   plugins: [
     react(),
     ViteImageOptimizer({
       includePublic: true,
-      logStats: true,
+      logStats: false,
       png: { quality: 80 },
       jpeg: { quality: 80 },
       jpg: { quality: 80 },
@@ -233,17 +231,19 @@ export default defineConfig({
     }),
     responsiveWebp(),
     seoMeta(),
-    demoFiles(),
+    pagesAtRoot(),
   ],
   build: {
-    outDir: "dist",
+    outDir,
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        ...pages,
-        "demo/index": resolve(root, "src", "demo", "index.html"),
-      },
+      input: Object.fromEntries(
+        listPages().map((page) => [
+          page.replace(/\.html$/, ""),
+          resolve(pagesDir, page),
+        ]),
+      ),
     },
   },
-  server: { open: "/index.html" },
+  server: { open: "/" },
 });

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-animations="off">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <style id="nv-guard">
@@ -31,9 +31,9 @@
       crossorigin
     />
     <link rel="stylesheet" href="assets/fonts/fonts.css" />
-    <link rel="stylesheet" href="src/styles/site.css" />
-    <link rel="stylesheet" href="src/styles/pages.css" />
-    <link rel="stylesheet" href="src/styles/color.css" />
+    <link rel="stylesheet" href="../styles/site.css" />
+    <link rel="stylesheet" href="../styles/pages.css" />
+    <link rel="stylesheet" href="../styles/color.css" />
   </head>
   <body data-page="inst">
     <div data-site-header></div>
@@ -551,134 +551,9 @@
       </section>
     </main>
     <div data-site-footer></div>
-    <script src="js/site.js"></script>
-    <script src="js/i18n.js"></script>
-    <!-- Temporarily disabled site animations:
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"
-    ></script>
-    <script defer src="js/motion.js"></script>
-    -->
-    <script>
-      (function () {
-        var D = {
-          bsc: {
-            t: "BSc final project",
-            seats: "1,240 seats",
-            pm: 55,
-            c: [
-              ["Structure & writing", 30],
-              ["Literature review", 25],
-              ["Methodology", 25],
-              ["Ethics", 20],
-            ],
-            b: [
-              ["0–39", "Fail", "r"],
-              ["40–54", "Revise", "y"],
-              ["55–69", "Pass", "g"],
-              ["70+", "First class", "b"],
-            ],
-            r: "Below 55 returns to the student with AI feedback. Supervisors see it at 55+.",
-          },
-          msc: {
-            t: "MSc thesis",
-            seats: "412 seats",
-            pm: 65,
-            c: [
-              ["Methodology", 30],
-              ["Literature & theory", 25],
-              ["Ethics (local IRB)", 25],
-              ["Writing & structure", 20],
-            ],
-            b: [
-              ["0–49", "Fail", "r"],
-              ["50–64", "Revise", "y"],
-              ["65–79", "Pass", "g"],
-              ["80+", "Distinction", "b"],
-            ],
-            r: "Below 65 routes to the supervisor automatically with flagged sections.",
-          },
-          phd: {
-            t: "PhD chapter",
-            seats: "186 seats",
-            pm: 75,
-            c: [
-              ["Novelty & contribution", 30],
-              ["Methodology", 30],
-              ["Statistics", 20],
-              ["Ethics & integrity", 20],
-            ],
-            b: [
-              ["0–59", "Major revision", "r"],
-              ["60–74", "Minor revision", "y"],
-              ["75–89", "Ready for committee", "g"],
-              ["90+", "Publication-ready", "b"],
-            ],
-            r: "75+ unlocks committee review. 85+ suggests an external expert.",
-          },
-        };
-        function ren(k) {
-          var d = D[k];
-          document.getElementById("cfgTitle").textContent = d.t;
-          document.getElementById("cfgSeats").textContent = d.seats;
-          document.getElementById("cfgPm").textContent = d.pm;
-          document.getElementById("cfgCrit").innerHTML = d.c
-            .map(function (c) {
-              return (
-                "<div class='c'>" +
-                c[0].replace("&", "&amp;") +
-                "<div class='bar'><span style='width:" +
-                c[1] * 2.5 +
-                "%'></span></div><b>" +
-                c[1] +
-                "%</b></div>"
-              );
-            })
-            .join("");
-          document.getElementById("cfgFill").style.width = d.pm + "%";
-          document.getElementById("cfgMark").style.left = d.pm + "%";
-          document.getElementById("cfgRoute").textContent = d.r;
-          document.getElementById("cfgBands").innerHTML = d.b
-            .map(function (b) {
-              return (
-                "<div><span class='tag " +
-                b[2] +
-                "'>" +
-                b[0] +
-                "</span><b>" +
-                b[1] +
-                "</b></div>"
-              );
-            })
-            .join("");
-        }
-        document.querySelectorAll("#progTabs button").forEach(function (b) {
-          b.onclick = function () {
-            document.querySelectorAll("#progTabs button").forEach(function (x) {
-              x.classList.toggle("on", x === b);
-            });
-            ren(b.getAttribute("data-k"));
-          };
-        });
-        ren("bsc");
-      })();
-    </script>
-    <template id="__bundler_thumbnail"
-      ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <rect width="100" height="100" fill="#1BB35C"></rect>
-        <text
-          x="50"
-          y="66"
-          text-anchor="middle"
-          font-family="sans-serif"
-          font-size="46"
-          font-weight="700"
-          fill="#fff"
-        >
-          N
-        </text>
-      </svg></template
-    >
+    <script type="module" src="../scripts/site.ts"></script>
+    <script type="module" src="../scripts/i18n.ts"></script>
+    <script type="module" src="../scripts/pages/institutions.ts"></script>
+    <script type="module" src="../scripts/motion.ts"></script>
   </body>
 </html>

@@ -1,17 +1,16 @@
 // @ts-nocheck
-// motion.ts: ported from the static Nelview site. Runs as a classic browser script (compiled by tsc to public/js).
+// motion.ts: loaded as a module from the pages in src/pages and bundled by Vite.
 // Shared globals are declared in src/types/globals.d.ts. Remove @ts-nocheck and tighten types incrementally.
 /* Nelview motion: one owner per element, shared easing, no transform conflicts. Content is never left hidden. */
+import { animate, scroll, stagger } from "motion";
+import Lenis from "lenis";
+
 (function () {
-  var M = window.Motion;
-  if (!M || !M.animate) return;
   if (
     window.matchMedia &&
     matchMedia("(prefers-reduced-motion: reduce)").matches
   )
     return;
-  var animate = M.animate,
-    stagger = M.stagger;
   var OUT = [0.22, 1, 0.36, 1],
     IO = [0.65, 0, 0.35, 1],
     SOFT = { type: "spring", stiffness: 170, damping: 26, mass: 1 };
@@ -258,11 +257,11 @@
   });
 
   /* scroll-linked: one transform owner each */
-  if (M.scroll) {
+  {
     var prog = document.createElement("div");
     prog.className = "nv-prog";
     document.body.appendChild(prog);
-    M.scroll(
+    scroll(
       animate(
         prog,
         { transform: ["scaleX(0)", "scaleX(1)"] },
@@ -273,7 +272,7 @@
       var box = im.closest(".photo"),
         a = im.closest(".mosaic") ? (i % 2 ? -5 : 5) : -4;
       im.style.willChange = "transform";
-      M.scroll(
+      scroll(
         animate(
           im,
           {
@@ -288,7 +287,7 @@
       );
     });
     document.querySelectorAll("main .sec.dark,main .cta").forEach(function (s) {
-      M.scroll(
+      scroll(
         animate(
           s,
           { clipPath: ["inset(0 2.5% round 28px)", "inset(0 0% round 0px)"] },
@@ -299,7 +298,7 @@
     });
     var gb = document.querySelector(".hero2 .grid-bg");
     if (gb)
-      M.scroll(
+      scroll(
         animate(
           gb,
           {
@@ -316,7 +315,7 @@
     var tf = document.querySelector(".tour-frame");
     if (tf) {
       tf.style.willChange = "transform";
-      M.scroll(
+      scroll(
         animate(
           tf,
           {
@@ -332,7 +331,7 @@
     }
     var fb = document.querySelector(".ftr-big");
     if (fb)
-      M.scroll(
+      scroll(
         animate(
           fb,
           {
@@ -358,7 +357,7 @@
       meas();
       addEventListener("resize", meas);
       tr.style.willChange = "transform";
-      M.scroll(
+      scroll(
         function (p) {
           var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
           tr.style.transform =
@@ -505,10 +504,7 @@
   /* smooth scroll (desktop) */
   var lenis = null;
   if (FINE) {
-    var ls = document.createElement("script");
-    ls.src = "https://unpkg.com/lenis@1.1.13/dist/lenis.min.js";
-    ls.onload = function () {
-      if (!window.Lenis) return;
+    (function () {
       lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
       lenis.on("scroll", sched);
       var frame = 0;
@@ -541,7 +537,6 @@
           });
         }
       });
-    };
-    document.head.appendChild(ls);
+    })();
   }
 })();

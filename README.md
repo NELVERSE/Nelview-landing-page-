@@ -2,7 +2,7 @@
 
 The ultimate pre-submission audit for research. Marketing site for Nelview, in English and French.
 
-Static multi-page site built with **Vite + TypeScript**. No framework: each page is plain HTML, styled by four CSS files and driven by five small TypeScript scripts.
+Static multi-page site built with **Vite + TypeScript**. No framework: each page is plain HTML, styled by shared CSS and driven by small TypeScript modules.
 
 ## Quick start
 
@@ -18,25 +18,46 @@ Requires Node 20+ and [pnpm](https://pnpm.io) (the repo ships a `pnpm-lock.yaml`
 ## Project structure
 
 ```
-*.html                 18 pages (index, about, institutions, experts, pricing, pledge, journal-guide, resources, article, contact, waitlist, apply, signin, privacy, terms, cookies, security, 404)
-beta.html              forwards referral links (nelview.com/beta?ref=CODE) to the waitlist
-src/styles/            site.css (base), pages.css, story.css, color.css (theme + motion + responsive layers)
-src/scripts/           TypeScript sources, compiled by tsc to public/js/ as classic scripts
-  site.ts              header, footer, menus, icons, forms (posts to Google Apps Script)
-  i18n.ts              English / French toggle, auto-detected from browser + timezone
-  motion.ts            scroll reveals, smooth scroll, page transitions (Motion + Lenis from CDN; currently switched off in every page)
-  legal.ts             privacy / terms / cookies / security page content
-  posts.ts             blog posts data
-src/types/globals.d.ts shared window globals
-src/demo/              embedded 38-second product demo (React, bundled by Vite to dist/demo/)
-public/assets/         images, team photos, audio, self-hosted fonts
-apps-script/           Google Apps Script backend (forms -> Google Sheet + emails)
+src/
+  pages/            HTML pages. src/pages/about.html is served as /about.html
+    demo/           page that hosts the embedded product demo (/demo/)
+  scripts/          TypeScript modules, bundled by Vite
+    site.ts         header, footer, menus, icons, form submission
+    i18n.ts         English / French switch, detected from browser and timezone
+    motion.ts       scroll reveals, smooth scroll, page transitions (Motion + Lenis)
+    legal.ts        privacy / terms / cookies / security content
+    posts.ts        blog posts
+    pages/          one script per page that needs its own behaviour
+  styles/           site.css (base), pages.css, story.css, color.css (theme, motion, responsive)
+  demo/             React source of the 38-second product demo
+  types/            shared type declarations
+public/             files copied to the site as they are: images, fonts, audio, robots.txt, sitemap.xml
+tests/
+  unit/             form backend (apps-script/Code.gs) run under Node
+  e2e/              browser tests against the built site (Playwright)
+apps-script/        Google Apps Script backend: forms -> Google Sheet, Drive and emails
+docs/               notes that are not needed to run the project
+.github/workflows/  build, test and deploy
+vite.config.ts      build: pages, share-card tags, responsive images, preview builds
 ```
+
+Each page lists the scripts it needs, in order: `site.ts`, `i18n.ts`, its own page script if it has one, then `motion.ts`.
+
+## Tests
+
+```bash
+pnpm run typecheck
+pnpm test             # backend unit tests, no browser needed
+pnpm run build
+pnpm run test:e2e     # browser tests against dist/
+```
+
+The first time, install the test browser with `pnpm exec playwright install chromium`. The browser tests never contact the real form backend; they answer its requests themselves.
 
 ## Configuration
 
 - **Form endpoint**: `NV_EP` in `src/scripts/site.ts` is the deployed Apps Script web-app URL.
-- **Portal links**: `PORTAL_BASE` at the top of `src/scripts/site.ts` (default `https://app.nelview.com`). Portal links in `apply.html` and `institutions.html` use the same domain.
+- **Portal links**: `PORTAL_BASE` at the top of `src/scripts/site.ts` (default `https://app.nelview.com`). Portal links in `src/pages/apply.html` and `src/pages/institutions.html` use the same domain.
 - **Sign in / Get started**: both route to `signin.html` / `waitlist.html` during the private beta (`APP` in `site.ts`).
 
 ## Branches: preview and production
@@ -62,7 +83,7 @@ Point `www.nelview.com` at the host. If the domain differs, set the `SITE_URL` e
 
 ## Backend (Google Apps Script)
 
-`apps-script/Code.gs` receives every form (waitlist, newsletter, pledge alerts, expert applications, contact, demo requests), writes to Google Sheets, saves reviewer CVs to Google Drive and sends branded emails. See `apps-script/Google Sheet Setup.md`.
+`apps-script/Code.gs` receives every form (waitlist, newsletter, pledge alerts, expert applications, contact, demo requests), writes to Google Sheets, saves reviewer CVs to Google Drive and sends branded emails. See `apps-script/SETUP.md`.
 
 The site waits for the script's reply before confirming anything to the visitor, and shows an error they can retry from if it does not get one. After changing `Code.gs`, redeploy it or the live site keeps talking to the old version.
 
@@ -70,7 +91,7 @@ To update an existing deployment, paste `Code.gs` into the Apps Script editor, t
 
 ## TypeScript notes
 
-The scripts were ported from the original JavaScript and keep `// @ts-nocheck` at the top so the build is clean today. Remove it file by file and type against `src/types/globals.d.ts` to tighten checks. `pnpm run typecheck` runs the compiler without emitting.
+The scripts were ported from the original JavaScript and keep `// @ts-nocheck` at the top, so the type check passes today without checking much. Remove it file by file and type against `src/types/globals.d.ts` to tighten checks.
 
 ## Before launch
 
