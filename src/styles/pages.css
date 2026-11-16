@@ -25,7 +25,7 @@
 }
 .phd h1 {
   font-size: clamp(44px, 6.6vw, 88px);
-  letter-spacing: -0.052em;
+  letter-spacing: -0.038em;
   line-height: 0.98;
   font-weight: 680;
   max-width: 16ch;
@@ -233,7 +233,7 @@
 }
 .art-hd h1 {
   font-size: clamp(38px, 5.4vw, 68px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.038em;
   line-height: 1.02;
   font-weight: 680;
   margin-top: 28px;
@@ -470,7 +470,7 @@
 }
 .ab-hero h1 {
   font-size: clamp(46px, 8vw, 112px);
-  letter-spacing: -0.058em;
+  letter-spacing: -0.038em;
   line-height: 0.95;
   font-weight: 690;
   max-width: 13ch;
@@ -693,7 +693,7 @@
 }
 .pl-hero h1 {
   font-size: clamp(46px, 7.6vw, 104px);
-  letter-spacing: -0.056em;
+  letter-spacing: -0.038em;
   line-height: 0.96;
   font-weight: 690;
   max-width: 12ch;
@@ -755,7 +755,7 @@
 }
 .lg-hd h1 {
   font-size: clamp(40px, 5.6vw, 72px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.038em;
   line-height: 1;
   font-weight: 680;
   margin-top: 24px;
@@ -980,7 +980,7 @@
 }
 .nf h1 {
   font-size: clamp(40px, 6vw, 72px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.038em;
   line-height: 1;
   font-weight: 680;
   margin-top: 16px;
@@ -1007,7 +1007,7 @@
 }
 .pr-hero h1 {
   font-size: clamp(44px, 6.8vw, 92px);
-  letter-spacing: -0.055em;
+  letter-spacing: -0.038em;
   line-height: 0.96;
   font-weight: 690;
   max-width: 13ch;

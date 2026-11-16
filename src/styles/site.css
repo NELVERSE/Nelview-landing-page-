@@ -123,14 +123,14 @@ textarea {
 }
 .display {
   font-size: clamp(44px, 7.2vw, 92px);
-  letter-spacing: -0.05em;
-  line-height: 0.98;
-  font-weight: 680;
+  letter-spacing: -0.038em;
+  line-height: 1;
+  font-weight: 640;
 }
 .h2 {
   font-size: clamp(34px, 4.6vw, 58px);
-  letter-spacing: -0.045em;
-  line-height: 1.02;
+  letter-spacing: -0.034em;
+  line-height: 1.05;
 }
 .h3 {
   font-size: clamp(22px, 2.2vw, 28px);
@@ -512,22 +512,27 @@ textarea {
 }
 .grid-bg {
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(
-    ellipse 70% 55% at 50% 0%,
-    #000 30%,
-    transparent 75%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse 70% 55% at 50% 0%,
-    #000 30%,
-    transparent 75%
-  );
-  opacity: 0.55;
+  inset: 0 0 auto;
+  height: min(760px, 100%);
+  background:
+    radial-gradient(
+      ellipse 46% 60% at 50% 0%,
+      rgba(27, 179, 92, 0.16),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 30% 46% at 12% 12%,
+      rgba(242, 165, 22, 0.1),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 30% 46% at 88% 8%,
+      rgba(27, 179, 92, 0.1),
+      transparent 70%
+    );
+  /* Fade in from the top so the wash has no edge under the header. */
+  mask-image: linear-gradient(to bottom, transparent, #000 160px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 160px);
   pointer-events: none;
 }
 .hero > .wrap {
@@ -2328,14 +2333,14 @@ picture {
 }
 /* ===== v2 home ===== */
 .hero2 {
-  padding: 80px 0 0;
+  padding: 64px 0 0;
   position: relative;
   overflow: hidden;
 }
 .hero2 .display {
-  font-size: clamp(38px, 7.4vw, 96px);
-  max-width: 13ch;
-  margin: 26px auto 0;
+  font-size: clamp(38px, 6.3vw, 82px);
+  max-width: 14ch;
+  margin: 24px auto 0;
 }
 .hero2 .lead {
   margin: 26px auto 0;
@@ -2445,6 +2450,10 @@ picture {
   border-radius: 24px;
   padding: 14px;
   position: relative;
+  box-shadow:
+    0 1px 2px rgba(15, 59, 42, 0.04),
+    0 24px 48px -24px rgba(15, 59, 42, 0.16),
+    0 60px 120px -60px rgba(15, 59, 42, 0.22);
 }
 .tour .app {
   grid-template-columns: 210px minmax(0, 1fr);

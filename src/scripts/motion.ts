@@ -454,7 +454,7 @@ import Lenis from "lenis";
       animate(
         veil,
         { transform: ["translateY(0%)", "translateY(-100%)"] },
-        { duration: 0.55, ease: IO },
+        { duration: 0.45, ease: IO },
       ).then(function () {
         veil.style.transform = "translateY(100%)";
       });
@@ -489,7 +489,7 @@ import Lenis from "lenis";
     animate(
       veil,
       { transform: ["translateY(100%)", "translateY(0%)"] },
-      { duration: 0.4, ease: IO },
+      { duration: 0.3, ease: IO },
     ).then(function () {
       location.href = a.href;
     });

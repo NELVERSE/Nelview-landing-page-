@@ -1047,7 +1047,7 @@ main .photo:hover img {
 }
 .hero-ed ~ .tour,
 .hero2 .tour {
-  margin-top: clamp(48px, 6vw, 80px);
+  margin-top: clamp(36px, 4.4vw, 56px);
 }
 @media (max-width: 820px) {
   .ed-row {
