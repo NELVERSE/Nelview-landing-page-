@@ -1,9 +1,9 @@
-name: Build and deploy
+name: Build and test
 
-# main    -> production: build, then deploy to GitHub Pages.
-# preview -> preview: build only (marked noindex). The built site is attached
-#            to the run as the "site-preview" artifact.
-# Pull requests into main get the same preview build as a check.
+# Checks only: typecheck, unit tests, build and browser tests on every push to
+# main or preview and on pull requests into main. The built site is attached to
+# the run as an artifact. Hosting (Vercel) deploys from the branches itself:
+# main is production, preview gets its own preview URL.
 on:
   push:
     branches: [main, preview]
@@ -38,29 +38,9 @@ jobs:
         run: |
           pnpm exec playwright install --with-deps chromium
           pnpm run test:e2e
-      - name: Upload production site for GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
-      - name: Upload preview site
-        if: github.ref != 'refs/heads/main'
+      - name: Upload built site
         uses: actions/upload-artifact@v5
         with:
-          name: site-preview
+          name: site-${{ env.NELVIEW_ENV }}
           path: dist
           retention-days: 14
-
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4

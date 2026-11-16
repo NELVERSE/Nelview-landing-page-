@@ -120,16 +120,17 @@ test("section headings end with a full stop or a question mark", async ({ page }
   expect(missing, "headings without end punctuation").toEqual([]);
 });
 
-test("the Pledge page keeps the shared left alignment", async ({ page }) => {
-  // It shares a menu highlight with About, whose centred layout must not leak.
-  await page.goto("/pledge");
-  const aligned = await page.evaluate(() =>
-    [...document.querySelectorAll<HTMLElement>("main h2")]
-      .filter((el) => el.offsetParent && !el.closest(".cta, .nlb"))
-      .map((el) => getComputedStyle(el).textAlign),
-  );
-  expect(aligned.length).toBeGreaterThan(3);
-  expect(aligned.every((a) => a === "start" || a === "left")).toBe(true);
+test("page headings are left-aligned on every page, About included", async ({ page }) => {
+  for (const path of ["/pledge", "/about", "/pricing", "/institutions", "/experts", "/contact"]) {
+    await page.goto(path);
+    const aligned = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>("main h1, main h2")]
+        .filter((el) => el.offsetParent && !el.closest(".cta, .nlb, .closing"))
+        .map((el) => getComputedStyle(el).textAlign),
+    );
+    expect(aligned.length, path).toBeGreaterThan(1);
+    expect(aligned.every((a) => a === "start" || a === "left"), `${path}: ${aligned}`).toBe(true);
+  }
 });
 
 test("headings have no italic accent", async ({ page }) => {
