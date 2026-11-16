@@ -1,4 +1,8 @@
-import { defineConfig, type ViteDevServer } from "vite";
+import {
+  defineConfig,
+  type HtmlTagDescriptor,
+  type ViteDevServer,
+} from "vite";
 import react from "@vitejs/plugin-react";
 import {
   existsSync,
@@ -6,6 +10,7 @@ import {
   readdirSync,
   readFileSync,
   statSync,
+  writeFileSync,
 } from "node:fs";
 import { parse, resolve } from "node:path";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
@@ -82,6 +87,80 @@ function responsiveWebp() {
   };
 }
 
+// Public address of the production site, used for canonical and share-card URLs.
+const SITE_URL = (process.env.SITE_URL || "https://www.nelview.com").replace(
+  /\/+$/,
+  "",
+);
+
+// A preview build is anything that is not the production site: the `preview`
+// branch and pull requests in GitHub Actions (NELVIEW_ENV), Vercel preview
+// deployments, and Netlify deploy previews / branch deploys. Local builds and
+// `main` are production. Preview builds are hidden from search engines.
+const isPreview =
+  process.env.NELVIEW_ENV !== "production" &&
+  (process.env.NELVIEW_ENV === "preview" ||
+    process.env.VERCEL_ENV === "preview" ||
+    (process.env.NETLIFY === "true" && process.env.CONTEXT !== "production"));
+
+function seoMeta() {
+  // Never indexed, on any build: error page, referral redirect, embedded demo.
+  const neverIndexed = new Set([
+    "/404.html",
+    "/beta.html",
+    "/src/demo/index.html",
+  ]);
+  // One file serves many URLs (article.html?p=...), so no single canonical URL.
+  const noCanonical = new Set(["/article.html"]);
+
+  return {
+    name: "nelview-seo-meta",
+    apply: "build" as const,
+    transformIndexHtml(html: string, ctx: { path: string }) {
+      const tags: HtmlTagDescriptor[] = [];
+      const meta = (attrs: Record<string, string>) =>
+        tags.push({ tag: "meta", attrs, injectTo: "head" });
+
+      if (isPreview || neverIndexed.has(ctx.path)) {
+        if (!/<meta[^>]+name=["']robots["']/i.test(html))
+          meta({ name: "robots", content: "noindex, nofollow" });
+      }
+      if (neverIndexed.has(ctx.path)) return tags;
+
+      const title = html.match(/<title>([^<]*)<\/title>/i)?.[1].trim();
+      const description = html
+        .match(/<meta[^>]+name=["']description["'][^>]*>/i)?.[0]
+        .match(/content="([^"]*)"/i)?.[1];
+      const page = ctx.path.replace(/^\//, "").replace(/\.html$/, "");
+      const url = `${SITE_URL}/${page === "index" ? "" : page}`;
+
+      if (!noCanonical.has(ctx.path)) {
+        tags.push({
+          tag: "link",
+          attrs: { rel: "canonical", href: url },
+          injectTo: "head",
+        });
+        meta({ property: "og:url", content: url });
+      }
+      meta({ property: "og:type", content: "website" });
+      meta({ property: "og:site_name", content: "Nelview" });
+      if (title) meta({ property: "og:title", content: title });
+      if (description)
+        meta({ property: "og:description", content: description });
+      meta({ property: "og:image", content: `${SITE_URL}/og-image.png` });
+      meta({ name: "twitter:card", content: "summary_large_image" });
+      return tags;
+    },
+    closeBundle() {
+      if (!isPreview) return;
+      writeFileSync(
+        resolve(root, "dist", "robots.txt"),
+        "# Preview build: keep out of search engines.\nUser-agent: *\nDisallow: /\n",
+      );
+    },
+  };
+}
+
 function resolveAssetPath(directory: string, name: string, width: number) {
   return `${directory}/${name}-${width}.webp`;
 }
@@ -153,6 +232,7 @@ export default defineConfig({
       webp: { quality: 80 },
     }),
     responsiveWebp(),
+    seoMeta(),
     demoFiles(),
   ],
   build: {

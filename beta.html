@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Join the waitlist · Nelview</title>
+    <!-- Referral links are shared as nelview.com/beta?ref=CODE (see waitlist.html
+         and the confirmation email in apps-script/Code.gs). This page forwards
+         them to the waitlist, keeping the referral code. -->
+    <script>
+      location.replace("waitlist.html" + location.search + location.hash);
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url=waitlist.html" /></noscript>
+  </head>
+  <body>
+    <p><a href="waitlist.html">Continue to the Nelview waitlist</a></p>
+  </body>
+</html>

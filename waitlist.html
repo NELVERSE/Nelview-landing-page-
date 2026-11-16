@@ -844,6 +844,14 @@
             history.replaceState(null, "", u.pathname + u.search + u.hash);
           }
         } catch (e) {}
+        // localStorage throws when storage is blocked (private mode, strict settings).
+        function stored(k) {
+          try {
+            return localStorage.getItem(k) || "";
+          } catch (e) {
+            return "";
+          }
+        }
         var refBy = "";
         try {
           var rp = new URLSearchParams(location.search).get("ref");
@@ -903,7 +911,7 @@
             .call(
               document.querySelectorAll("#" + g + " .chip.on"),
               function (c) {
-                return c.textContent;
+                return c.textContent.replace(/\s+/g, " ").trim();
               },
             )
             .join("; ");
@@ -930,7 +938,7 @@
           };
           var inRef = (
             new URLSearchParams(location.search).get("ref") ||
-            localStorage.getItem("nelview_ref_by") ||
+            stored("nelview_ref_by") ||
             ""
           )
             .toLowerCase()
@@ -971,7 +979,7 @@
             } else {
               var K = "nelview_beta_ref",
                 r =
-                  localStorage.getItem(K) ||
+                  stored(K) ||
                   "NV-BETA-" + Math.floor(100000 + Math.random() * 900000);
               try {
                 localStorage.setItem(K, r);
