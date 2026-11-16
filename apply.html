@@ -443,10 +443,32 @@
           };
         });
         var cv = document.getElementById("cv");
+        var CV_MAX = 10 * 1024 * 1024,
+          cvl = document.getElementById("cvl");
         cv.onchange = function () {
-          if (cv.files[0])
-            document.getElementById("cvl").textContent = cv.files[0].name;
+          var fl = cv.files[0];
+          if (fl && fl.size > CV_MAX) {
+            cv.value = "";
+            cvl.textContent =
+              "That file is over 10 MB. Please upload a smaller PDF or DOCX.";
+            return;
+          }
+          if (fl) cvl.textContent = fl.name;
         };
+        // Read the chosen CV as base64 so it can travel in the JSON submission.
+        function readCv(done) {
+          var fl = cv.files[0];
+          if (!fl) return done("");
+          var r = new FileReader();
+          r.onload = function () {
+            done(String(r.result).split(",")[1] || null);
+          };
+          r.onerror = function () {
+            done(null);
+          };
+          r.readAsDataURL(fl);
+        }
+        var reading = false;
         function go(n) {
           cur = n;
           P.forEach(function (p, i) {
@@ -518,24 +540,43 @@
             },
           );
           fd.cv_file = cv.files[0] ? cv.files[0].name : "";
-          nvSend(fd);
-          document.getElementById("dn").textContent =
-            f.elements["name"].value
-              .trim()
-              .split(" ")
-              .filter(function (w) {
-                return !/^(Dr|Prof)\.?$/.test(w);
-              })[0] || "there";
-          document.getElementById("de").textContent =
-            f.elements["email"].value.trim();
-          f.style.display = "none";
-          document.getElementById("apdone").classList.add("show");
-          S.forEach(function (s) {
-            s.classList.remove("on");
-            s.classList.add("dn");
-            s.querySelector("i").innerHTML = nvIc("check", 14);
+          if (reading) return;
+          reading = true;
+          readCv(function (data) {
+            reading = false;
+            if (data === null) {
+              cv.value = "";
+              cvl.textContent =
+                "We couldn't read that file. Please choose it again.";
+              go(2);
+              return;
+            }
+            if (data)
+              fd.cv = {
+                name: cv.files[0].name,
+                type: cv.files[0].type,
+                data: data,
+              };
+            nvSubmit(f, fd, function () {
+              document.getElementById("dn").textContent =
+                f.elements["name"].value
+                  .trim()
+                  .split(" ")
+                  .filter(function (w) {
+                    return !/^(Dr|Prof)\.?$/.test(w);
+                  })[0] || "there";
+              document.getElementById("de").textContent =
+                f.elements["email"].value.trim();
+              f.style.display = "none";
+              document.getElementById("apdone").classList.add("show");
+              S.forEach(function (s) {
+                s.classList.remove("on");
+                s.classList.add("dn");
+                s.querySelector("i").innerHTML = nvIc("check", 14);
+              });
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            });
           });
-          window.scrollTo({ top: 0, behavior: "smooth" });
         });
       })();
     </script>

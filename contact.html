@@ -355,22 +355,10 @@
         });
         var q = new URLSearchParams(location.search).get("topic");
         if (q === "contact" || q === "general") set("msg");
-        f.addEventListener(
-          "submit",
-          function () {
-            setTimeout(function () {
-              if (f.style.display === "none") {
-                var t = document.querySelector(".ct-tabs");
-                if (t) t.style.display = "none";
-              }
-            }, 0);
-            if (f.getAttribute("data-stage") === "Contact message") {
-              var t = f.querySelector("[name=topic]");
-              window.__ctTopic = t ? t.value : "";
-            }
-          },
-          true,
-        );
+        f.addEventListener("nv:sent", function () {
+          var t = document.querySelector(".ct-tabs");
+          if (t) t.style.display = "none";
+        });
       })();
     </script>
   </body>

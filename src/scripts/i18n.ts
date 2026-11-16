@@ -748,6 +748,12 @@
     "Contact me about beta access. My details are only used to manage the beta and are never sold.":
       "Contactez-moi au sujet de l'accès bêta. Mes données servent uniquement à gérer la bêta et ne sont jamais vendues.",
     "Privacy policy": "Politique de confidentialité",
+    "We couldn't send that. Check your connection and try again, or email team@nelview.com.":
+      "L'envoi a échoué. Vérifiez votre connexion et réessayez, ou écrivez à team@nelview.com.",
+    "That file is over 10 MB. Please upload a smaller PDF or DOCX.":
+      "Ce fichier dépasse 10 Mo. Veuillez envoyer un PDF ou DOCX plus léger.",
+    "We couldn't read that file. Please choose it again.":
+      "Impossible de lire ce fichier. Veuillez le sélectionner à nouveau.",
     "Please confirm so we can contact you about the beta.":
       "Veuillez confirmer pour que nous puissions vous contacter au sujet de la bêta.",
     "Join the waitlist": "Rejoindre la liste d'attente",

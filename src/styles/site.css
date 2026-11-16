@@ -3001,6 +3001,13 @@ picture {
 .ferr.show {
   display: block;
 }
+.nv-send-err {
+  margin-top: 12px;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
 .ffoot {
   display: flex;
   justify-content: space-between;

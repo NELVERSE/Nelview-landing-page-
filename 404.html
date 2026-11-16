@@ -2,6 +2,18 @@
 <html lang="en" data-animations="off">
   <head>
     <meta charset="utf-8" />
+    <script>
+      // This page is served for every missing URL, including nested ones such
+      // as /guides/old-post, where relative paths would point at /guides/assets.
+      // Anchor them to the site root. Project sites on github.io live under
+      // /<repository>/; everywhere else the site is at the domain root.
+      (function () {
+        var seg = location.pathname.split("/")[1];
+        var root =
+          /\.github\.io$/.test(location.hostname) && seg ? "/" + seg + "/" : "/";
+        document.write('<base href="' + root + '">');
+      })();
+    </script>
     <style id="nv-guard">
       html {
         background: #fff;

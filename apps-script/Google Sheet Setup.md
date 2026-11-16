@@ -120,7 +120,7 @@ What the site now gets back after submitting: `{ ok, position, reference, ref_co
 
 New tabs are created on the first submission. Expert applicants get a branded confirmation; every form alerts team@nelview.com.
 The home-page email box only pre-fills the waitlist (not stored on its own, so it can't create duplicate waitlist rows).
-CV files are not uploaded — only the file name is stored. Redeploy (Manage deployments → New version) after pasting the new Code.gs.
+CV files were not uploaded at this point — only the file name was stored (changed below). Redeploy (Manage deployments → New version) after pasting the new Code.gs.
 
 ## Update — website forms only (portals connect at launch)
 
@@ -134,3 +134,18 @@ Team alerts now go to **team@nelview.com and nelviewai@gmail.com**.
 | General contact (contact.html → General contact tab)                     | Contact                    | Sender confirmation + team alert    |
 | Newsletter / grant alerts                                                | Subscribers                | Team alert                          |
 | Institution Onboarding wizard and all portals are **not** connected yet. |
+
+## Update — reviewer CVs are uploaded, and the site waits for a real answer
+
+**This update needs a redeploy and one new permission.**
+
+1. Paste the new `Code.gs` into the Apps Script editor.
+2. In the editor, pick any function (for example `testBeta`) and press **Run** once. Google asks you to approve access to **Google Drive** — the script now saves CVs there. Approve it.
+3. **Deploy → Manage deployments → Edit (pencil) → Version: New version → Deploy.** The web-app URL stays the same.
+
+What changed:
+
+- **CV upload.** The reviewer application now sends the actual file (PDF or Word, up to 10 MB). The script saves it to a Drive folder called **Nelview reviewer CVs**, owned by the account that deploys the script, and writes the link to a new `cv_url` column in **Expert Applications** and into the team alert email. The folder is private: share it with whoever screens applications. If a file cannot be stored, the application is still saved and `cv_url` reads `(file not stored)`.
+- **Until you redeploy**, the old script ignores the file: applications still arrive with the file name only, and a stray `cv` column containing `[object Object]` appears in **Expert Applications**. Delete that column after redeploying.
+- **Honest confirmations.** Every form on the site now waits for this script's reply and shows an error (with the visitor's entries kept) if it does not get `{ ok: true }`. So the note above about `mode: 'no-cors'` no longer applies: the site reads the response.
+- **Emails can no longer fail a submission.** If a confirmation or team alert cannot be sent (for example the daily email quota is used up), the row is still stored and the visitor still sees success. The failure is logged under **Executions** in the Apps Script editor.

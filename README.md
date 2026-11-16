@@ -62,7 +62,9 @@ Point `www.nelview.com` at the host. If the domain differs, set the `SITE_URL` e
 
 ## Backend (Google Apps Script)
 
-`apps-script/Code.gs` receives every form (waitlist, newsletter, pledge alerts, expert applications, contact, demo requests), writes to Google Sheets and sends branded emails. See `apps-script/Google Sheet Setup.md`.
+`apps-script/Code.gs` receives every form (waitlist, newsletter, pledge alerts, expert applications, contact, demo requests), writes to Google Sheets, saves reviewer CVs to Google Drive and sends branded emails. See `apps-script/Google Sheet Setup.md`.
+
+The site waits for the script's reply before confirming anything to the visitor, and shows an error they can retry from if it does not get one. After changing `Code.gs`, redeploy it or the live site keeps talking to the old version.
 
 To update an existing deployment, paste `Code.gs` into the Apps Script editor, then **Deploy → Manage deployments → Edit → Version: New version → Deploy**. Editing the existing deployment keeps the same URL. Or use [clasp](https://github.com/google/clasp): copy `.clasp.json.example` to `.clasp.json`, add your script ID, run `clasp push`.
 

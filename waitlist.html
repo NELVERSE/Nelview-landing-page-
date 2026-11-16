@@ -699,6 +699,10 @@
             <div class="ferr" id="e3">
               Please confirm so we can contact you about the beta.
             </div>
+            <div class="ferr" id="e4" role="alert">
+              We couldn't send that. Check your connection and try again, or
+              email team@nelview.com.
+            </div>
             <div class="ffoot">
               <button class="btn btn-g" type="button" id="b2">Back</button
               ><button class="btn btn-p" type="button" id="go">
@@ -1030,32 +1034,47 @@
                 .catch(function () {});
             }, 20000);
           }
-          if (rec.hp) {
-            paint(null);
-          } else {
-            fetch(EP, {
-              method: "POST",
-              headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify(rec),
-            })
-              .then(function (x) {
-                return x.json();
-              })
-              .then(paint)
-              .catch(function () {
-                paint(null);
-              });
+          // Show the confirmation only once the application is really stored.
+          function welcome() {
+            $("fp3").classList.remove("on");
+            st.forEach(function (s) {
+              s.classList.remove("on");
+              s.classList.add("dn");
+            });
+            $("ok").classList.add("on");
+            $("nospam").style.display = "none";
+            $("wlTitle").textContent = "Welcome aboard.";
+            $("wlLead").textContent = "Here\u2019s what happens next.";
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }
-          $("fp3").classList.remove("on");
-          st.forEach(function (s) {
-            s.classList.remove("on");
-            s.classList.add("dn");
-          });
-          $("ok").classList.add("on");
-          $("nospam").style.display = "none";
-          $("wlTitle").textContent = "Welcome aboard.";
-          $("wlLead").textContent = "Here\u2019s what happens next.";
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          if (rec.hp) {
+            // Honeypot filled: a bot. Look successful, send nothing.
+            paint(null);
+            welcome();
+            return;
+          }
+          var btn = this;
+          function failed() {
+            btn.disabled = false;
+            err("e4", true);
+          }
+          btn.disabled = true;
+          err("e4", false);
+          fetch(EP, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(rec),
+          })
+            .then(function (x) {
+              return x.json();
+            })
+            .then(function (d) {
+              if (!d || !d.ok || !d.position) return failed();
+              btn.disabled = false;
+              paint(d);
+              welcome();
+            })
+            .catch(failed);
         };
         $("copy").onclick = function () {
           var i = $("refLink");

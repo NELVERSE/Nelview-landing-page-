@@ -122,6 +122,25 @@
                 "</span>";
         }
         document.title = p.h + " · Nelview";
+        // Every article is served by this one file, so describe the one on show
+        // to search engines and link previews.
+        (function () {
+          function set(sel, val) {
+            var e = document.querySelector(sel);
+            if (e) e.setAttribute("content", val);
+          }
+          set('meta[name="description"]', p.x);
+          set('meta[property="og:title"]', document.title);
+          set('meta[property="og:description"]', p.x);
+          var c = document.createElement("link");
+          c.rel = "canonical";
+          c.href =
+            location.origin +
+            location.pathname.replace(/\.html$/, "") +
+            "?p=" +
+            encodeURIComponent(p.s);
+          document.head.appendChild(c);
+        })();
         document.getElementById("a-h").textContent = p.h;
         document.getElementById("a-x").textContent = p.x;
         document.getElementById("a-who").innerHTML =
