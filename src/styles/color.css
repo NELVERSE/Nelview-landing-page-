@@ -1323,18 +1323,16 @@ main .photo:hover img {
   pointer-events: auto;
   height: 72px;
   padding: 0 12px 0 26px;
-  background: rgba(250, 248, 242, 0.78);
-  backdrop-filter: saturate(1.6) blur(18px);
-  -webkit-backdrop-filter: saturate(1.6) blur(18px);
+  /* Opaque on purpose. A translucent bar with a backdrop blur is redrawn on
+     every scroll frame and flickers over video and animated content. */
+  background: #faf8f2;
+  overflow: visible;
   border: 1px solid rgba(15, 59, 42, 0.08);
   border-radius: 22px;
   box-shadow: 0 12px 32px -22px rgba(15, 59, 42, 0.35);
-  transition:
-    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    background 0.5s;
+  transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .hdr.sc .wrap {
-  background: rgba(250, 248, 242, 0.9);
   box-shadow: 0 18px 44px -24px rgba(15, 59, 42, 0.45);
 }
 .nav .nl,
@@ -2083,7 +2081,7 @@ table {
     border-radius: 16px;
   }
   [data-site-header] {
-    height: 72px;
+    height: 74px; /* the drawn bar: 10px above, 60px bar, 4px below */
   }
   .hdr-r .si {
     display: none;
