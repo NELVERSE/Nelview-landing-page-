@@ -1159,17 +1159,6 @@ main
   color: var(--blue);
   font-weight: 600;
 }
-.step > .n {
-  display: inline-grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: var(--hue-soft, var(--blue-soft));
-  color: var(--hue, var(--blue));
-  font-weight: 640;
-  font-variant-numeric: tabular-nums;
-}
 .step h3 {
   font-size: 22px;
   letter-spacing: -0.025em;
@@ -1197,18 +1186,6 @@ main
 }
 .flow > div:first-child {
   border-left: 0;
-}
-.flow .n {
-  display: inline-grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: var(--hue-soft, var(--blue-soft));
-  color: var(--hue, var(--blue));
-  font-size: 13px;
-  font-weight: 640;
-  font-variant-numeric: tabular-nums;
 }
 .flow b {
   font-size: 16px;

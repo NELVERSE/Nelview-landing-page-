@@ -509,23 +509,11 @@
 }
 .vrow {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 48px;
   padding: 40px 0;
   border-bottom: 1px solid var(--line);
   align-items: start;
-}
-.vrow .n {
-  display: inline-grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: var(--hue-soft, var(--blue-soft));
-  color: var(--hue, var(--blue));
-  font-size: 13px;
-  font-weight: 640;
-  font-variant-numeric: tabular-nums;
 }
 .vrow h3 {
   font-size: clamp(24px, 2.4vw, 30px);
@@ -542,9 +530,6 @@
 }
 .dark .vrow p {
   color: #b7bdc9;
-}
-.dark .vrow .n {
-  color: #4ade8a;
 }
 .ttl {
   display: grid;

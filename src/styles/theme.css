@@ -303,6 +303,32 @@ h3 em {
   }
 }
 
+/* ---------- process row (institutions) ---------- */
+/* The same grey cards as everywhere else, one per stage. */
+.flow {
+  gap: 12px;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  background: none;
+}
+.flow > div {
+  border: 0;
+  border-radius: var(--radius-m);
+  background: var(--card);
+}
+.flow .ico {
+  background: #fff;
+  color: var(--hue, var(--brand));
+  margin-bottom: 6px;
+}
+@media (max-width: 900px) {
+  .flow > div,
+  .flow > div:first-child {
+    border: 0;
+  }
+}
+
 /* ---------- feature cards ---------- */
 /* A small label, one bold line, an arrow, and a product visual underneath. */
 .nb {
