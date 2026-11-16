@@ -96,7 +96,7 @@ import { animate, stagger } from "motion";
 
   // Groups: the children arrive one after another.
   const GROUPS =
-    ".bento, .grid2, .grid3, .grid4, .feats, .steps, .flow, .nums, .stats, .board, .st-team, .st-chap, .vs, .vs-rows, .ex-tiers, .pp, .p4, .fund, .funds2, .cta2, .pgrid, .ttl, .vrows, .wall, .xrows, .integ-g, .roles, .perks, .hs-track, .bc, .recs, .nb, .nt, .pc, .qc, .facts";
+    ".bento, .grid2, .grid3, .grid4, .feats, .steps, .flow, .nums, .stats, .board, .st-team, .st-chap, .vs, .vs-rows, .ex-tiers, .pp, .p4, .fund, .funds2, .cta2, .pgrid, .ttl, .vrows, .wall, .xrows, .integ-g, .roles, .perks, .hs-track, .bc, .recs, .nb, .nt, .pc, .qc";
   for (const group of all(GROUPS)) {
     if (!outsideHero(group) || inView(group)) continue;
     if (group.parentElement?.closest(GROUPS)) continue;
