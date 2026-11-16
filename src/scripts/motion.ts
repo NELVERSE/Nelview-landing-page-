@@ -504,12 +504,17 @@
 
   /* smooth scroll (desktop) */
   var lenis = null;
-  if (FINE) {
+  if (FINE && matchMedia("(min-width: 900px)").matches) {
     var ls = document.createElement("script");
     ls.src = "https://unpkg.com/lenis@1.1.13/dist/lenis.min.js";
     ls.onload = function () {
       if (!window.Lenis) return;
-      lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
+      lenis = new Lenis({
+        lerp: 0.08,
+        wheelMultiplier: 0.8,
+        smoothWheel: false,
+        syncTouch: false,
+      });
       lenis.on("scroll", sched);
       var frame = 0;
       function raf(t) {

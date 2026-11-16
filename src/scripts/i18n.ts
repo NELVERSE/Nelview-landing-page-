@@ -11,9 +11,13 @@
       "Associé à des directeurs et experts du domaine qui guident votre travail du premier jet à la publication, selon le domaine et non la disponibilité.",
     "A share of every Nelview subscription funds early-stage research, from prototype to data collection. Open to students, PhDs and university teams.":
       "Une part de chaque abonnement Nelview finance la recherche débutante, du prototype à la collecte de données. Ouvert aux étudiants, doctorants et équipes universitaires.",
-    "Publishing safely": "Publier en sécurité",
-    "Free guidance on choosing a legitimate journal, spotting predatory ones and protecting your work before you submit.":
-      "Des conseils gratuits pour choisir une revue légitime, repérer les revues prédatrices et protéger votre travail avant de soumettre.",
+    "We connect researchers with mentors, funding and guidance to publish strong work and explore real-world paths for valuable prototypes.":
+      "Nous mettons les chercheurs en relation avec des mentors, des financements et un accompagnement pour publier des travaux solides et explorer des débouchés concrets pour les prototypes prometteurs.",
+    "Publishing & enterprise": "Publication et entrepreneuriat",
+    "We support researchers in publishing rigorous findings and exploring pathways to turn valuable prototypes with real-world potential into viable businesses or enterprises.":
+      "Nous aidons les chercheurs à publier des résultats rigoureux et à explorer des voies pour transformer des prototypes prometteurs à fort potentiel concret en entreprises viables.",
+    "Explore a research-to-enterprise pathway":
+      "Explorer une voie de la recherche à l'entreprise",
     Journals: "Revues",
     Grants: "Financements",
     "Guides, product news and Research Pledge calls, about once a month.":
@@ -579,8 +583,6 @@
       "Des retours autrefois réservés à quelques-uns. Désormais pour tous.",
     "Great research needs more than feedback.":
       "Une grande recherche a besoin de plus que des retours.",
-    "We're pairing researchers with mentors and opening real pathways to funding, so promising work doesn't stall.":
-      "Nous associons les chercheurs à des mentors et ouvrons de vraies voies de financement, pour que les travaux prometteurs ne s'arrêtent pas.",
     Mentorship: "Mentorat",
     "Matched with supervisors and domain experts who guide your work from first draft to publication.":
       "Associé à des directeurs et experts qui guident votre travail du premier jet à la publication.",
@@ -792,7 +794,6 @@
     "Try Nelview": "Essayer Nelview gratuitement",
     "Meet the team": "Rencontrer l'équipe",
     "What we believe": "Nos convictions",
-    "Our academic board.": "Notre conseil académique.",
     "Where the story is now.": "Où en est l'histoire.",
     "The people building Nelview.": "Les personnes qui construisent Nelview.",
     "What comes next.": "La suite.",
@@ -805,6 +806,16 @@
       "Nous avons donc construit la pièce manquante.",
     "Feedback is the start, not the finish line.":
       "Les retours sont un début, pas une ligne d'arrivée.",
+    "Strong research can lead to discoveries, better policy or new products. When a prototype has real-world potential, it can also become the basis for a viable business or enterprise. We want to help research move forward without losing the value it creates locally.":
+      "Une recherche solide peut mener à des découvertes, à de meilleures politiques ou à de nouveaux produits. Lorsqu'un prototype a un potentiel concret, il peut aussi devenir la base d'une entreprise viable. Nous voulons aider la recherche à progresser sans perdre la valeur qu'elle crée localement.",
+    "Pairing researchers with mentors and named experts in their field.":
+      "Mettre les chercheurs en relation avec des mentors et des experts identifiés dans leur domaine.",
+    "Opening pathways to journals, grants and funders.":
+      "Ouvrir des voies vers les revues, les subventions et les organismes de financement.",
+    "Returning a share of every subscription to early-stage African research through the":
+      "Réinvestir une part de chaque abonnement dans la recherche africaine en phase précoce via le programme",
+    "Helping researchers explore routes from valuable prototypes to viable businesses and enterprises.":
+      "Aider les chercheurs à explorer des voies pour transformer des prototypes prometteurs en entreprises viables.",
     "Read the pledge": "Lire l'engagement",
     "We respect your privacy": "Nous respectons votre vie privée",
     "We use essential cookies to run Nelview and, with your consent, analytics to improve it. We never sell your data. Read our":

@@ -192,6 +192,41 @@
 .st-team .ph {
   border-radius: 18px;
 }
+body[data-page="about"] .st-hero-g > div:first-child,
+body[data-page="about"] .split-head {
+  text-align: center;
+}
+body[data-page="about"] main h1,
+body[data-page="about"] main h2,
+body[data-page="about"] main .lead {
+  text-align: center;
+}
+body[data-page="about"] .st-hero .lead,
+body[data-page="about"] .split-head .lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+body[data-page="about"] .st-hero .row {
+  justify-content: center;
+}
+body[data-page="about"] .st-split > div:not(.photo),
+body[data-page="about"] .st-mv .card {
+  text-align: center;
+}
+body[data-page="about"] .st-split .checks {
+  max-width: 44ch;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+body[data-page="about"] .st-band .bigquote {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+body[data-page="about"] .st-mv .card {
+  align-items: center;
+}
 @media (max-width: 1080px) {
   .st-team {
     grid-template-columns: repeat(3, minmax(0, 1fr));
