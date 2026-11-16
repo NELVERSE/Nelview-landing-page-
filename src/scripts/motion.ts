@@ -4,7 +4,7 @@
 // up. Nothing is ever left hidden: pending reveals are flushed after a
 // timeout, before printing, and when the tab goes to the background. Visitors
 // who ask for reduced motion get none of this.
-import { animate, scroll, stagger } from "motion";
+import { animate, stagger } from "motion";
 
 (() => {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -146,26 +146,6 @@ import { animate, scroll, stagger } from "motion";
   }
 
   // The product preview straightens as it rises into view.
-  // Large pointer-driven screens only: the preview is a very tall layer on a phone.
-  const preview = matchMedia("(min-width: 900px) and (pointer: fine)").matches
-    ? document.querySelector<HTMLElement>(".tour-frame")
-    : null;
-  if (preview) {
-    scroll(
-      animate(
-        preview,
-        {
-          transform: [
-            "perspective(1600px) rotateX(6deg) scale(0.97)",
-            "perspective(1600px) rotateX(0deg) scale(1)",
-          ],
-        },
-        { ease: "linear" },
-      ),
-      { target: preview, offset: ["start end", "start 0.45"] },
-    );
-  }
-
   setTimeout(flush, 12000);
   addEventListener("beforeprint", flush);
   document.addEventListener("visibilitychange", () => {

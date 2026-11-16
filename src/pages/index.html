@@ -22,128 +22,23 @@
 <div data-site-header></div>
 <main>
 <section class="hero2" data-screen-label="Home hero">
-<div class="wrap" style="text-align:center">
+<div class="wrap">
 <h1 class="display" data-i18n="hero">The ultimate <span style="white-space:nowrap">pre&#8209;submission</span> <em class="acc">audit</em> for research.</h1>
 <p class="lead">Nelview reviews your manuscript, grant or thesis the way a journal editor would, then tells you exactly what to fix before you submit.</p>
-<form class="hero-form" data-lead="waitlist.html"><input type="email" placeholder="Your academic email" aria-label="Email" required><button class="btn btn-p" type="submit">Get started<span data-ic="arrow" data-s="16"></span></button></form>
-<div class="hero-sub"><span>Private beta. Limited spots each month.</span><a href="contact.html">Institutions: book a demo<span data-ic="arrow" data-s="14"></span></a></div>
-
-<div class="tour" id="tour">
-<div class="tour-tabs" id="tourTabs">
-<button class="on" data-t="review"><span data-ic="cpu" data-s="15"></span>AI Review<i class="pg"></i></button>
-<button data-t="edit"><span data-ic="edit" data-s="15"></span>Editor<i class="pg"></i></button>
-<button data-t="journal"><span data-ic="shield" data-s="15"></span>Journal Check<i class="pg"></i></button>
-<button data-t="cite"><span data-ic="book" data-s="15"></span>Citations<i class="pg"></i></button>
-<button data-t="format"><span data-ic="layers" data-s="15"></span>Formatter<i class="pg"></i></button>
-</div>
-<div class="tour-frame">
-<div class="mock">
-<div class="mock-bar"><i></i><i></i><i></i><span class="u">app.nelview.com</span></div>
-<div class="app">
-<div class="app-side" id="tourSide">
-<a class="it on" data-t="review"><span data-ic="cpu" data-s="15"></span>AI Review</a><a class="it" data-t="edit"><span data-ic="edit" data-s="15"></span>Document Editor</a><a class="it" data-t="journal"><span data-ic="shield" data-s="15"></span>Journal Check</a><a class="it" data-t="cite"><span data-ic="book" data-s="15"></span>Citations</a><a class="it" data-t="format"><span data-ic="layers" data-s="15"></span>Formatter</a>
-<div class="lb">Projects</div><a class="it">Microgravity &amp; enzymes</a><a class="it">Lipase stability abstract</a><a class="it">R01 grant draft</a>
-</div>
-
-<div class="tpane tp-review on" data-t="review">
-<div class="app-main">
-<div class="row" style="justify-content:space-between"><div><div class="muted" style="font-size:12.5px">Journal manuscript · Round 2</div><div style="font-size:19px;font-weight:620;letter-spacing:-.02em;margin-top:2px">Effects of microgravity on enzyme kinetics</div></div><span class="tag y">Minor revision</span></div>
-<div class="crit">
-<div class="c">Methodology<div class="bar g"><span style="width:82%"></span></div><b>82</b></div>
-<div class="c">Novelty &amp; contribution<div class="bar"><span style="width:71%"></span></div><b>71</b></div>
-<div class="c">Statistics<div class="bar y"><span style="width:58%"></span></div><b>58</b></div>
-<div class="c">Ethics &amp; integrity<div class="bar g"><span style="width:88%"></span></div><b>88</b></div>
-<div class="c">Citation relevance<div class="bar"><span style="width:64%"></span></div><b>64</b></div>
-</div>
-<div class="recs">
-<div class="r"><span class="tag r">High</span><div><b>Report effect sizes with confidence intervals</b>Table 3 lists p-values only. Reviewers at JBC will ask for CIs.</div></div>
-<div class="r"><span class="tag y">Med</span><div><b>Justify the sample size</b>Add a power analysis to §2.4 to pre-empt a desk reject.</div></div>
-<div class="r"><span class="tag b">Low</span><div><b>3 references missing DOIs</b>Auto-fix available in Citations.</div></div>
+<div class="hero-cta"><a class="btn btn-p btn-lg" href="waitlist.html">Get started</a><a class="btn btn-soft btn-lg" href="contact.html">Book a demo</a></div>
+<div class="hero-proof">
+<p>Works with the tools you already use.</p>
+<ul><li>Zotero</li><li>Mendeley</li><li>ORCID</li><li>Crossref</li><li>Microsoft Word</li><li>LaTeX</li><li>Google Docs</li><li>Moodle</li><li>Canvas</li><li>DOAJ</li><li>COPE</li><li>AJOL</li></ul>
 </div>
 </div>
-<div class="app-rail">
-<div style="text-align:center"><div class="ring" data-ring="68"><div class="n">68<small>of 100</small></div></div><div style="font-size:13px;color:var(--ink-3);margin-top:10px">+7 since round 1</div></div>
-<div class="divider"></div>
-<div class="kv"><div>Target journal<b>J. Biol. Chem.</b></div><div>Journal fit<b>88%</b></div><div>Legitimacy<b style="color:var(--ok)">Verified</b></div><div>Pass mark<b>71</b></div></div>
-<a class="btn btn-p btn-sm" style="width:100%">Request expert review</a>
+<div class="hero-media">
+<video title="Nelview product video" playsinline preload="none" poster="assets/demo-poster.webp"><source src="assets/nelview-product-compact.m4v" type="video/mp4"></video>
+<button class="hero-play" type="button" aria-label="Play the product video"></button>
 </div>
-</div>
-
-<div class="tpane tp-edit" data-t="edit" style="grid-template-columns:minmax(0,1fr) 280px">
-<div class="doc">
-<h5>2.4 · Methods: sample</h5>
-<p>Enzyme activity was measured in <span class="hl">24 samples across two conditions</span>, selected to reflect prior work in the field. Each sample was incubated for 30 minutes at 37 °C before measurement.</p>
-<p>Differences between conditions were tested using independent t-tests, and <span class="hl hl-g">results were considered significant at p &lt; 0.05</span>. All analyses were run in R 4.3.</p>
-<p>Microgravity was simulated using a random positioning machine calibrated to 10⁻³ g, following the protocol described by Osei et al.</p>
-</div>
-<div class="cmt">
-<div class="who"><span class="ico" data-ic="cpu" data-s="14" style="width:24px;height:24px;border-radius:6px"></span>Nelview · Statistics<span class="tag r" style="margin-left:auto">High</span></div>
-<div>No power analysis. With n=24, reviewers will question whether the study can detect the effect you report.</div>
-<div class="fix"><b style="color:var(--ink)">Suggested:</b> "A priori power analysis (α=0.05, power=0.8) indicated n=22 was required to detect d=1.2."</div>
-<div class="row" style="gap:8px"><span class="btn btn-p btn-sm">Apply</span><span class="btn btn-g btn-sm">Dismiss</span></div>
-</div>
-</div>
-
-<div class="tpane" data-t="journal" style="grid-template-columns:minmax(0,1fr)">
-<div class="app-main">
-<div class="searchbar"><span data-ic="search" data-s="16" style="color:var(--ink-3)"></span>International Journal of Advanced Sciences<span class="tag r" style="margin-left:auto">High risk</span></div>
-<div class="sig">
-<div class="bad"><span data-ic="x" data-s="15"></span>Not indexed in DOAJ</div>
-<div class="bad"><span data-ic="x" data-s="15"></span>Not a COPE member</div>
-<div class="bad"><span data-ic="x" data-s="15"></span>Promises peer review in 48 hours</div>
-<div class="bad"><span data-ic="x" data-s="15"></span>"Impact factor" from an unrecognised index</div>
-<div class="ok"><span data-ic="check" data-s="15"></span>ISSN registered</div>
-<div class="bad"><span data-ic="x" data-s="15"></span>Fee requested before acceptance</div>
-</div>
-<div class="muted" style="font-size:12.5px;margin:22px 0 4px">Legitimate alternatives in your field</div>
-<div class="recs" style="margin-top:8px">
-<div class="r"><span class="tag g">92%</span><div style="flex:1"><b>Journal of Biological Chemistry</b>DOAJ · COPE · median 38 days to decision</div></div>
-<div class="r"><span class="tag g">86%</span><div style="flex:1"><b>PLOS ONE</b>DOAJ · COPE · open access</div></div>
-<div class="r"><span class="tag g">81%</span><div style="flex:1"><b>African Journal of Biotechnology</b>AJOL · DOAJ</div></div>
-</div>
-</div>
-</div>
-
-<div class="tpane" data-t="cite" style="grid-template-columns:minmax(0,1fr)">
-<div class="app-main">
-<div class="row" style="justify-content:space-between"><div style="font-size:17px;font-weight:620;letter-spacing:-.02em">References · 42</div><div class="row" style="gap:8px"><span class="selectish">APA 7th<span data-ic="arrow" data-s="12"></span></span><span class="tag b">Synced from Zotero</span></div></div>
-<table class="reftbl">
-<tr><td>Osei, K., Mensah, A. &amp; Boateng, E. (2022). Enzyme kinetics under simulated microgravity.</td><td><span class="tag g">Found</span></td></tr>
-<tr><td>Nkosi, T. (2021). Thermal stability of lipases in extremophiles.</td><td><span class="tag y">No DOI</span></td></tr>
-<tr><td>Dlamini, L. et al. (2020). Ethics review in multi-site African studies.</td><td><span class="tag g">Found</span></td></tr>
-<tr><td>Smith, J. (2019). Protein folding at low gravity.</td><td><span class="tag r">Retracted</span></td></tr>
-<tr><td>Okafor, A. (2023). Reproducibility in bench biochemistry.</td><td><span class="tag y">Not cited in text</span></td></tr>
-</table>
-<div class="row" style="margin-top:18px;gap:8px"><span class="btn btn-p btn-sm">Fix 3 issues</span><span class="btn btn-g btn-sm">Export .bib</span></div>
-</div>
-</div>
-
-<div class="tpane" data-t="format" style="grid-template-columns:minmax(0,1fr)">
-<div class="app-main">
-<div class="row" style="justify-content:space-between"><div><div class="muted" style="font-size:12.5px">Target journal</div><span class="selectish" style="margin-top:6px">Journal of Biological Chemistry<span data-ic="arrow" data-s="12"></span></span></div><span class="tag g">9 of 10 requirements met</span></div>
-<div class="recs">
-<div class="r"><span class="tag g" data-ic="check" data-s="12"></span><div style="flex:1"><b>Abstract ≤ 250 words</b>Yours: 231 words</div></div>
-<div class="r"><span class="tag g" data-ic="check" data-s="12"></span><div style="flex:1"><b>Structured sections</b>Introduction · Results · Discussion · Experimental procedures</div></div>
-<div class="r"><span class="tag g" data-ic="check" data-s="12"></span><div style="flex:1"><b>Figures at 300 dpi, TIFF or EPS</b>6 figures converted</div></div>
-<div class="r"><span class="tag y" data-ic="x" data-s="12"></span><div style="flex:1"><b>Data availability statement</b>Missing. Add before export.</div></div>
-</div>
-<div class="row" style="margin-top:18px;gap:8px"><span class="btn btn-p btn-sm">Export .docx</span><span class="btn btn-g btn-sm">Export LaTeX</span></div>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="sec-sm" data-screen-label="Integrations">
-<div class="wrap">
-<div class="integ">
-<div><h2 class="h3" style="font-size:clamp(26px,2.8vw,36px)">Works with the tools you already use.</h2><p class="muted" style="margin-top:10px">Import from your reference manager, export to your journal, sign in with your university.</p></div>
-<div class="integ-g"><span>Zotero</span><span>Mendeley</span><span>ORCID</span><span>Crossref</span><span>Microsoft Word</span><span>LaTeX</span><span>Google Docs</span><span>Moodle</span><span>Canvas</span><span>DOAJ</span><span>COPE</span><span>AJOL</span></div>
-</div>
-</div>
+<figure class="hero-quote">
+<blockquote>"What won me over was the rigour. It holds work to the same bar I do in my own reviews."</blockquote>
+<figcaption><b>Prof. Marie Laurent</b><span>Research Integrity · Sorbonne</span></figcaption>
+</figure>
 </section>
 <section class="sec" data-screen-label="Problem">
 <div class="wrap">
@@ -163,12 +58,6 @@
 <div class="step"><div class="stepviz" style="flex-direction:row;align-items:center;gap:16px"><div class="ring" data-ring="68" data-size="84" style="margin:0"><div class="n" style="font-size:24px">68</div></div><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div class="bar g"><span style="width:82%"></span></div><div class="bar y"><span style="width:58%"></span></div><div class="bar"><span style="width:71%"></span></div></div></div><span class="n">02</span><h3>Get your readiness report</h3><p>Scores on methodology, novelty, statistics and ethics, with a verdict and prioritised fixes.</p></div>
 <div class="step"><div class="stepviz"><div class="lrow"><span>Effect sizes added</span><span class="tag g">Fixed</span></div><div class="lrow"><span>Formatted for JBC</span><span class="tag g">Ready</span></div></div><span class="n">03</span><h3>Fix, format and submit</h3><p>Apply fixes, format to your target journal, verify it's legitimate and submit.</p></div>
 </div>
-</div>
-</section>
-<section class="sec-sm" data-screen-label="Demo video">
-<div class="wrap">
-<div class="sec-head" style="text-align:center;margin-inline:auto"><h2 class="h2">See a full review in 35 seconds.</h2></div>
-<div class="demo-vid"><video title="Nelview product video" controls playsinline preload="none" poster="assets/demo-poster.webp"><source src="assets/nelview-product-compact.m4v" type="video/mp4"></video></div>
 </div>
 </section>
 <section class="sec hs" data-screen-label="Document types">
@@ -290,7 +179,6 @@
 <div class="card"><p class="quote">"I've supervised hundreds of theses. This gives every student the feedback only a few ever get."</p><div class="person"><span class="av in" style="background:#0A0D14">CO</span><div><b>Prof. Chidi Okeke</b><span>Research Methodology · Univ. of Ibadan</span></div></div></div>
 <div class="card"><p class="quote">"As a final-year student with no supervisor on hand, this was the structured feedback I never had. It feels like a mentor."</p><div class="person"><span class="av in" style="background:#1BB35C">SK</span><div><b>Samuel K.</b><span>BSc Final Year · Engineering</span></div></div></div>
 <div class="card big"><p class="quote">"Research ethics in Africa has its own context. Nelview is the first tool I've seen account for it."</p><div class="person"><span class="av" style="background:#F2A516;color:#fff">LD</span><div><b>Prof. Lerato Dlamini</b><span>Research Ethics · Univ. of Cape Town</span></div></div></div>
-<div class="card"><p class="quote">"What won me over was the rigour. It holds work to the same bar I do in my own reviews."</p><div class="person"><span class="av in" style="background:#3C4250">ML</span><div><b>Prof. Marie Laurent</b><span>Research Integrity · Sorbonne</span></div></div></div>
 </div>
 </div>
 </section>

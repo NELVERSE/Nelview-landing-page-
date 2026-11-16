@@ -47,12 +47,11 @@ test.describe("waitlist", () => {
     });
   });
 
-  test("the home page email box pre-fills the waitlist", async ({ page }) => {
+  test("the hero's Get started button opens the waitlist", async ({ page }) => {
     await page.goto("/");
-    await page.fill("form.hero-form input", "lead@uni.edu");
-    await page.locator("form.hero-form button").click();
+    await page.locator(".hero-cta a", { hasText: "Get started" }).click();
     await expect(page).toHaveURL(/waitlist/);
-    await expect(page.locator("#f_email")).toHaveValue("lead@uni.edu");
+    await expect(page.locator("#f_email")).toBeVisible();
   });
 });
 

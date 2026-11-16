@@ -38,7 +38,6 @@ test("the page does no layout work on its own while the hero is showing", async 
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(1500); // entrance animations finish
-  // The feature tabs auto-advance here; that must not re-lay-out the page.
   expect((await idleWork(page)).layoutsPerSecond).toBeLessThan(5);
 });
 
@@ -52,19 +51,34 @@ test("nothing animates once the hero has scrolled away", async ({ page }) => {
   expect(work.stylesPerSecond).toBeLessThan(5);
 });
 
-test("the product video waits to be played and has a poster", async ({
+test("the product video downloads nothing until it is played", async ({
   page,
   request,
 }) => {
   await page.goto("/");
-  const video = page.locator(".demo-vid video");
-  await video.scrollIntoViewIfNeeded();
+  const video = page.locator(".hero-media video");
   await expect(video).toHaveAttribute("preload", "none");
-  await expect(video).toHaveAttribute("controls", "");
-  expect(await video.evaluate((el: HTMLVideoElement) => el.paused)).toBe(true);
+  expect(await video.evaluate((el: HTMLVideoElement) => el.controls)).toBe(false);
   for (const url of [
     await video.evaluate((el: HTMLVideoElement) => el.poster),
     await video.locator("source").evaluate((el: HTMLSourceElement) => el.src),
   ])
     expect((await request.head(url)).status(), url).toBe(200);
+
+  await page.locator(".hero-play").click();
+  await expect(page.locator(".hero-play")).toBeHidden();
+  expect(await video.evaluate((el: HTMLVideoElement) => el.controls)).toBe(true);
+});
+
+test("header product links point at a section that exists", async ({ page }) => {
+  await page.setViewportSize({ width: 1366, height: 800 });
+  await page.goto("/");
+  const targets = await page.evaluate(() =>
+    [...document.querySelectorAll<HTMLAnchorElement>('a[href*="index.html#"]')].map(
+      (link) => link.hash,
+    ),
+  );
+  expect(targets.length).toBeGreaterThan(0);
+  for (const hash of new Set(targets))
+    await expect(page.locator(hash), hash).toHaveCount(1);
 });

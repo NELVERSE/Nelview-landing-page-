@@ -129,31 +129,31 @@
           "cpu",
           "AI Review Engine",
           "A 0–100 readiness score across methods, novelty, stats and ethics",
-          "index.html#tour",
+          "index.html#how",
         ],
         [
           "edit",
           "Document Editor",
           "Fix issues section by section, in context",
-          "index.html#tour",
+          "index.html#how",
         ],
         [
           "shield",
           "Journal Check",
           "DOAJ and COPE legitimacy, predatory red flags",
-          "index.html#tour",
+          "index.html#how",
         ],
         [
           "book",
           "Citation Manager",
           "Sync Zotero and Mendeley, catch missing refs",
-          "index.html#tour",
+          "index.html#how",
         ],
         [
           "layers",
           "Journal Formatter",
           "Match any journal's guidelines in seconds",
-          "index.html#tour",
+          "index.html#how",
         ],
         [
           "users",
@@ -469,7 +469,7 @@
       "+233 25 680 9108</a><span style='display:inline-flex;gap:8px;align-items:center'>" +
       ic("pin", 15) +
       "Accra, Ghana</span></div></div>" +
-      "<div class='col'><h5>Product</h5><a href='index.html#tour'>AI Review Engine</a><a href='index.html#tour'>Document Editor</a><a href='index.html#tour'>Journal Check</a><a href='index.html#tour'>Citation Manager</a><a href='index.html#tour'>Journal Formatter</a></div>" +
+      "<div class='col'><h5>Product</h5><a href='index.html#how'>AI Review Engine</a><a href='index.html#how'>Document Editor</a><a href='index.html#how'>Journal Check</a><a href='index.html#how'>Citation Manager</a><a href='index.html#how'>Journal Formatter</a></div>" +
       "<div class='col'><h5>Solutions</h5><a href='index.html#audiences'>Researchers &amp; authors</a><a href='institutions.html'>Universities</a><a href='institutions.html#supervisors'>Supervisors &amp; lecturers</a><a href='experts.html'>Expert reviewers</a><a href='pricing.html'>Pricing</a></div>" +
       "<div class='col'><h5>Resources</h5><a href='resources.html'>Blog &amp; guides</a><a href='journal-guide.html'>Predatory journal guide</a><a href='index.html#faq'>FAQ</a><a href='contact.html'>Help &amp; support</a></div>" +
       "<div class='col'><h5>Company</h5><a href='about.html'>About &amp; mission</a><a href='pledge.html'>Research Pledge</a><a href='experts.html'>Join the reviewer network</a><a href='contact.html'>Contact</a></div></div>" +

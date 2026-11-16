@@ -116,82 +116,145 @@ h3 em {
 }
 
 /* ---------- home: hero ---------- */
+/* Headline, two actions, a proof row, one large video panel, one quote. */
 .hero2 {
-  padding-top: clamp(48px, 6vw, 80px);
+  padding: clamp(56px, 7vw, 104px) 0 clamp(56px, 7vw, 96px);
+  text-align: center;
 }
 .hero2 .display {
-  font-size: clamp(40px, 6vw, 80px);
+  font-size: clamp(40px, 5.8vw, 76px);
   max-width: 15ch;
-  margin-top: 0;
+  margin: 0 auto;
 }
-.hero-form {
-  border-radius: 14px;
-  border: 1px solid var(--line-2);
-  box-shadow: none;
+.hero2 .lead {
+  margin: 22px auto 0;
+  max-width: 46ch;
+  font-size: clamp(17px, 1.5vw, 20px);
 }
-.hero-form .btn {
-  border-radius: 9px;
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
 }
-/* The product sits on a colour field that changes with the selected feature. */
-.hero2 .tour {
-  margin-top: clamp(40px, 5vw, 64px);
-  padding: clamp(16px, 3vw, 40px) clamp(12px, 3.4vw, 48px) 0;
-  border-radius: var(--radius-l) var(--radius-l) 0 0;
+.btn-soft {
   background: var(--c-green-soft);
-  transition: background-color 0.6s;
-  overflow: hidden;
-}
-.hero2 .tour[data-t="edit"] {
-  background: var(--c-blue-soft);
-}
-.hero2 .tour[data-t="journal"] {
-  background: var(--c-amber-soft);
-}
-.hero2 .tour[data-t="cite"] {
-  background: var(--c-violet-soft);
-}
-.hero2 .tour[data-t="format"] {
-  background: var(--c-coral-soft);
-}
-.tour-tabs {
-  margin-bottom: clamp(16px, 2.4vw, 28px);
-}
-.tour-tabs button {
-  background: #fff;
   border-color: transparent;
+  color: var(--forest);
 }
-.tour-tabs button.on {
-  background: var(--ink);
-  color: #fff;
+.btn-soft:hover {
+  background: #bdecca;
 }
-.tour-frame {
+.hero-proof {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.hero-proof p {
+  font-size: 14.5px;
+  color: var(--ink-3);
+}
+.hero-proof ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px clamp(22px, 3.2vw, 44px);
+  max-width: 880px;
+  margin: 20px auto 0;
   padding: 0;
-  border: 0;
-  border-radius: var(--radius-m) var(--radius-m) 0 0;
-  background: #fff;
-  box-shadow: 0 30px 60px -30px rgba(12, 20, 17, 0.4);
-  overflow: hidden;
 }
-.tour-frame .mock {
-  border-radius: 0;
-  border: 0;
-  box-shadow: none;
+.hero-proof li {
+  font-size: clamp(16px, 1.5vw, 19px);
+  font-weight: 640;
+  letter-spacing: -0.02em;
+  color: var(--ink-2);
 }
-
-/* ---------- home: proof strip ---------- */
-.integ {
-  border: 0;
-  background: none;
-  padding: 0;
-  box-shadow: none;
-}
-
-/* ---------- home: product video ---------- */
-.demo-vid {
-  border: 0;
+/* Wider than the text column, like a stage for the product. */
+.hero-media {
+  position: relative;
+  width: min(1300px, 100% - 40px);
+  margin: clamp(40px, 5vw, 64px) auto 0;
+  aspect-ratio: 16 / 9;
   border-radius: var(--radius-l);
+  overflow: hidden;
   background: var(--c-green-soft);
-  box-shadow: none;
+}
+.hero-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 84px;
+  height: 84px;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  background: var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.hero-play::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 0;
+  height: 0;
+  border-left: 24px solid #fff;
+  border-block: 15px solid transparent;
+  translate: 4px 0;
+}
+.hero-play:hover {
+  transform: scale(1.06);
+}
+.hero-media.playing .hero-play {
+  display: none;
+}
+.hero-quote {
+  margin: clamp(40px, 5vw, 64px) auto 0;
+  padding: 0 24px;
+  max-width: 760px;
+}
+.hero-quote blockquote {
+  margin: 0;
+  font-size: clamp(22px, 2.5vw, 32px);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  font-weight: 560;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.hero-quote figcaption {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 15px;
+  color: var(--ink-3);
+}
+.hero-quote figcaption b {
+  font-size: 17px;
+  font-weight: 640;
+  color: var(--ink);
+}
+@media (max-width: 720px) {
+  .hero-media {
+    border-radius: 18px;
+  }
+  .hero-play {
+    width: 64px;
+    height: 64px;
+  }
+  .hero-play::before {
+    border-left-width: 18px;
+    border-block-width: 11px;
+  }
 }
 
 /* ---------- home: document types ---------- */
@@ -294,10 +357,5 @@ body[data-page="inst"] main > section:first-of-type {
 @media (max-width: 1080px) {
   .hdr .wrap {
     padding: 0 20px;
-  }
-}
-@media (max-width: 720px) {
-  .hero2 .tour {
-    border-radius: 20px 20px 0 0;
   }
 }
