@@ -20,7 +20,8 @@ Requires Node 20+ and [pnpm](https://pnpm.io) (the repo ships a `pnpm-lock.yaml`
 ```
 src/
   pages/            HTML pages. src/pages/about.html is served as /about.html
-    demo/           page that hosts the embedded product demo (/demo/)
+    demo/           the animated React demo (/demo/). No longer linked: the home page plays
+                    the product video instead
   scripts/          TypeScript modules, bundled by Vite
     site.ts         header, footer, menus, icons, form submission
     i18n.ts         English / French switch, detected from browser and timezone
@@ -30,9 +31,10 @@ src/
     pages/          one script per page that needs its own behaviour
   styles/           theme.css is the current design and loads last; site.css, pages.css,
                     story.css and color.css are the older layers it builds on
-  demo/             React source of the 38-second product demo
+  demo/             React source of that animated demo
   types/            shared type declarations
-public/             files copied to the site as they are: images, fonts, audio, robots.txt, sitemap.xml
+public/             files copied to the site as they are: images, the product video, tool logos
+                    (assets/logos), fonts, favicon set, robots.txt, sitemap.xml
 tests/
   unit/             form backend (apps-script/Code.gs) run under Node
   e2e/              browser tests against the built site (Playwright)
