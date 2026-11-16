@@ -1,10 +1,88 @@
-// @ts-nocheck
 // Page script for index.html. Loaded after site.ts and i18n.ts, before motion.ts.
-(function(){
-var tour=document.getElementById('tour'),order=['review','edit','journal','cite','format'],cur=0,timer=null;
-function show(t){cur=order.indexOf(t);tour.setAttribute('data-t',t);document.querySelectorAll('#tourTabs button').forEach(function(b){var on=b.getAttribute('data-t')===t;b.classList.remove('on');if(on){void b.offsetWidth;b.classList.add('on');}});document.querySelectorAll('#tourSide .it[data-t]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===t);});tour.querySelectorAll('.tpane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-t')===t);});}
-function auto(){clearInterval(timer);timer=setInterval(function(){show(order[(cur+1)%order.length]);},7000);}
-function pick(t){clearInterval(timer);tour.classList.add('paused');show(t);}
-document.querySelectorAll('#tourTabs button,#tourSide .it[data-t]').forEach(function(b){b.addEventListener('click',function(){pick(b.getAttribute('data-t'));});});
-if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)auto();else tour.classList.add('paused');
+(() => {
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- Product tour: tabs that advance on their own while the tour is on screen.
+  const tour = document.getElementById("tour");
+  if (tour) {
+    const ORDER = ["review", "edit", "journal", "cite", "format"];
+    const INTERVAL = 7000;
+    let current = 0;
+    let timer: number | undefined;
+    let picked = false;
+
+    const show = (name: string) => {
+      current = Math.max(0, ORDER.indexOf(name));
+      tour.setAttribute("data-t", name);
+      for (const tab of document.querySelectorAll<HTMLElement>("#tourTabs button")) {
+        const on = tab.dataset.t === name;
+        tab.classList.remove("on");
+        if (on) {
+          void tab.offsetWidth; // restart the progress bar animation
+          tab.classList.add("on");
+        }
+      }
+      for (const item of document.querySelectorAll<HTMLElement>("#tourSide .it[data-t]"))
+        item.classList.toggle("on", item.dataset.t === name);
+      for (const pane of tour.querySelectorAll<HTMLElement>(".tpane"))
+        pane.classList.toggle("on", pane.dataset.t === name);
+    };
+
+    const stop = () => window.clearInterval(timer);
+    const start = () => {
+      stop();
+      if (picked || reducedMotion) return;
+      show(ORDER[current]);
+      timer = window.setInterval(
+        () => show(ORDER[(current + 1) % ORDER.length]),
+        INTERVAL,
+      );
+    };
+
+    for (const control of document.querySelectorAll<HTMLElement>(
+      "#tourTabs button, #tourSide .it[data-t]",
+    ))
+      control.addEventListener("click", () => {
+        picked = true;
+        stop();
+        tour.classList.add("paused");
+        show(control.dataset.t || ORDER[0]);
+      });
+
+    if (reducedMotion) tour.classList.add("paused");
+
+    // Only tick while visible: no timers or animations for a tour nobody can see.
+    new IntersectionObserver(([entry]) => {
+      tour.classList.toggle("offscreen", !entry.isIntersecting);
+      if (entry.isIntersecting && !document.hidden) start();
+      else stop();
+    }).observe(tour);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stop();
+      else if (!tour.classList.contains("offscreen")) start();
+    });
+  }
+
+  // ---- Demo: loads when played, and is removed again once scrolled away.
+  const demo = document.querySelector<HTMLElement>(".demo-vid");
+  const play = demo?.querySelector<HTMLButtonElement>(".demo-play");
+  if (demo && play) {
+    let frame: HTMLIFrameElement | null = null;
+
+    play.addEventListener("click", () => {
+      frame = document.createElement("iframe");
+      frame.src = "demo/index.html?embed=1";
+      frame.title = "Nelview Research Review Center demo";
+      frame.allow = "autoplay";
+      demo.appendChild(frame);
+      demo.classList.add("playing");
+    });
+
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting || !frame) return;
+      frame.remove();
+      frame = null;
+      demo.classList.remove("playing");
+    }).observe(demo);
+  }
 })();

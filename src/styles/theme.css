@@ -194,6 +194,58 @@ h3 em {
   box-shadow: none;
 }
 
+/* ---------- home: demo ---------- */
+/* The animated demo is heavy, so it loads only when played and is removed
+   again once it scrolls out of view. Until then this poster stands in. */
+.demo-vid {
+  border: 0;
+  border-radius: var(--radius-l);
+  background: var(--c-green-soft);
+  box-shadow: none;
+}
+.demo-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.demo-play img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.demo-play span {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px 14px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.demo-play span::before {
+  content: "";
+  border-left: 12px solid currentColor;
+  border-block: 8px solid transparent;
+}
+.demo-play:hover span {
+  transform: scale(1.05);
+}
+.demo-vid.playing .demo-play {
+  display: none;
+}
+
 /* ---------- home: document types ---------- */
 .hs .hs-track {
   display: grid;

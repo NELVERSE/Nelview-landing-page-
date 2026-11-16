@@ -135,3 +135,20 @@ test("the mobile menu opens and the language switch works", async ({ page }) => 
   await expect(page.locator("h1")).toContainText("audit");
   await expect(page.locator("h1")).toContainText("recherche");
 });
+
+test("every page declares the favicon set and the files exist", async ({ page, request }) => {
+  for (const path of ["/", "/pricing", "/demo/index.html"]) {
+    await page.goto(path);
+    const icons = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLLinkElement>(
+        'link[rel="icon"], link[rel="apple-touch-icon"], link[rel="manifest"]',
+      )].map((link) => link.href),
+    );
+    expect(icons.length, `${path} icon links`).toBe(4);
+    for (const url of icons)
+      expect((await request.get(url)).status(), url).toBe(200);
+  }
+  const manifest = await (await request.get("/site.webmanifest")).json();
+  for (const icon of manifest.icons)
+    expect((await request.get(`/${icon.src}`)).status(), icon.src).toBe(200);
+});

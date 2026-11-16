@@ -84,14 +84,20 @@ function pagesAtRoot(): Plugin {
     generateBundle: {
       order: "post",
       handler(_options, bundle) {
+        // Files Vite itself emitted (bundled scripts and styles). Only links to
+        // these need adjusting; hand-written links to public files are already
+        // relative to the page's final address.
+        const emitted = Object.keys(bundle).filter(
+          (key) => !key.startsWith("pages/"),
+        );
         for (const [key, file] of Object.entries(bundle)) {
           if (file.type !== "asset" || !key.startsWith("pages/")) continue;
-          // One folder shallower, so built-asset URLs lose one "../".
+          // The page moves one folder up, so links to emitted files lose one "../".
+          let html = String(file.source);
+          for (const target of emitted)
+            html = html.replaceAll(`../${target}`, `./${target}`);
           file.fileName = key.slice("pages/".length);
-          file.source = String(file.source).replace(
-            /(["'(\s,])\.\.\/((?:\.\.\/)*assets\/)/g,
-            "$1./$2",
-          );
+          file.source = html;
           delete bundle[key];
           bundle[file.fileName] = file;
         }

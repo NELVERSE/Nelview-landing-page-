@@ -10,8 +10,10 @@ import { animate, scroll, stagger } from "motion";
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const EASE = [0.22, 1, 0.36, 1] as const;
-  const RISE = "translate3d(0,18px,0)";
-  const REST = "translate3d(0,0,0)";
+  // 2D on purpose: a 3D transform gives every waiting element its own graphics
+  // layer, which is enough to exhaust memory on a phone.
+  const RISE = "translateY(18px)";
+  const REST = "translateY(0px)";
 
   /** Reveals waiting for their trigger element to scroll into view. */
   const pending = new Map<Element, () => void>();
@@ -144,7 +146,10 @@ import { animate, scroll, stagger } from "motion";
   }
 
   // The product preview straightens as it rises into view.
-  const preview = document.querySelector<HTMLElement>(".tour-frame");
+  // Large pointer-driven screens only: the preview is a very tall layer on a phone.
+  const preview = matchMedia("(min-width: 900px) and (pointer: fine)").matches
+    ? document.querySelector<HTMLElement>(".tour-frame")
+    : null;
   if (preview) {
     scroll(
       animate(

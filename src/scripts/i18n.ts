@@ -356,6 +356,9 @@
     "is desk-rejected before peer review. Not for lack of ideas, for lack of":
       "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback.": "retours rigoureux.",
+    "Play demo": "Lancer la démo",
+    "A phone showing a Nelview review report with a score of 82 out of 100":
+      "Un téléphone affichant un rapport Nelview avec un score de 82 sur 100",
     "is desk-rejected before peer review begins. Not for lack of ideas, but for lack of":
       "est rejeté d'emblée avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback before submission.":

@@ -2500,7 +2500,10 @@ picture {
   bottom: 0;
   height: 2px;
   background: #4ade8a;
-  width: 0;
+  /* Scaled, not resized: animating width re-laid-out the whole page every frame. */
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
 }
 .tour-tabs button.on .pg {
   animation: pg 7s linear forwards;
@@ -2510,8 +2513,11 @@ picture {
 }
 @keyframes pg {
   to {
-    width: 100%;
+    transform: scaleX(1);
   }
+}
+.tour.offscreen .tour-tabs button .pg {
+  animation-play-state: paused;
 }
 .tour-frame {
   background: var(--bg-3);
@@ -3501,15 +3507,10 @@ html:not(.nv-ready) body::after {
     visibility: hidden;
   }
 }
+/* Placeholder for an image that has not loaded yet. Deliberately static: a
+   shimmer here ran forever on every lazy image further down the page. */
 .nv-ld {
-  background: linear-gradient(
-      90deg,
-      var(--bg-3) 0,
-      var(--bg-2) 50%,
-      var(--bg-3) 100%
-    )
-    0 0/200% 100% !important;
-  animation: nvsh 0.8s linear infinite;
+  background: var(--bg-3) !important;
 }
 .nv-ld img {
   opacity: 0;
