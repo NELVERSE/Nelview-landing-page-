@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      lenis:
-        specifier: 1.1.13
-        version: 1.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       motion:
         specifier: 11.11.13
         version: 11.11.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -130,10 +127,6 @@ packages:
   '@babel/types@7.29.11':
     resolution: {integrity: sha512-WCsemW40Cpc6gouC1SrY6PBaZ+oLRlEVY9XBvZBI7il/HyUrb2nJ505wE1MHEFyDZNnrWDEuy4jL50WVHfTTSQ==}
     engines: {node: '>=6.9.0'}
-
-  '@darkroom.engineering/tempus@0.0.46':
-    resolution: {integrity: sha512-s5vav3KMHYezvUCl4ee5epg0oimF6M8C9gAaKxFnFaTvX2q3ywFDryIv6XLd0mRFUt3S1uHDJqKaiEcs2ZVSvw==}
-    deprecated: 'The ''@darkroom.engineering/tempus'' package has been renamed to ''tempus''. Please update your dependencies: npm install tempus and visit the documentation: https://www.npmjs.com/package/tempus'
 
   '@emnapi/runtime@1.11.3':
     resolution: {integrity: sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==}
@@ -725,17 +718,6 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  lenis@1.1.13:
-    resolution: {integrity: sha512-iny+vWwUHcZGbJz+p2I75H1muLBRZqSG7t04jnhA+CWOQDFL1vt9bsZDwPPtYEmYVVvqAdo5MbXVFzNOlbgUkQ==}
-    peerDependencies:
-      react: '>=17.0.0'
-      react-dom: '>=17.0.0'
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -1033,8 +1015,6 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.29.11
       '@babel/helper-validator-identifier': 7.29.7
-
-  '@darkroom.engineering/tempus@0.0.46': {}
 
   '@emnapi/runtime@1.11.3':
     dependencies:
@@ -1477,13 +1457,6 @@ snapshots:
   jsesc@3.1.0: {}
 
   json5@2.2.3: {}
-
-  lenis@1.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@darkroom.engineering/tempus': 0.0.46
-    optionalDependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   loose-envify@1.4.0:
     dependencies:

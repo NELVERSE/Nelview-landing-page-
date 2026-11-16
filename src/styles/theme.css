@@ -1,0 +1,303 @@
+/* theme.css: the current visual design. Loaded last on every page.
+ *
+ * Principles: white pages, bold sans headlines, flat colour fields instead of
+ * gradients and glows, near-black primary buttons, hairline borders, one
+ * radius scale. Older rules in site.css / pages.css / color.css that this file
+ * supersedes can be deleted as each page is revisited.
+ */
+
+/* ---------- tokens ---------- */
+:root {
+  --ink: #0c1411;
+  --ink-2: #3b4541;
+  --ink-3: #68726d;
+  --line: #e4e7e5;
+  --line-2: #d2d7d4;
+  --bg-2: #f5f6f4;
+  --bg-3: #eceeeb;
+  --brand: #0f8f48;
+  --forest: #0b3d2a;
+
+  /* Colour fields: flat surfaces for panels and tinted cards. */
+  --c-green-soft: #cff3da;
+  --c-blue-soft: #d3e3ff;
+  --c-amber-soft: #ffe9ae;
+  --c-violet-soft: #e2d9ff;
+  --c-coral-soft: #ffd8cd;
+  --c-teal-soft: #c9eef0;
+
+  --radius-s: 10px;
+  --radius-m: 16px;
+  --radius-l: 28px;
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+[id] {
+  scroll-margin-top: 88px;
+}
+
+/* ---------- type ---------- */
+.display {
+  letter-spacing: -0.042em;
+  font-weight: 660;
+  line-height: 1.02;
+}
+.h2 {
+  font-size: clamp(30px, 3.6vw, 46px);
+  letter-spacing: -0.034em;
+  line-height: 1.08;
+  font-weight: 640;
+  text-wrap: balance;
+}
+.lead {
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+/* The accent word in a headline is the brand colour, in the same typeface. */
+.display em,
+.h2 em,
+.hero2 .acc {
+  font-style: normal;
+  color: var(--brand);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  animation: none;
+  padding: 0;
+}
+.dark .h2 em,
+.cta .display em {
+  color: #7ee2a4;
+}
+h1 em,
+h2 em,
+h3 em {
+  font-style: normal;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  border-radius: var(--radius-s);
+  font-weight: 560;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-p {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.btn-p:hover {
+  background: #000;
+  border-color: #000;
+}
+/* Inside product previews and on dark panels the button keeps the product green. */
+.mock .btn-p,
+.dark .btn-p,
+.wl .btn-p {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.btn-g {
+  border-radius: var(--radius-s);
+}
+
+/* ---------- layout ---------- */
+.sec {
+  padding: clamp(72px, 8.5vw, 112px) 0;
+}
+.card {
+  border-radius: var(--radius-m);
+}
+.split-head {
+  align-items: end;
+}
+
+/* ---------- home: hero ---------- */
+.hero2 {
+  padding-top: clamp(48px, 6vw, 80px);
+}
+.hero2 .display {
+  font-size: clamp(40px, 6vw, 80px);
+  max-width: 15ch;
+  margin-top: 0;
+}
+.hero-form {
+  border-radius: 14px;
+  border: 1px solid var(--line-2);
+  box-shadow: none;
+}
+.hero-form .btn {
+  border-radius: 9px;
+}
+/* The product sits on a colour field that changes with the selected feature. */
+.hero2 .tour {
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(16px, 3vw, 40px) clamp(12px, 3.4vw, 48px) 0;
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  background: var(--c-green-soft);
+  transition: background-color 0.6s;
+  overflow: hidden;
+}
+.hero2 .tour[data-t="edit"] {
+  background: var(--c-blue-soft);
+}
+.hero2 .tour[data-t="journal"] {
+  background: var(--c-amber-soft);
+}
+.hero2 .tour[data-t="cite"] {
+  background: var(--c-violet-soft);
+}
+.hero2 .tour[data-t="format"] {
+  background: var(--c-coral-soft);
+}
+.tour-tabs {
+  margin-bottom: clamp(16px, 2.4vw, 28px);
+}
+.tour-tabs button {
+  background: #fff;
+  border-color: transparent;
+}
+.tour-tabs button.on {
+  background: var(--ink);
+  color: #fff;
+}
+.tour-frame {
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+  background: #fff;
+  box-shadow: 0 30px 60px -30px rgba(12, 20, 17, 0.4);
+  overflow: hidden;
+}
+.tour-frame .mock {
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+/* ---------- home: proof strip ---------- */
+.integ {
+  border: 0;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+/* ---------- home: document types ---------- */
+.hs .hs-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  overflow: visible;
+  padding-bottom: 0;
+  scroll-snap-type: none;
+  will-change: auto;
+}
+.hs .hs-track .card {
+  min-height: 0;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 28px;
+  border: 0;
+  background: var(--hue-soft);
+}
+.hs .hs-track .card .ico {
+  background: #fff;
+  color: var(--hue);
+  margin-bottom: 14px;
+}
+@media (max-width: 899px) {
+  .hs .hs-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .hs .hs-track {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- closing call to action ---------- */
+.cta {
+  background: var(--brand);
+  border-radius: var(--radius-l);
+}
+.cta::before {
+  content: none;
+}
+.cta .display em {
+  color: #c8f5d6;
+}
+
+/* ---------- story band: photo beside a colour field ---------- */
+.imgband {
+  background: var(--c-amber-soft);
+  border-color: transparent;
+  color: var(--ink);
+  border-radius: var(--radius-l);
+}
+.imgband .lead {
+  color: var(--ink-2);
+}
+.imgband .btn-w {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* ---------- footer: near-black, so the green panels above stand out ---------- */
+.ftr,
+[data-site-footer] {
+  background: var(--ink);
+}
+
+/* ---------- page heroes: one colour field per area of the site ---------- */
+.pr-hero,
+.st-hero,
+.page-hero,
+.phd,
+.jg-hero {
+  background: var(--page-field, var(--bg-2));
+}
+body[data-page="price"] {
+  --page-field: var(--c-amber-soft);
+}
+body[data-page="about"] {
+  --page-field: var(--c-green-soft);
+}
+body[data-page="contact"],
+body[data-page="exp"] {
+  --page-field: var(--c-blue-soft);
+}
+body[data-page="res"] {
+  --page-field: var(--c-teal-soft);
+}
+body[data-page="inst"] {
+  --page-field: var(--c-violet-soft);
+}
+body[data-page="inst"] main > section:first-of-type {
+  background: var(--page-field);
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 1080px) {
+  .hdr .wrap {
+    padding: 0 20px;
+  }
+}
+@media (max-width: 720px) {
+  .hero2 .tour {
+    border-radius: 20px 20px 0 0;
+  }
+}

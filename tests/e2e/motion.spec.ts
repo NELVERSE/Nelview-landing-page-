@@ -39,29 +39,17 @@ for (const path of pages) {
 }
 
 test("the hero is readable straight away", async ({ page }) => {
-  await page.addInitScript(() => sessionStorage.setItem("nv_intro", "1"));
   await page.goto("/");
   const heading = page.locator("main h1");
   await expect(heading).toBeVisible();
-  // The headline is revealed by un-clipping it from the bottom up.
   await expect
-    .poll(
-      () =>
-        heading.evaluate((el) => {
-          const clip = getComputedStyle(el).clipPath.match(
-            /inset\(\S+ \S+ (-?[\d.]+)%/,
-          );
-          return clip ? parseFloat(clip[1]) : 0;
-        }),
-      { timeout: 3000 },
-    )
-    .toBeLessThanOrEqual(0);
+    .poll(() => heading.evaluate((el) => getComputedStyle(el).opacity), {
+      timeout: 3000,
+    })
+    .toBe("1");
 });
 
-test("following a link plays the page transition and lands on the page", async ({
-  page,
-}) => {
-  await page.addInitScript(() => sessionStorage.setItem("nv_intro", "1"));
+test("following a link in the header lands on that page", async ({ page }) => {
   await page.goto("/");
   await page.locator("header.hdr a.nl[href='pricing.html']").click();
   await expect(page).toHaveURL(/pricing/);
@@ -71,10 +59,15 @@ test("following a link plays the page transition and lands on the page", async (
 test.describe("with reduced motion", () => {
   test.use({ reducedMotion: "reduce" });
 
-  test("no animation layer is added and content is simply there", async ({ page }) => {
+  test("nothing is hidden waiting for an animation", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator(".nv-veil, .nv-intro, .nv-prog")).toHaveCount(0);
-    await expect(page.locator("html")).not.toHaveClass(/lenis/);
     await expect(page.locator("main h1")).toBeVisible();
+    const waiting = await page.evaluate(
+      () =>
+        [...document.querySelectorAll<HTMLElement>("main *")].filter(
+          (el) => el.style.opacity === "0",
+        ).length,
+    );
+    expect(waiting).toBe(0);
   });
 });

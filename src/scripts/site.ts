@@ -475,7 +475,7 @@
       "<div class='col'><h5>Company</h5><a href='about.html'>About &amp; mission</a><a href='pledge.html'>Research Pledge</a><a href='experts.html'>Join the reviewer network</a><a href='contact.html'>Contact</a></div></div>" +
       "<div class='ftr-bot'><div class='ftr-soc'><span>© 2026 Nelverse · Nelview</span>" +
       soc() +
-      "</div><div class='row'><a href='privacy.html'>Privacy</a><a href='terms.html'>Terms</a><a href='security.html'>Security</a><a href='cookies.html'>Cookies</a><span class='lang'><b>English</b><span title='French version coming soon'>Français · soon</span></span></div></div><div class='ftr-big'>Nelview</div></div></footer>";
+      "</div><div class='row'><a href='privacy.html'>Privacy</a><a href='terms.html'>Terms</a><a href='security.html'>Security</a><a href='cookies.html'>Cookies</a><span class='lang'><b>English</b><span title='French version coming soon'>Français · soon</span></span></div></div></div></footer>";
   }
   document.querySelectorAll("[data-ic]").forEach(function (e) {
     var s = +e.getAttribute("data-s") || 18;

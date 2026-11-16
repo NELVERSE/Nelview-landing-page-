@@ -24,11 +24,12 @@ src/
   scripts/          TypeScript modules, bundled by Vite
     site.ts         header, footer, menus, icons, form submission
     i18n.ts         English / French switch, detected from browser and timezone
-    motion.ts       scroll reveals, smooth scroll, page transitions (Motion + Lenis)
+    motion.ts       scroll reveals, bar fills and count-ups (Motion)
     legal.ts        privacy / terms / cookies / security content
     posts.ts        blog posts
     pages/          one script per page that needs its own behaviour
-  styles/           site.css (base), pages.css, story.css, color.css (theme, motion, responsive)
+  styles/           theme.css is the current design and loads last; site.css, pages.css,
+                    story.css and color.css are the older layers it builds on
   demo/             React source of the 38-second product demo
   types/            shared type declarations
 public/             files copied to the site as they are: images, fonts, audio, robots.txt, sitemap.xml

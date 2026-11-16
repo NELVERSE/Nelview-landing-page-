@@ -12,14 +12,13 @@
 <link rel="stylesheet" href="../styles/site.css">
 <link rel="stylesheet" href="../styles/pages.css">
 <link rel="stylesheet" href="../styles/color.css">
+<link rel="stylesheet" href="../styles/theme.css">
 </head>
 <body data-page="home">
 <div data-site-header></div>
 <main>
 <section class="hero2" data-screen-label="Home hero">
-<div class="grid-bg"></div>
 <div class="wrap" style="text-align:center">
-<a class="pill" href="institutions.html"><b>New</b>Pass marks and score bands per programme<span data-ic="arrow" data-s="14"></span></a>
 <h1 class="display" data-i18n="hero">The ultimate <span style="white-space:nowrap">pre&#8209;submission</span> <em class="acc">audit</em> for research.</h1>
 <p class="lead">Nelview reviews your manuscript, grant or thesis the way a journal editor would, then tells you exactly what to fix before you submit.</p>
 <form class="hero-form" data-lead="waitlist.html"><input type="email" placeholder="Your academic email" aria-label="Email" required><button class="btn btn-p" type="submit">Get started<span data-ic="arrow" data-s="16"></span></button></form>
@@ -134,17 +133,17 @@
 </div>
 </div>
 </section>
-
-<section class="sec-sm" data-screen-label="Demo video">
+<section class="sec-sm" data-screen-label="Integrations">
 <div class="wrap">
-<div class="sec-head" style="text-align:center;margin-inline:auto"><h2 class="h2">See a full review in 35 seconds.</h2></div>
-<div class="demo-vid"><iframe src="demo/index.html?embed=1" title="Nelview Research Review Center demo" allow="autoplay" loading="lazy"></iframe></div>
+<div class="integ">
+<div><h2 class="h3" style="font-size:clamp(26px,2.8vw,36px)">Works with the tools you already use.</h2><p class="muted" style="margin-top:10px">Import from your reference manager, export to your journal, sign in with your university.</p></div>
+<div class="integ-g"><span>Zotero</span><span>Mendeley</span><span>ORCID</span><span>Crossref</span><span>Microsoft Word</span><span>LaTeX</span><span>Google Docs</span><span>Moodle</span><span>Canvas</span><span>DOAJ</span><span>COPE</span><span>AJOL</span></div>
+</div>
 </div>
 </section>
-
 <section class="sec" data-screen-label="Problem">
 <div class="wrap">
-<p class="statement"><b>1 in 2 manuscripts</b> is desk-rejected before peer review begins. Not for lack of ideas, but for lack of <span class="g">rigorous feedback before submission.</span></p>
+<p class="statement"><b>1 in 2 manuscripts</b> is desk-rejected before peer review. Not for lack of ideas, for lack of <span class="g">rigorous feedback.</span></p>
 <div class="nums">
 <div class="hue-coral"><span class="ico lg" data-ic="search" data-s="22"></span><b>Feedback is scarce</b><p>Few reliable, affordable ways to get rigorous review before you submit.</p></div>
 <div class="hue-amber"><span class="ico lg" data-ic="clock" data-s="22"></span><b>Months are lost</b><p>Rejections that a pre-submission audit would have caught in minutes.</p></div>
@@ -152,20 +151,6 @@
 </div>
 </div>
 </section>
-
-<section class="sec" style="padding-top:0" data-screen-label="Our story">
-<div class="wrap"><div class="imgband"><div class="photo"><img src="assets/story/classroom.webp" alt="Students in a classroom" style="object-position:center 30%" decoding="async" width="800" height="1200" loading="lazy"></div><div class="tx"><h2 class="h2" style="font-size:clamp(30px,3.4vw,44px)">The talent is here. The feedback isn't.</h2><p class="lead">Nelview started in Accra with one question researchers kept asking: is this research strong, and what needs to improve? We're building the answer, and keeping its value on the continent.</p><a class="btn btn-w" href="about.html" style="align-self:flex-start">Read our story<span data-ic="arrow"></span></a></div></div></div>
-</section>
-
-<section class="sec" style="padding-top:0" data-screen-label="Built for researchers">
-<div class="wrap"><div class="mosaic">
-<div class="photo m1"><img src="assets/gen/hero-researcher.png" alt="Researcher smiling at her desk" decoding="async" width="736" height="736" loading="lazy"></div>
-<div class="photo m2"><img src="assets/gen/beta-hero-image.png" alt="Researchers working in a lab" decoding="async" width="800" height="1000" loading="lazy"></div>
-<div class="mc"><h3>Built for researchers, by researchers.</h3><a href="about.html">Our mission<span data-ic="arrow" data-s="16"></span></a></div>
-<div class="photo"><img src="assets/gen/photo-contract-review.png" alt="Reviewing a printed manuscript" decoding="async" width="1537" height="1023" loading="lazy"></div>
-</div></div>
-</section>
-
 <section class="sec alt" id="how" data-screen-label="How it works">
 <div class="wrap">
 <div class="split-head"><div><h2 class="h2" data-i18n="steps">Three steps to a stronger <em>submission</em>.</h2></div><p class="lead">No setup and no templates. Drop in a file and Nelview works out what it is and how it should be judged.</p></div>
@@ -176,7 +161,12 @@
 </div>
 </div>
 </section>
-
+<section class="sec-sm" data-screen-label="Demo video">
+<div class="wrap">
+<div class="sec-head" style="text-align:center;margin-inline:auto"><h2 class="h2">See a full review in 35 seconds.</h2></div>
+<div class="demo-vid"><iframe src="demo/index.html?embed=1" title="Nelview Research Review Center demo" allow="autoplay" loading="lazy"></iframe></div>
+</div>
+</section>
 <section class="sec hs" data-screen-label="Document types">
 <div class="hs-pin"><div class="wrap">
 <div class="split-head"><h2 class="h2" data-i18n="framew">The right framework for <em>every</em> document.</h2><p class="lead">Nelview detects what you've uploaded and judges it the way that document is judged in the real world.</p></div>
@@ -190,7 +180,6 @@
 </div>
 </div></div>
 </section>
-
 <section class="sec dark" data-screen-label="Readiness scale">
 <div class="wrap">
 <div class="grid2" style="gap:64px;align-items:center">
@@ -207,30 +196,6 @@
 </div>
 </div>
 </section>
-
-<section class="sec" id="audiences" data-screen-label="Audiences">
-<div class="wrap">
-<div class="sec-head"><h2 class="h2">One review standard. Four ways in.</h2></div>
-<div class="tabs" data-tabs="aud"><button class="on" data-id="a">Researchers</button><button data-id="b">Institutions</button><button data-id="c">Supervisors</button><button data-id="d">Expert reviewers</button></div>
-<div class="tabpane aud on" data-pane="aud" data-id="a">
-<div><h3 class="h3">Submit with confidence, not hope.</h3><ul class="checks"><li data-ic="check">AI reviews on every plan, unlimited on Pro</li><li data-ic="check">Benchmarking against published papers in your field</li><li data-ic="check">Journal fit, formatting and legitimacy checks</li><li data-ic="check">Commission a human expert on any verdict</li></ul><a class="btn btn-p" href="waitlist.html">Get started<span data-ic="arrow"></span></a></div>
-<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">Your projects</div><div class="recs"><div class="r"><span class="tag y">68</span><div><b>Effects of microgravity on enzyme kinetics</b>Journal manuscript · 2 rounds</div></div><div class="r"><span class="tag g">79</span><div><b>Low-temperature stability of lipases</b>Conference abstract · Ready</div></div><div class="r"><span class="tag b">—</span><div><b>R01 grant: specific aims</b>Grant proposal · Draft</div></div></div></div></div>
-</div>
-<div class="tabpane aud" data-pane="aud" data-id="b">
-<div><h3 class="h3">Rigorous review for every student, at scale.</h3><ul class="checks"><li data-ic="check">Seats for every student. They never pay.</li><li data-ic="check">Your criteria, pass marks and score bands per programme</li><li data-ic="check">Supervisor and expert review built into the workflow</li><li data-ic="check">Department analytics and predatory-journal protection</li></ul><a class="btn btn-p" href="institutions.html">Nelview for Institutions<span data-ic="arrow"></span></a></div>
-<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">MSc Public Health · pass mark 65</div><div class="crit"><div class="c">Cohort 2026<div class="bar"><span style="width:74%"></span></div><b>74%</b></div><div class="c">Above pass mark<div class="bar g"><span style="width:61%"></span></div><b>61%</b></div><div class="c">Awaiting supervisor<div class="bar y"><span style="width:22%"></span></div><b>22%</b></div></div></div></div>
-</div>
-<div class="tabpane aud" data-pane="aud" data-id="c">
-<div><h3 class="h3">Spend your time on the thinking, not the typos.</h3><ul class="checks"><li data-ic="check">Students arrive with an AI review already done</li><li data-ic="check">Comment, approve or return with one click</li><li data-ic="check">Track every student against the pass mark</li><li data-ic="check">Request expert review for high-stakes work</li></ul><a class="btn btn-p" href="institutions.html#supervisors">For supervisors<span data-ic="arrow"></span></a></div>
-<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">Waiting on you · 4</div><div class="recs"><div class="r"><span class="tag y">63</span><div><b>Kwame A. · Thesis chapter 3</b>Below pass mark by 2 · AI review attached</div></div><div class="r"><span class="tag g">72</span><div><b>Ama O. · Research proposal</b>Ready for approval</div></div></div></div></div>
-</div>
-<div class="tabpane aud" data-pane="aud" data-id="d">
-<div><h3 class="h3">Earn by reviewing work in your field.</h3><ul class="checks"><li data-ic="check">Bid on briefs matched to your expertise</li><li data-ic="check">Payment held in escrow, released on delivery</li><li data-ic="check">Double-blind and confidential</li><li data-ic="check">Typical rate $120–240 per review</li></ul><a class="btn btn-p" href="experts.html">Become a reviewer<span data-ic="arrow"></span></a></div>
-<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">Open briefs in Biostatistics</div><div class="recs"><div class="r"><span class="tag b">$180</span><div><b>RCT manuscript · statistical review</b>Due in 7 days · 3 bids</div></div><div class="r"><span class="tag b">$240</span><div><b>Grant proposal · methods panel</b>Due in 10 days · 1 bid</div></div></div></div></div>
-</div>
-</div>
-</section>
-
 <section class="sec alt" data-screen-label="Compare">
 <div class="wrap">
 <div class="split-head"><h2 class="h2">Not another AI writing tool.</h2><p class="lead">Writing tools make your sentences sound better. Nelview checks whether the research behind them holds up. Here's the same paragraph, sent to both.</p></div>
@@ -255,17 +220,28 @@
 </div>
 </div>
 </section>
-
-<section class="sec-sm" style="padding-top:0" data-screen-label="Photo band"><div class="wrap"><div class="pband"><div class="photo"><img src="assets/web/lab-duo.jpg" alt="Two researchers working together in a lab" loading="lazy" decoding="async" width="1600" height="1291"></div><p class="pband-t" data-i18n="pband">Evidence grounded in <em>African</em> research, reviewed to a global standard.</p></div></div></section>
-<section class="sec-sm" data-screen-label="Integrations">
+<section class="sec" id="audiences" data-screen-label="Audiences">
 <div class="wrap">
-<div class="integ">
-<div><h2 class="h3" style="font-size:clamp(26px,2.8vw,36px)">Works with the tools you already use.</h2><p class="muted" style="margin-top:10px">Import from your reference manager, export to your journal, sign in with your university.</p></div>
-<div class="integ-g"><span>Zotero</span><span>Mendeley</span><span>ORCID</span><span>Crossref</span><span>Microsoft Word</span><span>LaTeX</span><span>Google Docs</span><span>Moodle</span><span>Canvas</span><span>DOAJ</span><span>COPE</span><span>AJOL</span></div>
+<div class="sec-head"><h2 class="h2">One review standard. Four ways in.</h2></div>
+<div class="tabs" data-tabs="aud"><button class="on" data-id="a">Researchers</button><button data-id="b">Institutions</button><button data-id="c">Supervisors</button><button data-id="d">Expert reviewers</button></div>
+<div class="tabpane aud on" data-pane="aud" data-id="a">
+<div><h3 class="h3">Submit with confidence, not hope.</h3><ul class="checks"><li data-ic="check">AI reviews on every plan, unlimited on Pro</li><li data-ic="check">Benchmarking against published papers in your field</li><li data-ic="check">Journal fit, formatting and legitimacy checks</li><li data-ic="check">Commission a human expert on any verdict</li></ul><a class="btn btn-p" href="waitlist.html">Get started<span data-ic="arrow"></span></a></div>
+<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">Your projects</div><div class="recs"><div class="r"><span class="tag y">68</span><div><b>Effects of microgravity on enzyme kinetics</b>Journal manuscript · 2 rounds</div></div><div class="r"><span class="tag g">79</span><div><b>Low-temperature stability of lipases</b>Conference abstract · Ready</div></div><div class="r"><span class="tag b">—</span><div><b>R01 grant: specific aims</b>Grant proposal · Draft</div></div></div></div></div>
+</div>
+<div class="tabpane aud" data-pane="aud" data-id="b">
+<div><h3 class="h3">Rigorous review for every student, at scale.</h3><ul class="checks"><li data-ic="check">Seats for every student. They never pay.</li><li data-ic="check">Your criteria, pass marks and score bands per programme</li><li data-ic="check">Supervisor and expert review built into the workflow</li><li data-ic="check">Department analytics and predatory-journal protection</li></ul><a class="btn btn-p" href="institutions.html">Nelview for Institutions<span data-ic="arrow"></span></a></div>
+<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">MSc Public Health · pass mark 65</div><div class="crit"><div class="c">Cohort 2026<div class="bar"><span style="width:74%"></span></div><b>74%</b></div><div class="c">Above pass mark<div class="bar g"><span style="width:61%"></span></div><b>61%</b></div><div class="c">Awaiting supervisor<div class="bar y"><span style="width:22%"></span></div><b>22%</b></div></div></div></div>
+</div>
+<div class="tabpane aud" data-pane="aud" data-id="c">
+<div><h3 class="h3">Spend your time on the thinking, not the typos.</h3><ul class="checks"><li data-ic="check">Students arrive with an AI review already done</li><li data-ic="check">Comment, approve or return with one click</li><li data-ic="check">Track every student against the pass mark</li><li data-ic="check">Request expert review for high-stakes work</li></ul><a class="btn btn-p" href="institutions.html#supervisors">For supervisors<span data-ic="arrow"></span></a></div>
+<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">Waiting on you · 4</div><div class="recs"><div class="r"><span class="tag y">63</span><div><b>Kwame A. · Thesis chapter 3</b>Below pass mark by 2 · AI review attached</div></div><div class="r"><span class="tag g">72</span><div><b>Ama O. · Research proposal</b>Ready for approval</div></div></div></div></div>
+</div>
+<div class="tabpane aud" data-pane="aud" data-id="d">
+<div><h3 class="h3">Earn by reviewing work in your field.</h3><ul class="checks"><li data-ic="check">Bid on briefs matched to your expertise</li><li data-ic="check">Payment held in escrow, released on delivery</li><li data-ic="check">Double-blind and confidential</li><li data-ic="check">Typical rate $120–240 per review</li></ul><a class="btn btn-p" href="experts.html">Become a reviewer<span data-ic="arrow"></span></a></div>
+<div class="mock"><div class="app-main"><div class="muted" style="font-size:12.5px">Open briefs in Biostatistics</div><div class="recs"><div class="r"><span class="tag b">$180</span><div><b>RCT manuscript · statistical review</b>Due in 7 days · 3 bids</div></div><div class="r"><span class="tag b">$240</span><div><b>Grant proposal · methods panel</b>Due in 10 days · 1 bid</div></div></div></div></div>
 </div>
 </div>
 </section>
-
 <section class="sec dark" data-screen-label="Expert layer">
 <div class="wrap ex">
 <div class="ex-vis">
@@ -290,7 +266,6 @@
 </div>
 </div>
 </section>
-
 <section class="sec" data-screen-label="Privacy">
 <div class="wrap">
 <div class="split-head"><h2 class="h2" data-i18n="yours">Your research stays <em>yours</em>.</h2><p class="lead">Unpublished work is the most valuable thing a researcher has. We treat it that way.</p></div>
@@ -302,7 +277,6 @@
 </div>
 </div>
 </section>
-
 <section class="sec alt" data-screen-label="Testimonials">
 <div class="wrap">
 <div class="sec-head"><h2 class="h2">Feedback only a few ever got. Now for everyone.</h2></div>
@@ -316,18 +290,9 @@
 </div>
 </div>
 </section>
-
-<section class="sec" data-screen-label="Mentorship and funding">
-<div class="wrap">
-<div class="split-head"><h2 class="h2">Great research needs more than feedback.</h2><p class="lead">We're pairing researchers with mentors and opening real pathways to funding, so promising work doesn't stall.</p></div>
-<div class="fx">
-<a class="fx-c" href="pledge.html"><div class="photo fx-i"><img src="assets/web/microscope-w.jpg" alt="Researcher at a microscope with her supervisor nearby" decoding="async" width="1600" height="2133" loading="lazy"></div><h3>Mentorship</h3><p>Matched with supervisors and domain experts who guide your work from first draft to publication, by field, not availability.</p><span class="fx-l">How mentoring works<span data-ic="arrow" data-s="14"></span></span></a>
-<a class="fx-c" href="pledge.html"><div class="photo fx-i"><img src="assets/web/pipette-blue.jpg" alt="Scientist pipetting samples in a lab" decoding="async" width="1600" height="2400" loading="lazy"></div><h3>Funding</h3><p>A share of every Nelview subscription funds early-stage research, from prototype to data collection. Open to students, PhDs and university teams.</p><span class="fx-l">The Research Pledge<span data-ic="arrow" data-s="14"></span></span></a>
-<a class="fx-c" href="journal-guide.html"><div class="photo fx-i"><img src="assets/web/lab-notes.jpg" alt="Researcher recording results in a lab notebook" decoding="async" width="1600" height="1067" loading="lazy"></div><h3>Publishing safely</h3><p>Free guidance on choosing a legitimate journal, spotting predatory ones and protecting your work before you submit.</p><span class="fx-l">Predatory journal guide<span data-ic="arrow" data-s="14"></span></span></a>
-</div>
-</div>
+<section class="sec" style="padding-top:0" data-screen-label="Our story">
+<div class="wrap"><div class="imgband"><div class="photo"><img src="assets/story/classroom.webp" alt="Students in a classroom" style="object-position:center 30%" decoding="async" width="800" height="1200" loading="lazy"></div><div class="tx"><h2 class="h2" style="font-size:clamp(30px,3.4vw,44px)">The talent is here. The feedback isn't.</h2><p class="lead">Nelview started in Accra with one question researchers kept asking: is this research strong, and what needs to improve? We're building the answer, and keeping its value on the continent.</p><a class="btn btn-w" href="about.html" style="align-self:flex-start">Read our story<span data-ic="arrow"></span></a></div></div></div>
 </section>
-
 <section class="sec alt" data-screen-label="Pricing preview">
 <div class="wrap">
 <div class="pp-head"><h2 class="h2">A plan for every stage of research.</h2><p class="lead">Students at partner universities never pay.</p></div>
@@ -339,7 +304,6 @@
 <p class="pp-foot"><a href="pricing.html">Compare all plans</a><span>Pricing on request. Card, mobile money, bank transfer or PayPal.</span></p>
 </div>
 </section>
-
 <section class="sec" id="faq" data-screen-label="FAQ">
 <div class="wrap faq-grid">
 <div><h2 class="h2">Everything you might be wondering.</h2><p class="muted" style="margin-top:20px">Can't find it? <a href="contact.html">Talk to us</a>.</p></div>
@@ -354,33 +318,9 @@
 </div>
 </div>
 </section>
-
-<section class="sec alt" data-screen-label="Resources preview">
-<div class="wrap">
-<div class="split-head"><h2 class="h2">From the blog</h2><p class="lead"><a href="resources.html">All guides and articles</a></p></div>
-<div class="bc">
-<a class="bc-c" href="article.html?p=predatory-journals"><div class="photo bc-i"><img src="assets/web/lab-notes.jpg" alt="" loading="lazy" decoding="async" width="1600" height="1067"><span class="bc-k">JOURNALS</span></div><div class="bc-b"><span class="bc-m">Prof. Aisha Sani · 12 min</span><h3>How to spot a predatory journal before it costs you a paper</h3><span class="bc-l">Read article<span data-ic="arrow" data-s="14"></span></span></div></a>
-<a class="bc-c" href="article.html?p=desk-rejection"><div class="photo bc-i"><img src="assets/web/microscope-y.jpg" alt="" loading="lazy" decoding="async" width="1600" height="2031"><span class="bc-k">PEER REVIEW</span></div><div class="bc-b"><span class="bc-m">Prof. Chidi Okeke · 8 min</span><h3>The 6 reasons editors desk-reject, and how to fix each</h3><span class="bc-l">Read article<span data-ic="arrow" data-s="14"></span></span></div></a>
-<a class="bc-c" href="article.html?p=specific-aims"><div class="photo bc-i"><img src="assets/web/test-tubes.jpg" alt="" loading="lazy" decoding="async" width="1600" height="1275"><span class="bc-k">GRANTS</span></div><div class="bc-b"><span class="bc-m">Daniel Osei · 10 min</span><h3>Writing a specific aims page reviewers remember</h3><span class="bc-l">Read article<span data-ic="arrow" data-s="14"></span></span></div></a>
-</div>
-</div>
-</div>
-</section>
-
-<section class="sec gi" data-screen-label="Get involved">
-<div class="wrap">
-<div class="split-head"><h2 class="h2" data-i18n="gi">Get <em>involved</em>.</h2><p class="lead">Four ways to help raise the standard of research, wherever you sit.</p></div>
-<ol class="gi-l">
-<li><span class="gi-n">01</span><h3>Submit</h3><p>Get a rigorous review of your manuscript, grant or thesis before it goes out.</p><a href="waitlist.html">Join the waitlist<span data-ic="arrow" data-s="14"></span></a></li>
-<li><span class="gi-n">02</span><h3>Review</h3><p>Apply as an expert reviewer and get paid for confidential reviews in your field.</p><a href="apply.html">Become a reviewer<span data-ic="arrow" data-s="14"></span></a></li>
-<li><span class="gi-n">03</span><h3>Partner</h3><p>Bring Nelview to your university, faculty or programme, with your own criteria.</p><a href="institutions.html">For institutions<span data-ic="arrow" data-s="14"></span></a></li>
-<li><span class="gi-n">04</span><h3>Mentor</h3><p>Guide an early-career researcher from first draft to publication.</p><a href="contact.html">Talk to us<span data-ic="arrow" data-s="14"></span></a></li>
-</ol>
-</div>
-</section>
 <section class="sec" data-screen-label="Final CTA">
 <div class="wrap"><div class="cta">
-<h2 class="display" style="font-size:clamp(40px,6vw,76px);max-width:14ch;margin:0 auto" data-i18n="stopg">Stop guessing. Start <em>submitting</em>.</h2>
+<h2 class="display" style="font-size:clamp(40px,6vw,76px);max-width:14ch;margin:0 auto" data-i18n="stopg">Know it is ready before you <em>submit</em>.</h2>
 <p class="lead">Get expert-level feedback before you submit, not after a desk reject.</p>
 <div class="row"><a class="btn btn-w btn-lg" href="waitlist.html">Get started<span data-ic="arrow"></span></a><a class="btn btn-o btn-lg" href="contact.html">Book a demo</a></div>
 <div class="micro"><span data-ic="check">Private beta</span><span data-ic="check">Pricing on request</span><span data-ic="check">Your data, never sold</span></div>

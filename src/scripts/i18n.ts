@@ -353,6 +353,9 @@
     "Built with academics from": "Conçu avec des universitaires de",
     // problem + story
     "1 in 2 manuscripts": "1 manuscrit sur 2",
+    "is desk-rejected before peer review. Not for lack of ideas, for lack of":
+      "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
+    "rigorous feedback.": "retours rigoureux.",
     "is desk-rejected before peer review begins. Not for lack of ideas, but for lack of":
       "est rejeté d'emblée avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback before submission.":
@@ -838,7 +841,7 @@
     verdict: "Un <em>verdict</em>, pas des retours vagues.",
     human: "Pour une certitude, ajoutez un <em>humain</em>.",
     yours: "Votre recherche reste la <em>vôtre</em>.",
-    stopg: "Arrêtez de deviner. Commencez à <em>soumettre</em>.",
+    stopg: "Sachez qu'il est prêt avant de <em>soumettre</em>.",
     framew: "Le bon cadre pour <em>chaque</em> document.",
     gi: "Vous <em>engager</em>.",
     hero: 'L\'<em class="acc">audit</em> <span style="white-space:nowrap">pré&#8209;soumission</span> ultime pour la recherche.',

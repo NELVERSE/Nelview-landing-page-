@@ -883,9 +883,9 @@ footer .soc:hover,
 .acc,
 .h2 em,
 .display em {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
   letter-spacing: -0.01em;
   color: var(--g, #1bb35c);
   padding-right: 0.06em;
@@ -1052,9 +1052,9 @@ main .photo:hover img {
   }
 }
 .marq-xl .marq-t span {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
   font-size: clamp(30px, 4vw, 56px);
   letter-spacing: -0.01em;
   color: var(--forest, #0f3b2a);
@@ -1074,9 +1074,9 @@ main .photo:hover img {
 }
 .h2 em,
 .display em {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
   color: var(--g, #1bb35c);
 }
 .dark .h2 em,
@@ -1154,9 +1154,9 @@ main .photo:hover img {
 }
 .gi-l h3 {
   margin: 28px 0 0;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
   font-size: clamp(34px, 3.4vw, 48px);
   letter-spacing: -0.01em;
   color: var(--forest, #0f3b2a);
@@ -1308,30 +1308,18 @@ main .photo:hover img {
 }
 .hdr {
   top: 0;
-  padding: 12px 16px 4px;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  padding: 0;
+  background: #fff !important;
   border: 0 !important;
-  pointer-events: none;
+  border-bottom: 1px solid transparent !important;
+  transition: border-color 0.3s;
+}
+.hdr.sc {
+  border-bottom-color: var(--line) !important;
 }
 .hdr .wrap {
-  pointer-events: auto;
-  height: 72px;
-  padding: 0 12px 0 26px;
-  background: rgba(250, 248, 242, 0.78);
-  backdrop-filter: saturate(1.6) blur(18px);
-  -webkit-backdrop-filter: saturate(1.6) blur(18px);
-  border: 1px solid rgba(15, 59, 42, 0.08);
-  border-radius: 22px;
-  box-shadow: 0 12px 32px -22px rgba(15, 59, 42, 0.35);
-  transition:
-    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    background 0.5s;
-}
-.hdr.sc .wrap {
-  background: rgba(250, 248, 242, 0.9);
-  box-shadow: 0 18px 44px -24px rgba(15, 59, 42, 0.45);
+  height: 68px;
+  padding: 0 28px;
 }
 .nav .nl,
 .dd-t {
@@ -1375,17 +1363,17 @@ main .photo:hover img {
   transform: scaleX(1);
 }
 .hdr-r .btn {
-  background: var(--forest, #0f3b2a) !important;
-  color: #7ef0aa !important;
+  background: var(--ink) !important;
+  color: #fff !important;
   border: 0 !important;
-  border-radius: 14px;
-  height: 48px;
-  padding: 0 22px;
-  font-size: 15.5px;
-  font-weight: 550;
+  border-radius: 10px;
+  height: 42px;
+  padding: 0 18px;
+  font-size: 15px;
+  font-weight: 560;
 }
 .hdr-r .btn:hover {
-  background: var(--forest-2, #154d37) !important;
+  background: #000 !important;
 }
 .hdr-r .si {
   font-size: 15.5px;
@@ -1433,9 +1421,9 @@ main .photo:hover img {
 }
 .fx-c h3 {
   margin: 0;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
   font-size: clamp(32px, 3vw, 42px);
   letter-spacing: -0.01em;
   color: var(--forest, #0f3b2a);
@@ -1675,9 +1663,9 @@ main .photo:hover img {
   text-wrap: balance;
 }
 .pband-t em {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
   color: #7ef0aa;
 }
 .ap-ph {
