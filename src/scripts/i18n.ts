@@ -1321,7 +1321,7 @@
     "Seats for every student": "Une licence par étudiant",
     "Your criteria and pass marks": "Vos critères et seuils",
     "Supervisor dashboards": "Tableaux de bord des directeurs",
-    "Talk to sales": "Parler à un conseiller",
+    "Talk to sales": "Parler à l'équipe",
     "Compare all plans": "Comparer toutes les offres",
     "Prices in USD. Card, mobile money, bank transfer or PayPal.":
       "Prix en USD. Carte, mobile money, virement ou PayPal.",
