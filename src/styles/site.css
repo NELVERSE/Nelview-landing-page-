@@ -19,6 +19,20 @@
   --bad: #c0262d;
   --bad-soft: #fdecec;
   --r: 14px;
+  /* Accent hues. Each has a strong tone for icons and text and a soft tone for
+     surfaces. Used for icon tiles, number badges and tinted cards. */
+  --c-green: #12a150;
+  --c-green-soft: #e4f6eb;
+  --c-blue: #2f6fed;
+  --c-blue-soft: #e6eefe;
+  --c-amber: #c97a04;
+  --c-amber-soft: #fdf0d3;
+  --c-violet: #7550e6;
+  --c-violet-soft: #eee9fd;
+  --c-coral: #df4f3a;
+  --c-coral-soft: #fde9e4;
+  --c-teal: #0b8f9b;
+  --c-teal-soft: #ddf4f5;
   --font: "Geist", system-ui, sans-serif;
   --mono: "Geist Mono", ui-monospace, monospace;
 }
@@ -791,12 +805,74 @@ textarea {
   color: var(--ink-3);
   font-size: 12px;
 }
+/* A hue is a pair of custom properties that icon tiles, number badges and
+   tinted cards read. Set one by class, or let a group hand them out in order. */
+.hue-green {
+  --hue: var(--c-green);
+  --hue-soft: var(--c-green-soft);
+}
+.hue-blue {
+  --hue: var(--c-blue);
+  --hue-soft: var(--c-blue-soft);
+}
+.hue-amber {
+  --hue: var(--c-amber);
+  --hue-soft: var(--c-amber-soft);
+}
+.hue-violet {
+  --hue: var(--c-violet);
+  --hue-soft: var(--c-violet-soft);
+}
+.hue-coral {
+  --hue: var(--c-coral);
+  --hue-soft: var(--c-coral-soft);
+}
+.hue-teal {
+  --hue: var(--c-teal);
+  --hue-soft: var(--c-teal-soft);
+}
+main
+  :is(.grid2, .grid3, .grid4, .bento, .feats, .roles, .perks, .hs-track, .steps, .flow, .vrows, .gi-l)
+  > :nth-child(6n + 1) {
+  --hue: var(--c-green);
+  --hue-soft: var(--c-green-soft);
+}
+main
+  :is(.grid2, .grid3, .grid4, .bento, .feats, .roles, .perks, .hs-track, .steps, .flow, .vrows, .gi-l)
+  > :nth-child(6n + 2) {
+  --hue: var(--c-blue);
+  --hue-soft: var(--c-blue-soft);
+}
+main
+  :is(.grid2, .grid3, .grid4, .bento, .feats, .roles, .perks, .hs-track, .steps, .flow, .vrows, .gi-l)
+  > :nth-child(6n + 3) {
+  --hue: var(--c-amber);
+  --hue-soft: var(--c-amber-soft);
+}
+main
+  :is(.grid2, .grid3, .grid4, .bento, .feats, .roles, .perks, .hs-track, .steps, .flow, .vrows, .gi-l)
+  > :nth-child(6n + 4) {
+  --hue: var(--c-violet);
+  --hue-soft: var(--c-violet-soft);
+}
+main
+  :is(.grid2, .grid3, .grid4, .bento, .feats, .roles, .perks, .hs-track, .steps, .flow, .vrows, .gi-l)
+  > :nth-child(6n + 5) {
+  --hue: var(--c-coral);
+  --hue-soft: var(--c-coral-soft);
+}
+main
+  :is(.grid2, .grid3, .grid4, .bento, .feats, .roles, .perks, .hs-track, .steps, .flow, .vrows, .gi-l)
+  > :nth-child(6n + 6) {
+  --hue: var(--c-teal);
+  --hue-soft: var(--c-teal-soft);
+}
 .ico {
   width: 34px;
   height: 34px;
   border-radius: 9px;
-  background: var(--blue-soft);
-  color: var(--blue);
+  background: var(--hue-soft, var(--blue-soft));
+  color: var(--hue, var(--blue));
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -808,7 +884,7 @@ textarea {
   border-radius: 11px;
 }
 .ico.d {
-  background: var(--ink);
+  background: var(--hue, var(--ink));
   color: #fff;
 }
 /* logos */
@@ -1025,10 +1101,20 @@ textarea {
   gap: 12px;
 }
 .step .n {
-  font-family: var(--mono);
   font-size: 13px;
   color: var(--blue);
   font-weight: 600;
+}
+.step > .n {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--hue-soft, var(--blue-soft));
+  color: var(--hue, var(--blue));
+  font-weight: 640;
+  font-variant-numeric: tabular-nums;
 }
 .step h3 {
   font-size: 22px;
@@ -1059,9 +1145,16 @@ textarea {
   border-left: 0;
 }
 .flow .n {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--ink-3);
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--hue-soft, var(--blue-soft));
+  color: var(--hue, var(--blue));
+  font-size: 13px;
+  font-weight: 640;
+  font-variant-numeric: tabular-nums;
 }
 .flow b {
   font-size: 16px;
@@ -1702,8 +1795,8 @@ textarea {
   position: relative;
 }
 .cover .k {
-  font-family: var(--mono);
-  font-size: 12px;
+  font-size: 12.5px;
+  font-weight: 560;
   opacity: 0.8;
 }
 .cover .t {
@@ -1862,8 +1955,8 @@ picture {
   background: var(--line);
 }
 .kicker-num {
-  font-family: var(--mono);
   font-size: 13px;
+  font-weight: 560;
   color: var(--ink-3);
 }
 .page-hero {
@@ -2264,8 +2357,9 @@ picture {
   color: #fff;
 }
 .dd-post .k {
-  font-family: var(--mono);
-  font-size: 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: #4ade8a;
 }
 .dd-post b {
@@ -2640,44 +2734,66 @@ picture {
   }
 }
 .statement {
-  font-size: clamp(30px, 4.2vw, 54px);
-  line-height: 1.12;
-  letter-spacing: -0.04em;
-  font-weight: 620;
-  max-width: 22ch;
+  font-size: clamp(28px, 3.5vw, 46px);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  max-width: 900px;
+  margin-inline: auto;
+  text-align: center;
+  text-wrap: balance;
   color: var(--ink-3);
 }
 .statement b {
   color: var(--ink);
-  font-weight: 620;
+  font-weight: 600;
 }
 .statement .g {
-  color: var(--blue-tx);
+  background: linear-gradient(90deg, var(--c-green), var(--c-teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
+/* Three tinted cards, one hue each. */
 .nums {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 64px;
+  gap: 20px;
+  margin-top: 56px;
 }
 .nums > div {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 28px;
+  border-radius: 22px;
+  background: var(--hue-soft);
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.nums .k {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--blue-tx);
+@media (pointer: fine) {
+  .nums > div:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 40px -28px var(--hue);
+  }
+}
+.nums .ico {
+  background: #fff;
+  color: var(--hue);
+  box-shadow: 0 1px 2px rgba(10, 13, 20, 0.08);
+  margin-bottom: 18px;
 }
 .nums b {
-  font-size: 20px;
+  font-size: 21px;
   letter-spacing: -0.02em;
   font-weight: 620;
+  color: var(--ink);
 }
 .nums p {
   color: var(--ink-2);
-  font-size: 15px;
+  font-size: 15.5px;
+  line-height: 1.5;
 }
 .wall {
   columns: 3;
