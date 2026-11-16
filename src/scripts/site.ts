@@ -178,7 +178,7 @@
           "file",
           "Researchers & authors",
           "Submit with confidence, not hope",
-          "index.html#audiences",
+          "index.html#how",
         ],
         [
           "building",
@@ -472,7 +472,7 @@
       ic("pin", 15) +
       "Accra, Ghana</span></div></div>" +
       "<div class='col'><h5>Product</h5><a href='index.html#how'>AI Review Engine</a><a href='index.html#how'>Document Editor</a><a href='index.html#how'>Journal Check</a><a href='index.html#how'>Citation Manager</a><a href='index.html#how'>Journal Formatter</a></div>" +
-      "<div class='col'><h5>Solutions</h5><a href='index.html#audiences'>Researchers &amp; authors</a><a href='institutions.html'>Universities</a><a href='institutions.html#supervisors'>Supervisors &amp; lecturers</a><a href='experts.html'>Expert reviewers</a><a href='pricing.html'>Pricing</a></div>" +
+      "<div class='col'><h5>Solutions</h5><a href='index.html#how'>Researchers &amp; authors</a><a href='institutions.html'>Universities</a><a href='institutions.html#supervisors'>Supervisors &amp; lecturers</a><a href='experts.html'>Expert reviewers</a><a href='pricing.html'>Pricing</a></div>" +
       "<div class='col'><h5>Resources</h5><a href='resources.html'>Blog &amp; guides</a><a href='journal-guide.html'>Predatory journal guide</a><a href='index.html#faq'>FAQ</a><a href='contact.html'>Help &amp; support</a></div>" +
       "<div class='col'><h5>Company</h5><a href='about.html'>About &amp; mission</a><a href='pledge.html'>Research Pledge</a><a href='experts.html'>Join the reviewer network</a><a href='contact.html'>Contact</a></div></div>" +
       "<div class='ftr-bot'><div class='ftr-soc'><span>© 2026 Nelverse · Nelview</span>" +

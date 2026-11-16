@@ -98,8 +98,7 @@ h3 em {
 }
 /* Inside product previews and on dark panels the button keeps the product green. */
 .mock .btn-p,
-.dark .btn-p,
-.wl .btn-p {
+.dark .btn-p {
   background: var(--blue);
   border-color: var(--blue);
 }
@@ -463,9 +462,6 @@ h3 em {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 10px;
 }
-.nt-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
 .nt-c {
   display: flex;
   flex-direction: column;
@@ -679,9 +675,6 @@ main .nt > :nth-child(6n + 6) {
   .nt {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .nt-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 @media (max-width: 820px) {
   .nb,
@@ -711,8 +704,230 @@ main .nt > :nth-child(6n + 6) {
   .nt {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .nb-score {
-    flex-direction: column;
-    align-items: flex-start;
+}
+
+/* ---------- phones: cards use rows, not stacked columns ---------- */
+/* On a narrow screen a card that stacks icon, then title, then text spends a
+   third of its height on empty space beside the icon. Put the icon and title
+   on one row with the text full width underneath, and let visuals use the
+   whole card. */
+@media (max-width: 640px) {
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 8px;
+    align-items: center;
+    align-content: start;
   }
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) > * {
+    grid-column: 1 / -1;
+  }
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) > .ico {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+  }
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) > .ico + * {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+  .feat,
+  .step,
+  .flow > div {
+    padding: 18px;
+  }
+  .nums > div {
+    padding: 20px;
+  }
+
+  /* Tiles: one per row, the icon spanning the title and its line of text. */
+  .nt-c {
+    padding: 14px 16px;
+    column-gap: 12px;
+    row-gap: 2px;
+  }
+  .nt-c > .ico {
+    grid-row: 1 / span 2;
+  }
+  .nt-c > .ico + * {
+    grid-row: 1;
+  }
+  .nt-c > .ico + * + * {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  /* Break between words, never inside one. */
+  .nt-c b,
+  .nt-c span {
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+}
+/* Too narrow for two tiles side by side: one per row. */
+@media (max-width: 380px) {
+  .nt {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- phones: feature cards ---------- */
+@media (max-width: 820px) {
+  .nb-c {
+    padding: 20px 12px 0;
+    gap: 18px;
+  }
+  .nb-h {
+    padding: 0 8px;
+  }
+  /* The white visual takes the card's full width. */
+  .nb-v {
+    margin: 0;
+    padding: 18px 16px;
+  }
+  .nb-w .nb-v {
+    margin: 0;
+  }
+  /* Score ring beside its bars, as in the steps row, not above them. */
+  .nb-score {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  /* Name and match on one line, the detail line free to use the full width
+     beneath them; the avatar spans both. */
+  .nb-people .person {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 12px;
+    row-gap: 1px;
+    align-items: center;
+  }
+  .nb-people .person > .av {
+    grid-row: 1 / span 2;
+  }
+  .nb-people .person > div {
+    display: contents;
+  }
+  .nb-people .person > div > b {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+  }
+  .nb-people .person > div > span {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    align-self: start;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .nb-people .person > .ex-m {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: end;
+  }
+}
+
+/* =============================================================================
+   Consistency layer
+   One type scale, one radius scale, one spacing rhythm and one set of button
+   roles for every page. Loaded last, so it settles any older page-level rule.
+   ========================================================================== */
+:root {
+  --h1: clamp(40px, 5.4vw, 76px); /* page titles on marketing pages */
+  --h1-s: clamp(34px, 3.6vw, 48px); /* titles on forms, articles and legal pages */
+  --h2: clamp(30px, 3.6vw, 46px); /* section headings and closing statements */
+  --hero-top: clamp(56px, 7vw, 96px);
+  --hero-bottom: clamp(48px, 5.5vw, 80px);
+}
+
+/* Page titles */
+.display,
+.hero2 .display,
+.hero-grid .display,
+.pl-hero h1,
+.pr-hero h1,
+.ab-hero h1,
+.phd h1,
+.st-hero h1,
+.jg-hero h1 {
+  font-size: var(--h1);
+  font-weight: 660;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+.lg-hd h1,
+.art-hd h1,
+.si-box h1,
+.wl h1,
+h1.h2 {
+  font-size: var(--h1-s);
+  font-weight: 660;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+/* Section headings and the closing statement of a page */
+.h2,
+.cta h2,
+.cta .display,
+.cta-band h2,
+.nlb h2,
+.imgband h2 {
+  font-size: var(--h2);
+  font-weight: 640;
+  letter-spacing: -0.034em;
+  line-height: 1.08;
+}
+
+/* Page headers share one rhythm */
+.pr-hero,
+.st-hero,
+.page-hero,
+.phd,
+.jg-hero,
+.pl-hero,
+.hero:not(.hero2) {
+  padding-top: var(--hero-top);
+  padding-bottom: var(--hero-bottom);
+}
+.art-hd,
+.lg-hd {
+  padding-top: clamp(48px, 5vw, 72px);
+  padding-bottom: 40px;
+}
+
+/* Corner radius: 10 for controls, 12 for cards, 20 for large panels */
+.vs-f,
+.jg-ex,
+.role,
+.tldr,
+.kv.card {
+  border-radius: var(--radius-m);
+}
+.vs-p,
+.fcard,
+.calc-out,
+.nlb,
+.cta,
+.imgband,
+.si-box {
+  border-radius: var(--radius-l);
+}
+
+/* Buttons: primary is dark, secondary is soft green, tertiary is outlined.
+   Large outlined buttons sit beside a primary one, so they take the secondary look. */
+.btn-g.btn-lg {
+  background: var(--c-green-soft);
+  border-color: transparent;
+  color: var(--forest);
+}
+.btn-g.btn-lg:hover {
+  background: #bdecca;
+}
+
+/* Newsletter and sign-up banners are the brand green, like the footer */
+.nlb {
+  background: var(--forest);
 }
