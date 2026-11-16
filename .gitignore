@@ -6,3 +6,5 @@ dist/
 .clasp.json
 test-results/
 playwright-report/
+# pnpm is the package manager (see "packageManager" in package.json); npm lockfile is not used
+package-lock.json

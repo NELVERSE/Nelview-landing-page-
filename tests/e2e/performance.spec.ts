@@ -52,21 +52,19 @@ test("nothing animates once the hero has scrolled away", async ({ page }) => {
   expect(work.stylesPerSecond).toBeLessThan(5);
 });
 
-test("the demo loads only when played and unloads when scrolled away", async ({
+test("the product video waits to be played and has a poster", async ({
   page,
+  request,
 }) => {
   await page.goto("/");
-  const demo = page.locator(".demo-vid");
-  await demo.scrollIntoViewIfNeeded();
-  await expect(demo.locator("iframe")).toHaveCount(0);
-  await expect(demo.locator("img")).toBeVisible();
-
-  await demo.locator(".demo-play").click();
-  await expect(demo.locator("iframe")).toHaveCount(1);
-  await expect(demo.frameLocator("iframe").locator("#root > *").first()).toBeAttached();
-
-  await page.locator("footer.ftr").scrollIntoViewIfNeeded();
-  await expect(demo.locator("iframe")).toHaveCount(0);
-  await demo.scrollIntoViewIfNeeded();
-  await expect(demo.locator(".demo-play")).toBeVisible();
+  const video = page.locator(".demo-vid video");
+  await video.scrollIntoViewIfNeeded();
+  await expect(video).toHaveAttribute("preload", "none");
+  await expect(video).toHaveAttribute("controls", "");
+  expect(await video.evaluate((el: HTMLVideoElement) => el.paused)).toBe(true);
+  for (const url of [
+    await video.evaluate((el: HTMLVideoElement) => el.poster),
+    await video.locator("source").evaluate((el: HTMLSourceElement) => el.src),
+  ])
+    expect((await request.head(url)).status(), url).toBe(200);
 });

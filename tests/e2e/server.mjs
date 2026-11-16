@@ -16,6 +16,9 @@ const types = {
   ".webp": "image/webp",
   ".woff2": "font/woff2",
   ".mp3": "audio/mpeg",
+  ".m4v": "video/mp4",
+  ".ico": "image/x-icon",
+  ".webmanifest": "application/manifest+json",
   ".xml": "application/xml",
   ".txt": "text/plain",
 };

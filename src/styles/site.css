@@ -43,9 +43,11 @@
 }
 html {
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  scroll-behavior: auto;
 }
 html:focus-within {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 body {
   font-family: var(--font);
@@ -55,6 +57,83 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.006em;
+  overflow-x: clip;
+}
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+* {
+  box-sizing: border-box;
+  min-width: 0;
+}
+main,
+section,
+.wrap,
+.row,
+.grid2,
+.grid3,
+.grid4,
+.steps,
+.nums,
+.split-head,
+.hero-form,
+.hero-sub,
+.tour,
+.tour-tabs,
+.tour-frame,
+.app,
+.app-main,
+.app-rail,
+.recs,
+.card,
+.step,
+.p4,
+.pp,
+.mosaic,
+.wall,
+.fund,
+.band,
+.cta2,
+.tabs,
+.tabpane,
+.hs-track {
+  min-width: 0;
+  overflow-x: clip;
+}
+p,
+li,
+span,
+strong,
+b,
+small,
+a,
+button,
+input,
+textarea,
+select,
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 a {
   color: var(--blue-tx);

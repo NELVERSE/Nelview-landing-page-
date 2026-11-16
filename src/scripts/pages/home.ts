@@ -62,27 +62,4 @@
       else if (!tour.classList.contains("offscreen")) start();
     });
   }
-
-  // ---- Demo: loads when played, and is removed again once scrolled away.
-  const demo = document.querySelector<HTMLElement>(".demo-vid");
-  const play = demo?.querySelector<HTMLButtonElement>(".demo-play");
-  if (demo && play) {
-    let frame: HTMLIFrameElement | null = null;
-
-    play.addEventListener("click", () => {
-      frame = document.createElement("iframe");
-      frame.src = "demo/index.html?embed=1";
-      frame.title = "Nelview Research Review Center demo";
-      frame.allow = "autoplay";
-      demo.appendChild(frame);
-      demo.classList.add("playing");
-    });
-
-    new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting || !frame) return;
-      frame.remove();
-      frame = null;
-      demo.classList.remove("playing");
-    }).observe(demo);
-  }
 })();
