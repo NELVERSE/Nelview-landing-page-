@@ -40,7 +40,7 @@ tests/
   e2e/              browser tests against the built site (Playwright)
 apps-script/        Google Apps Script backend: forms -> Google Sheet, Drive and emails
 docs/               notes that are not needed to run the project
-.github/workflows/  build, test and deploy
+.github/workflows/  build and test checks
 vite.config.ts      build: pages, share-card tags, responsive images, preview builds
 ```
 
@@ -67,7 +67,7 @@ The first time, install the test browser with `pnpm exec playwright install chro
 
 | Branch    | Purpose    | What happens on push                                                             |
 | --------- | ---------- | -------------------------------------------------------------------------------- |
-| `main`    | Production | Built and deployed as the live site.                                             |
+| `main`    | Production | The host (Vercel) builds and serves it as the live site.                         |
 | `preview` | Preview    | Built as a preview: same site, hidden from search engines (`noindex` + robots). |
 
 Day to day: push work to `preview`, check it, then open a pull request from `preview` into `main` to release.
@@ -80,7 +80,7 @@ Any static host works. Build command `pnpm run build`, output folder `dist`.
 
 - **Vercel**: import the repo. `vercel.json` is included (clean URLs). `main` is the production branch; every push to `preview` gets its own preview URL automatically.
 - **Netlify**: import the repo. `netlify.toml` is included. `main` is production; turn on branch deploys for `preview` under Site configuration → Build & deploy → Branches.
-- **GitHub Pages**: Settings → Pages → Source: _GitHub Actions_. `.github/workflows/deploy.yml` deploys every push to `main`. Pages hosts one site per repository, so pushes to `preview` (and pull requests into `main`) are built and attached to the workflow run as the `site-preview` artifact rather than published at a URL.
+- **CI**: `.github/workflows/deploy.yml` does not deploy. It typechecks, runs the unit and browser tests and builds on every push to `main` and `preview` and on pull requests into `main`, and attaches the built site to the run as an artifact (`site-production` or `site-preview`). Hosting deploys from the branches on its own.
 
 Point `www.nelview.com` at the host. If the domain differs, set the `SITE_URL` environment variable for the build (used for canonical and share-card URLs) and update `public/sitemap.xml` and `public/robots.txt`.
 

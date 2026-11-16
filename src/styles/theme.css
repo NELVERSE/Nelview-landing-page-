@@ -931,3 +931,9 @@ h1.h2 {
 .nlb {
   background: var(--forest);
 }
+
+/* Row chips keep their label on one line, whatever the language. */
+.recs .r > .tag {
+  flex: none;
+  white-space: nowrap;
+}

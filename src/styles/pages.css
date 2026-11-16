@@ -992,7 +992,6 @@
 /* pricing v2 */
 .pr-hero {
   padding: 96px 0 56px;
-  text-align: center;
 }
 .pr-hero h1 {
   font-size: clamp(44px, 6.8vw, 92px);
@@ -1000,10 +999,10 @@
   line-height: 0.96;
   font-weight: 690;
   max-width: 13ch;
-  margin: 0 auto;
+  margin: 0;
 }
 .pr-hero .lead {
-  margin: 24px auto 0;
+  margin: 24px 0 0;
   max-width: 52ch;
 }
 .pr-hero .toggle {
@@ -1313,8 +1312,6 @@
 }
 
 /* ---------- About page (was story.css) ---------- */
-/* Keyed on data-view: the Pledge page shares data-page="about" for its menu highlight
-   and must not inherit the About page's centred layout. */
 .st-hero {
   padding: 88px 0 96px;
 }
@@ -1508,41 +1505,6 @@
 }
 .st-team .ph {
   border-radius: 18px;
-}
-body[data-view="about"] .st-hero-g > div:first-child,
-body[data-view="about"] .split-head {
-  text-align: center;
-}
-body[data-view="about"] main h1,
-body[data-view="about"] main h2,
-body[data-view="about"] main .lead {
-  text-align: center;
-}
-body[data-view="about"] .st-hero .lead,
-body[data-view="about"] .split-head .lead {
-  margin-left: auto;
-  margin-right: auto;
-}
-body[data-view="about"] .st-hero .row {
-  justify-content: center;
-}
-body[data-view="about"] .st-split > div:not(.photo),
-body[data-view="about"] .st-mv .card {
-  text-align: center;
-}
-body[data-view="about"] .st-split .checks {
-  max-width: 44ch;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-body[data-view="about"] .st-band .bigquote {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-body[data-view="about"] .st-mv .card {
-  align-items: center;
 }
 @media (max-width: 1080px) {
   .st-team {
