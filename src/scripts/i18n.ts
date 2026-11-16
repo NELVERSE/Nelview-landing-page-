@@ -1,5 +1,5 @@
 // @ts-nocheck
-// i18n.ts: ported from the static Nelview site. Runs as a classic browser script (compiled by tsc to public/js).
+// i18n.ts: loaded as a module from the pages in src/pages and bundled by Vite.
 // Shared globals are declared in src/types/globals.d.ts. Remove @ts-nocheck and tighten types incrementally.
 /* Nelview EN/FR — auto-detects from saved choice, browser language, then timezone (francophone regions) */
 (function () {
@@ -357,6 +357,19 @@
     "Built with academics from": "Conçu avec des universitaires de",
     // problem + story
     "1 in 2 manuscripts": "1 manuscrit sur 2",
+    "is desk-rejected before peer review. Not for lack of ideas, for lack of":
+      "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
+    "rigorous feedback.": "retours rigoureux.",
+    "Know where your paper stands.": "Sachez où en est votre article.",
+    "A 0–100 readiness score, with the fixes that move it.": "Un score de préparation de 0 à 100, avec les corrections qui le font progresser.",
+    "Catch a predatory journal before you submit.": "Repérez une revue prédatrice avant de soumettre.",
+    "Add a named human expert when it matters.": "Ajoutez un expert humain identifié quand c'est important.",
+    "See what Nelview can review": "Ce que Nelview peut évaluer",
+    "Publish rigorous findings and explore paths from prototype to enterprise.": "Publiez des résultats rigoureux et explorez les voies du prototype à l'entreprise.",
+    "A share of every Nelview subscription funds early-stage research, from prototype to data collection.": "Une part de chaque abonnement Nelview finance la recherche débutante, du prototype à la collecte de données.",
+    "6 document types": "6 types de documents",
+    "Expert reviews in 5–7 days": "Évaluations d'experts en 5 à 7 jours",
+    "English and French": "Anglais et français",
     "is desk-rejected before peer review begins. Not for lack of ideas, but for lack of":
       "est rejeté d'emblée avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback before submission.":
@@ -750,6 +763,12 @@
     "Contact me about beta access. My details are only used to manage the beta and are never sold.":
       "Contactez-moi au sujet de l'accès bêta. Mes données servent uniquement à gérer la bêta et ne sont jamais vendues.",
     "Privacy policy": "Politique de confidentialité",
+    "We couldn't send that. Check your connection and try again, or email team@nelview.com.":
+      "L'envoi a échoué. Vérifiez votre connexion et réessayez, ou écrivez à team@nelview.com.",
+    "That file is over 10 MB. Please upload a smaller PDF or DOCX.":
+      "Ce fichier dépasse 10 Mo. Veuillez envoyer un PDF ou DOCX plus léger.",
+    "We couldn't read that file. Please choose it again.":
+      "Impossible de lire ce fichier. Veuillez le sélectionner à nouveau.",
     "Please confirm so we can contact you about the beta.":
       "Veuillez confirmer pour que nous puissions vous contacter au sujet de la bêta.",
     "Join the waitlist": "Rejoindre la liste d'attente",
@@ -843,7 +862,7 @@
     verdict: "Un <em>verdict</em>, pas des retours vagues.",
     human: "Pour une certitude, ajoutez un <em>humain</em>.",
     yours: "Votre recherche reste la <em>vôtre</em>.",
-    stopg: "Arrêtez de deviner. Commencez à <em>soumettre</em>.",
+    stopg: "Sachez qu'il est prêt avant de <em>soumettre</em>.",
     framew: "Le bon cadre pour <em>chaque</em> document.",
     gi: "Vous <em>engager</em>.",
     hero: 'L\'<em class="acc">audit</em> <span style="white-space:nowrap">pré&#8209;soumission</span> ultime pour la recherche.',

@@ -80,6 +80,50 @@ function sanitizeInput(data) {
 
 var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
+// ---- Reviewer CV uploads ----------------------------------------------------
+// The reviewer application sends the CV inside the JSON body as
+// { name, type, data } with data base64-encoded. It is saved to a private Drive
+// folder owned by the account that deploys this script; share that folder with
+// whoever screens applications. Only PDF / Word files up to 10 MB are kept.
+var CV_FOLDER_NAME = "Nelview reviewer CVs";
+var CV_MAX_BYTES = 10 * 1024 * 1024;
+var CV_TYPES = {
+  pdf: "application/pdf",
+  doc: "application/msword",
+  docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+};
+
+// Returns the Drive URL of the stored file, or "" when no usable file was sent.
+function saveCv(cv, data) {
+  if (!cv || typeof cv !== "object" || typeof cv.data !== "string" || !cv.data)
+    return "";
+  var m = String(cv.name || "")
+    .toLowerCase()
+    .match(/\.(pdf|docx?)$/);
+  if (!m) return "";
+  // 4 base64 characters carry 3 bytes: reject oversized uploads before decoding.
+  if (cv.data.length > Math.ceil(CV_MAX_BYTES / 3) * 4) return "";
+  var bytes = Utilities.base64Decode(cv.data);
+  if (!bytes.length || bytes.length > CV_MAX_BYTES) return "";
+
+  var who =
+    String(data.name || "")
+      .replace(/[^A-Za-z0-9 .'-]/g, "")
+      .trim()
+      .slice(0, 60) || "Applicant";
+  var stamp = Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd");
+  var blob = Utilities.newBlob(
+    bytes,
+    CV_TYPES[m[1]],
+    who + " - CV - " + stamp + "." + m[1],
+  );
+  var folders = DriveApp.getFoldersByName(CV_FOLDER_NAME);
+  var folder = folders.hasNext()
+    ? folders.next()
+    : DriveApp.createFolder(CV_FOLDER_NAME);
+  return folder.createFile(blob).getUrl();
+}
+
 // ---- Waitlist columns + lookups --------------------------------------------
 var BETA_COLS = [
   "submitted_at",
@@ -242,6 +286,11 @@ function doPost(e) {
       if (data && data[HONEYPOT_FIELDS[i]]) return jsonOut({ ok: true });
     }
 
+    // The CV travels as a nested object; take it out before the text fields are
+    // sanitised and capped, and so it is never written to a sheet cell.
+    var cv = data && data.cv;
+    if (data) delete data.cv;
+
     data = sanitizeInput(data);
 
     // Require a syntactically valid email before doing anything.
@@ -260,7 +309,7 @@ function doPost(e) {
       st.indexOf("alert") > -1
     )
       return jsonOut(handleSubscriber(data));
-    if (st.indexOf("expert") > -1) return jsonOut(handleExpert(data));
+    if (st.indexOf("expert") > -1) return jsonOut(handleExpert(data, cv));
     if (st.indexOf("contact") > -1) return jsonOut(handleContact(data));
     return jsonOut(handleBeta(data));
   } catch (err) {
@@ -376,7 +425,15 @@ function handleSubscriber(data) {
 }
 
 // ---- Expert reviewer applications -> tab "Expert Applications" --------------
-function handleExpert(data) {
+function handleExpert(data, cv) {
+  // A CV that cannot be stored must not lose the application itself.
+  try {
+    data.cv_url = saveCv(cv, data);
+  } catch (err) {
+    console.error("CV upload failed: " + err);
+    data.cv_url = "";
+  }
+  if (!data.cv_url && data.cv_file) data.cv_url = "(file not stored)";
   writeRow(
     "Expert Applications",
     [
@@ -402,6 +459,7 @@ function handleExpert(data) {
       "pay",
       "note",
       "cv_file",
+      "cv_url",
       "page",
     ],
     data,
@@ -455,6 +513,7 @@ function handleExpert(data) {
     "reviews",
     "rate",
     "cv_file",
+    "cv_url",
   ].forEach(function (k) {
     labels[k] = k.replace("_", " ");
   });
@@ -615,12 +674,19 @@ function sendDemoConfirmation(data) {
   );
 }
 
+// Emails are sent after the row is stored. If one fails (quota, bad address) the
+// submission is still saved, so log it and carry on: the website shows an error
+// whenever this script reports a failure, and the visitor would then resubmit.
 function sendBranded(to, subject, html) {
-  var opts = { htmlBody: html, name: "Nelview", replyTo: FROM_ALIAS };
-  // use the verified alias if present on this account; otherwise fall back to the account address
-  var aliases = GmailApp.getAliases();
-  if (aliases.indexOf(FROM_ALIAS) !== -1) opts.from = FROM_ALIAS;
-  GmailApp.sendEmail(to, subject, "", opts);
+  try {
+    var opts = { htmlBody: html, name: "Nelview", replyTo: FROM_ALIAS };
+    // use the verified alias if present on this account; otherwise fall back to the account address
+    var aliases = GmailApp.getAliases();
+    if (aliases.indexOf(FROM_ALIAS) !== -1) opts.from = FROM_ALIAS;
+    GmailApp.sendEmail(to, subject, "", opts);
+  } catch (err) {
+    console.error("Confirmation email failed: " + err);
+  }
 }
 
 // ---- Email shell (shared, light/dark aware) --------------------------------
@@ -926,16 +992,20 @@ function sendTeamAlert(data, labels, badge, subjectBase) {
     "</div>" +
     "</div>";
 
-  MailApp.sendEmail({
-    to: TEAM_INBOX,
-    subject:
-      subjectBase +
-      (data.name ? " \u2014 " + subjPart(data.name) : "") +
-      (data.country ? " (" + subjPart(data.country) + ")" : "") +
-      (!data.country && data.institution
-        ? " (" + subjPart(data.institution) + ")"
-        : ""),
-    htmlBody: html,
-    name: "Nelview Bot",
-  });
+  try {
+    MailApp.sendEmail({
+      to: TEAM_INBOX,
+      subject:
+        subjectBase +
+        (data.name ? " \u2014 " + subjPart(data.name) : "") +
+        (data.country ? " (" + subjPart(data.country) + ")" : "") +
+        (!data.country && data.institution
+          ? " (" + subjPart(data.institution) + ")"
+          : ""),
+      htmlBody: html,
+      name: "Nelview Bot",
+    });
+  } catch (err) {
+    console.error("Team alert email failed: " + err);
+  }
 }

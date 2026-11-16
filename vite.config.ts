@@ -1,26 +1,214 @@
-import { defineConfig, type ViteDevServer } from "vite";
+import {
+  defineConfig,
+  type HtmlTagDescriptor,
+  type Plugin,
+  type ViteDevServer,
+} from "vite";
 import react from "@vitejs/plugin-react";
 import {
   existsSync,
   mkdirSync,
   readdirSync,
-  readFileSync,
   statSync,
+  writeFileSync,
 } from "node:fs";
-import { parse, resolve } from "node:path";
+import { join, parse, relative, resolve } from "node:path";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
-const root = fileURLToPath(new URL(".", import.meta.url));
+// Layout: src/ is the Vite root, src/pages/ holds the HTML pages, public/ holds
+// files copied as they are, dist/ is the build output.
+const repo = fileURLToPath(new URL(".", import.meta.url));
+const src = resolve(repo, "src");
+const pagesDir = resolve(src, "pages");
+const publicDir = resolve(repo, "public");
+const outDir = resolve(repo, "dist");
 
-function responsiveWebp() {
+// Public address of the production site, used for canonical and share-card URLs.
+const SITE_URL = (process.env.SITE_URL || "https://www.nelview.com").replace(
+  /\/+$/,
+  "",
+);
+
+// A preview build is anything that is not the production site: the `preview`
+// branch and pull requests in GitHub Actions (NELVIEW_ENV), Vercel preview
+// deployments, and Netlify deploy previews / branch deploys. Local builds and
+// `main` are production. Preview builds are hidden from search engines.
+const isPreview =
+  process.env.NELVIEW_ENV !== "production" &&
+  (process.env.NELVIEW_ENV === "preview" ||
+    process.env.VERCEL_ENV === "preview" ||
+    (process.env.NETLIFY === "true" && process.env.CONTEXT !== "production"));
+
+/** Every .html file under src/pages, as paths relative to it ("about.html", "demo/index.html"). */
+function listPages(dir = pagesDir): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return listPages(full);
+    return entry.name.endsWith(".html")
+      ? [relative(pagesDir, full).replace(/\\/g, "/")]
+      : [];
+  });
+}
+
+/** The site path a page is served at: "/pages/about.html" -> "/about.html". */
+const sitePath = (htmlPath: string) => htmlPath.replace(/^\/pages\//, "/");
+
+/**
+ * Pages live in src/pages but are served from the site root, so
+ * src/pages/about.html is /about.html in development and dist/about.html in
+ * the build. /about (no extension) works in development too, as it does on the
+ * hosts.
+ */
+function pagesAtRoot(): Plugin {
+  const known = new Set(listPages().map((page) => `/${page}`));
+
+  return {
+    name: "nelview-pages-at-root",
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url && (req.method === "GET" || req.method === "HEAD")) {
+          const [path, query = ""] = req.url.split("?");
+          const page = path.endsWith("/")
+            ? `${path}index.html`
+            : path.endsWith(".html")
+              ? path
+              : `${path}.html`;
+          if (known.has(page))
+            req.url = `/pages${page}${query ? `?${query}` : ""}`;
+        }
+        next();
+      });
+    },
+    generateBundle: {
+      order: "post",
+      handler(_options, bundle) {
+        // Files Vite itself emitted (bundled scripts and styles). Only links to
+        // these need adjusting; hand-written links to public files are already
+        // relative to the page's final address.
+        const emitted = Object.keys(bundle).filter(
+          (key) => !key.startsWith("pages/"),
+        );
+        for (const [key, file] of Object.entries(bundle)) {
+          if (file.type !== "asset" || !key.startsWith("pages/")) continue;
+          // The page moves one folder up, so links to emitted files lose one "../".
+          let html = String(file.source);
+          for (const target of emitted)
+            html = html.replaceAll(`../${target}`, `./${target}`);
+          file.fileName = key.slice("pages/".length);
+          file.source = html;
+          delete bundle[key];
+          bundle[file.fileName] = file;
+        }
+      },
+    },
+  };
+}
+
+/** Canonical and share-card tags on every page; noindex on previews. */
+function seoMeta(): Plugin {
+  // Never indexed, on any build: error page, referral redirect, embedded demo.
+  const neverIndexed = new Set(["/404.html", "/beta.html", "/demo/index.html"]);
+  // One file serves many URLs (article.html?p=...), so it sets its own canonical.
+  const noCanonical = new Set(["/article.html"]);
+
+  return {
+    name: "nelview-seo-meta",
+    apply: "build",
+    transformIndexHtml(html, ctx) {
+      const path = sitePath(ctx.path);
+      const tags: HtmlTagDescriptor[] = [];
+      const meta = (attrs: Record<string, string>) =>
+        tags.push({ tag: "meta", attrs, injectTo: "head" });
+
+      if (isPreview || neverIndexed.has(path)) {
+        if (!/<meta[^>]+name=["']robots["']/i.test(html))
+          meta({ name: "robots", content: "noindex, nofollow" });
+      }
+      if (neverIndexed.has(path)) return tags;
+
+      const title = html.match(/<title>([^<]*)<\/title>/i)?.[1].trim();
+      const description = html
+        .match(/<meta[^>]+name=["']description["'][^>]*>/i)?.[0]
+        .match(/content="([^"]*)"/i)?.[1];
+      const page = path.replace(/^\//, "").replace(/\.html$/, "");
+      const url = `${SITE_URL}/${page === "index" ? "" : page}`;
+
+      if (!noCanonical.has(path)) {
+        tags.push({
+          tag: "link",
+          attrs: { rel: "canonical", href: url },
+          injectTo: "head",
+        });
+        meta({ property: "og:url", content: url });
+      }
+      meta({ property: "og:type", content: "website" });
+      meta({ property: "og:site_name", content: "Nelview" });
+      if (title) meta({ property: "og:title", content: title });
+      if (description)
+        meta({ property: "og:description", content: description });
+      meta({ property: "og:image", content: `${SITE_URL}/og-image.png` });
+      meta({ property: "og:image:width", content: "1200" });
+      meta({ property: "og:image:height", content: "630" });
+      meta({
+        property: "og:image:alt",
+        content: "Nelview: the pre-submission audit for research",
+      });
+      meta({ name: "twitter:card", content: "summary_large_image" });
+      meta({ name: "twitter:image", content: `${SITE_URL}/og-image.png` });
+
+      // On the home page, tell search engines the site's name and logo, so a
+      // result shows "Nelview" and the mark rather than the bare domain.
+      if (path === "/index.html")
+        tags.push({
+          tag: "script",
+          attrs: { type: "application/ld+json" },
+          children: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Nelview",
+              alternateName: ["Nelview AI", "nelview.com"],
+              url: `${SITE_URL}/`,
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Nelview",
+              url: `${SITE_URL}/`,
+              logo: `${SITE_URL}/icon-512.png`,
+              email: "team@nelview.com",
+              sameAs: ["https://www.linkedin.com/showcase/nelview/"],
+            },
+          ]),
+          injectTo: "head",
+        });
+      return tags;
+    },
+    closeBundle() {
+      if (!isPreview) return;
+      writeFileSync(
+        resolve(outDir, "robots.txt"),
+        "# Preview build: keep out of search engines.\nUser-agent: *\nDisallow: /\n",
+      );
+    },
+  };
+}
+
+/** Wraps large local images in <picture> with responsive WebP sources. */
+function responsiveWebp(): Plugin {
   const images = new Map<string, number>();
+  const widthsFor = (original: number) => {
+    const widths = [480, 960, 1440].filter((width) => width < original);
+    if (original <= 1440) widths.push(original);
+    return widths;
+  };
 
   return {
     name: "nelview-responsive-webp",
-    apply: "build" as const,
-    async transformIndexHtml(html: string) {
+    apply: "build",
+    async transformIndexHtml(html) {
       const tags = [
         ...html.matchAll(/<img\b[^>]*\bsrc=(["'])(assets\/[^"']+)\1[^>]*>/gi),
       ];
@@ -30,7 +218,7 @@ function responsiveWebp() {
         const image = match[0];
         const source = match[2];
         if (source.startsWith("assets/team/")) continue;
-        const input = resolve(root, "public", source);
+        const input = resolve(publicDir, source);
         if (!existsSync(input)) continue;
 
         const metadata = await sharp(input).metadata();
@@ -38,12 +226,8 @@ function responsiveWebp() {
 
         images.set(source, metadata.width);
         const { dir, name } = parse(source);
-        const widths = [480, 960, 1440].filter(
-          (width) => width < metadata.width!,
-        );
-        if (metadata.width <= 1440) widths.push(metadata.width);
-        const srcset = widths
-          .map((width) => `${resolveAssetPath(dir, name, width)} ${width}w`)
+        const srcset = widthsFor(metadata.width)
+          .map((width) => `${dir}/${name}-${width}.webp ${width}w`)
           .join(", ");
         const picture = `<picture><source type="image/webp" srcset="${srcset}" sizes="(max-width: 720px) 100vw, 50vw">${image}</picture>`;
 
@@ -56,23 +240,12 @@ function responsiveWebp() {
       return output;
     },
     async closeBundle() {
-      const output = resolve(root, "dist", "assets");
       for (const [source, originalWidth] of images) {
-        const input = resolve(root, "public", source);
         const { dir, name } = parse(source);
-        const widths = [480, 960, 1440].filter(
-          (width) => width < originalWidth,
-        );
-        if (originalWidth <= 1440) widths.push(originalWidth);
-
-        for (const width of widths) {
-          const destination = resolve(
-            output,
-            dir.replace(/^assets[\\/]/, ""),
-            `${name}-${width}.webp`,
-          );
+        for (const width of widthsFor(originalWidth)) {
+          const destination = resolve(outDir, dir, `${name}-${width}.webp`);
           mkdirSync(resolve(destination, ".."), { recursive: true });
-          await sharp(input)
+          await sharp(resolve(publicDir, source))
             .resize({ width, withoutEnlargement: true })
             .webp({ quality: 78, effort: 4 })
             .toFile(destination);
@@ -82,88 +255,35 @@ function responsiveWebp() {
   };
 }
 
-function resolveAssetPath(directory: string, name: string, width: number) {
-  return `${directory}/${name}-${width}.webp`;
-}
-
-function demoFiles() {
-  const source = resolve(root, "src", "demo");
-
-  return {
-    name: "nelview-demo-files",
-    configureServer(server: ViteDevServer) {
-      server.middlewares.use("/demo", (req, res, next) => {
-        if (!req.url || (req.method !== "GET" && req.method !== "HEAD")) {
-          next();
-          return;
-        }
-
-        const pathname = new URL(req.url, "http://localhost").pathname;
-        if (pathname !== "/index.html") {
-          next();
-          return;
-        }
-
-        const html = readFileSync(resolve(source, "index.html"), "utf8");
-        server
-          .transformIndexHtml("/demo/index.html", html)
-          .then((transformed) => {
-            res.setHeader("Content-Type", "text/html; charset=utf-8");
-            res.end(req.method === "HEAD" ? undefined : transformed);
-          })
-          .catch(next);
-      });
-    },
-    generateBundle: {
-      order: "post",
-      handler(_options, bundle) {
-        const sourcePath = "src/demo/index.html";
-        const demoHtml = bundle[sourcePath];
-        if (!demoHtml || demoHtml.type !== "asset") return;
-
-        demoHtml.fileName = "demo/index.html";
-        demoHtml.source = String(demoHtml.source).replaceAll(
-          "../../assets/",
-          "../assets/",
-        );
-        delete bundle[sourcePath];
-        bundle[demoHtml.fileName] = demoHtml;
-      },
-    },
-  };
-}
-
-// Every .html file in the project root is a page.
-const pages = Object.fromEntries(
-  readdirSync(root)
-    .filter((f) => f.endsWith(".html"))
-    .map((f) => [f.replace(/\.html$/, ""), resolve(root, f)]),
-);
-
 export default defineConfig({
+  root: src,
+  publicDir,
   base: "./", // relative URLs: works on a custom domain, Vercel, Netlify or GitHub Pages sub-paths
   plugins: [
     react(),
     ViteImageOptimizer({
       includePublic: true,
-      logStats: true,
+      logStats: false,
       png: { quality: 80 },
       jpeg: { quality: 80 },
       jpg: { quality: 80 },
       webp: { quality: 80 },
     }),
     responsiveWebp(),
-    demoFiles(),
+    seoMeta(),
+    pagesAtRoot(),
   ],
   build: {
-    outDir: "dist",
+    outDir,
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        ...pages,
-        "demo/index": resolve(root, "src", "demo", "index.html"),
-      },
+      input: Object.fromEntries(
+        listPages().map((page) => [
+          page.replace(/\.html$/, ""),
+          resolve(pagesDir, page),
+        ]),
+      ),
     },
   },
-  server: { open: "/index.html" },
+  server: { open: "/" },
 });

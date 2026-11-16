@@ -2,7 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.nelview.com/about</loc></url>
   <url><loc>https://www.nelview.com/apply</loc></url>
-  <url><loc>https://www.nelview.com/article</loc></url>
+  <url><loc>https://www.nelview.com/article?p=predatory-journals</loc></url>
+  <url><loc>https://www.nelview.com/article?p=desk-rejection</loc></url>
+  <url><loc>https://www.nelview.com/article?p=specific-aims</loc></url>
+  <url><loc>https://www.nelview.com/article?p=informed-consent</loc></url>
+  <url><loc>https://www.nelview.com/article?p=readiness-score</loc></url>
+  <url><loc>https://www.nelview.com/article?p=journal-fit</loc></url>
+  <url><loc>https://www.nelview.com/article?p=pass-marks</loc></url>
+  <url><loc>https://www.nelview.com/article?p=stats-mistakes</loc></url>
+  <url><loc>https://www.nelview.com/article?p=african-journals</loc></url>
   <url><loc>https://www.nelview.com/contact</loc></url>
   <url><loc>https://www.nelview.com/cookies</loc></url>
   <url><loc>https://www.nelview.com/experts</loc></url>

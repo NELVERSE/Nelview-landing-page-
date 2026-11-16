@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style id="nv-guard">
+      html {
+        background: #fff;
+      }
+      body {
+        opacity: 0;
+        animation: nvShow 0.01s 0.25s forwards;
+      }
+      @keyframes nvShow {
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apply to become a reviewer · Nelview</title>
+    <meta
+      name="description"
+      content="Apply to join the Nelview reviewer network. About 8 minutes: tell us your field, credentials and rate, and we verify every applicant within 5 to 7 working days."
+    />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="preload"
+      href="assets/fonts/geist-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+    <link rel="stylesheet" href="../styles/site.css" />
+    <link rel="stylesheet" href="../styles/pages.css" />
+    <link rel="stylesheet" href="../styles/color.css" />
+    <link rel="stylesheet" href="../styles/theme.css" />
+  </head>
+  <body data-page="exp">
+    <div data-site-header></div>
+    <main>
+      <section class="page-hero" style="padding: 64px 0 40px">
+        <div class="wrap">
+          <h1 class="h2">Apply to become a Nelview reviewer</h1>
+          <p class="lead" style="margin-top: 14px">
+            About 8 minutes. We verify every applicant within 5–7 working days.
+          </p>
+        </div>
+      </section>
+      <section style="padding-bottom: 112px">
+        <div class="wrap apply">
+          <aside>
+            <div class="photo ap-ph">
+              <img
+                src="assets/web/portrait-m.jpg"
+                alt="Nelview expert reviewer"
+                loading="lazy"
+                decoding="async"
+                width="1600"
+                height="1066"
+              />
+            </div>
+            <div class="stepper" id="stepper">
+              <div class="s on">
+                <i>1</i
+                ><span>About you<small>Name, role, institution</small></span>
+              </div>
+              <div class="s">
+                <i>2</i
+                ><span>Expertise<small>Fields and experience</small></span>
+              </div>
+              <div class="s">
+                <i>3</i><span>Credentials<small>ORCID, degree, CV</small></span>
+              </div>
+              <div class="s">
+                <i>4</i
+                ><span>Preferences<small>Rate and availability</small></span>
+              </div>
+            </div>
+            <div class="card" style="margin-top: 24px; background: var(--bg-2)">
+              <b style="font-size: 15px">What happens next</b>
+              <ul class="checks" style="margin: 4px 0 0; gap: 10px">
+                <li data-ic="check" style="font-size: 14px">
+                  Credential check in 5–7 days
+                </li>
+                <li data-ic="check" style="font-size: 14px">
+                  A short paid calibration review
+                </li>
+                <li data-ic="check" style="font-size: 14px">
+                  Matched briefs in your field
+                </li>
+              </ul>
+            </div>
+          </aside>
+          <div class="card" style="padding: 40px">
+            <form id="apf" novalidate>
+              <input
+                name="hp"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+                style="
+                  position: absolute;
+                  left: -9999px;
+                  width: 1px;
+                  height: 1px;
+                  opacity: 0;
+                "
+              />
+              <div class="fpanel on" data-p="0">
+                <h2>About you</h2>
+                <div class="fld">
+                  <label>How would you like to contribute?</label>
+                  <div class="opt">
+                    <label
+                      ><input
+                        type="radio"
+                        name="role"
+                        value="Peer reviewer"
+                        checked
+                      /><b>Peer reviewer</b>Structured reviews on submissions in
+                      your field</label
+                    ><label
+                      ><input type="radio" name="role" value="Examiner" /><b
+                        >External examiner</b
+                      >Theses and dissertations for partner universities</label
+                    ><label
+                      ><input type="radio" name="role" value="Board" /><b
+                        >Academic board</b
+                      >Help shape and benchmark our frameworks</label
+                    >
+                  </div>
+                </div>
+                <div class="form two">
+                  <div class="fld">
+                    <label>Full name *</label
+                    ><input
+                      name="name"
+                      required
+                      placeholder="Dr. Amara Okafor"
+                    />
+                  </div>
+                  <div class="fld">
+                    <label>Title *</label
+                    ><select name="title" required>
+                      <option value="">Select…</option>
+                      <option>Professor</option>
+                      <option>Associate Professor</option>
+                      <option>Senior Lecturer</option>
+                      <option>Lecturer</option>
+                      <option>Postdoctoral Researcher</option>
+                      <option>Research Consultant</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form two">
+                  <div class="fld">
+                    <label>Email *</label
+                    ><input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="you@university.edu"
+                    />
+                  </div>
+                  <div class="fld">
+                    <label>Country *</label
+                    ><input name="country" required placeholder="Ghana" />
+                  </div>
+                </div>
+                <div class="fld">
+                  <label>Institution or organisation *</label
+                  ><input
+                    name="inst"
+                    required
+                    placeholder="University of Ghana"
+                  />
+                </div>
+              </div>
+
+              <div class="fpanel" data-p="1">
+                <h2>Your expertise</h2>
+                <div class="fld">
+                  <label
+                    >Primary fields *
+                    <span class="muted" style="font-weight: 400"
+                      >(pick any)</span
+                    ></label
+                  >
+                  <div class="chips" data-chips="fields">
+                    <span class="chip">Life Sciences</span
+                    ><span class="chip">Medicine</span
+                    ><span class="chip">Public Health</span
+                    ><span class="chip">Biostatistics</span
+                    ><span class="chip">Engineering</span
+                    ><span class="chip">Computer Science</span
+                    ><span class="chip">Social Sciences</span
+                    ><span class="chip">Economics</span
+                    ><span class="chip">Education</span
+                    ><span class="chip">Agriculture</span
+                    ><span class="chip">Humanities</span
+                    ><span class="chip">Environmental Science</span>
+                  </div>
+                </div>
+                <div class="form two">
+                  <div class="fld">
+                    <label>Years of research experience *</label
+                    ><select name="years" required>
+                      <option value="">Select…</option>
+                      <option>3–5 years</option>
+                      <option>6–10 years</option>
+                      <option>11–15 years</option>
+                      <option>16+ years</option>
+                    </select>
+                  </div>
+                  <div class="fld">
+                    <label>Peer reviews completed</label
+                    ><select name="reviews">
+                      <option>Fewer than 10</option>
+                      <option>10–50</option>
+                      <option>50–150</option>
+                      <option>150+</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="fld">
+                  <label>Document types you can review</label>
+                  <div class="chips" data-chips="docs">
+                    <span class="chip">Journal manuscripts</span
+                    ><span class="chip">Grant proposals</span
+                    ><span class="chip">Theses</span
+                    ><span class="chip">Ethics applications</span
+                    ><span class="chip">Conference abstracts</span
+                    ><span class="chip">Statistical review</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fpanel" data-p="2">
+                <h2>Credentials &amp; verification</h2>
+                <p class="muted" style="margin-top: -8px">
+                  Kept confidential and used only to validate your application.
+                </p>
+                <div class="form two">
+                  <div class="fld">
+                    <label>ORCID iD *</label
+                    ><input
+                      name="orcid"
+                      required
+                      placeholder="0000-0002-1825-0097"
+                      pattern="\d{4}-\d{4}-\d{4}-\d{3}[\dX]"
+                    />
+                  </div>
+                  <div class="fld">
+                    <label>Google Scholar or profile URL</label
+                    ><input
+                      name="scholar"
+                      placeholder="https://scholar.google.com/…"
+                    />
+                  </div>
+                </div>
+                <div class="fld">
+                  <label>Highest degree *</label
+                  ><select name="degree" required>
+                    <option value="">Select…</option>
+                    <option>PhD</option>
+                    <option>MD</option>
+                    <option>MD-PhD</option>
+                    <option>Master's</option>
+                    <option>Other doctoral</option>
+                  </select>
+                </div>
+                <div class="fld">
+                  <label>CV or résumé *</label
+                  ><label class="upl" id="upl"
+                    ><span class="ico lg" data-ic="upload" data-s="20"></span>
+                    <div>
+                      <b id="cvl">Upload your CV</b
+                      ><span class="h">PDF or DOCX, up to 10 MB</span>
+                    </div>
+                    <input type="file" id="cv" accept=".pdf,.doc,.docx" hidden
+                  /></label>
+                </div>
+              </div>
+
+              <div class="fpanel" data-p="3">
+                <h2>Review preferences</h2>
+                <div class="form two">
+                  <div class="fld">
+                    <label>Target rate per review (USD) *</label
+                    ><select name="rate" required>
+                      <option value="">Select…</option>
+                      <option>$80–120</option>
+                      <option>$120–180</option>
+                      <option>$180–240</option>
+                      <option>$240+</option>
+                    </select>
+                  </div>
+                  <div class="fld">
+                    <label>Reviews per month</label
+                    ><select name="capacity">
+                      <option>1–2</option>
+                      <option>3–5</option>
+                      <option>6+</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="fld">
+                  <label>Payout method</label>
+                  <div class="opt">
+                    <label
+                      ><input type="radio" name="pay" value="Bank" checked /><b
+                        >Bank transfer</b
+                      >Local or international</label
+                    ><label
+                      ><input type="radio" name="pay" value="Mobile money" /><b
+                        >Mobile money</b
+                      >Paid to your phone</label
+                    ><label
+                      ><input type="radio" name="pay" value="PayPal" /><b
+                        >PayPal</b
+                      >Paid in USD</label
+                    >
+                  </div>
+                </div>
+                <div class="fld">
+                  <label>Anything else we should know?</label
+                  ><textarea
+                    name="note"
+                    placeholder="Editorial roles, awards, or areas you'd especially like to review…"
+                  ></textarea>
+                </div>
+                <label class="chk"
+                  ><input type="checkbox" id="agree" />I confirm this
+                  information is accurate and agree to Nelview's reviewer terms,
+                  confidentiality and double-blind policy.</label
+                >
+              </div>
+
+              <div class="ferr" id="ferr">
+                Please complete the required fields.
+              </div>
+              <div class="ffoot">
+                <button
+                  type="button"
+                  class="btn btn-g"
+                  id="back"
+                  style="visibility: hidden"
+                >
+                  Back</button
+                ><span class="muted" style="font-size: 14px" id="cnt"
+                  >Step 1 of 4</span
+                ><button type="submit" class="btn btn-p" id="next">
+                  Continue<span data-ic="arrow" data-s="16"></span>
+                </button>
+              </div>
+            </form>
+            <div
+              class="done"
+              id="apdone"
+              style="padding: 24px 8px; text-align: left"
+            >
+              <span
+                class="ico lg"
+                data-ic="check"
+                data-s="22"
+                style="margin: 0 0 18px; background: var(--blue); color: #fff"
+              ></span>
+              <h2 class="h3">
+                Application received, <span id="dn">there</span>.
+              </h2>
+              <p class="muted" style="margin-top: 10px">
+                We've sent a confirmation to
+                <b id="de" style="color: var(--ink)"></b>. Here's what happens
+                next.
+              </p>
+              <div class="tl">
+                <div class="dn">
+                  <i data-ic="check" data-s="14"></i>
+                  <div><b>Application submitted</b><span>Today</span></div>
+                </div>
+                <div>
+                  <i>2</i>
+                  <div>
+                    <b>Credential verification</b
+                    ><span
+                      >ORCID, affiliation and publication record · 5–7 working
+                      days</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <i>3</i>
+                  <div>
+                    <b>Identity check (KYC)</b
+                    ><span>Required before your first payout</span>
+                  </div>
+                </div>
+                <div>
+                  <i>4</i>
+                  <div>
+                    <b>Calibration review</b
+                    ><span>One paid review to align with our standards</span>
+                  </div>
+                </div>
+                <div>
+                  <i>5</i>
+                  <div>
+                    <b>Start receiving briefs</b
+                    ><span>Matched to your fields in the Expert Portal</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 8px">
+                <a class="btn btn-d" href="https://app.nelview.com/expert"
+                  >Preview the Expert Portal<span data-ic="arrow"></span></a
+                ><a class="btn btn-g" href="index.html">Back to home</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-site-footer></div>
+    <script type="module" src="../scripts/site.ts"></script>
+    <script type="module" src="../scripts/i18n.ts"></script>
+    <script type="module" src="../scripts/pages/apply.ts"></script>
+    <script type="module" src="../scripts/motion.ts"></script>
+  </body>
+</html>

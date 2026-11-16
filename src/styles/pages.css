@@ -25,7 +25,7 @@
 }
 .phd h1 {
   font-size: clamp(44px, 6.6vw, 88px);
-  letter-spacing: -0.052em;
+  letter-spacing: -0.038em;
   line-height: 0.98;
   font-weight: 680;
   max-width: 16ch;
@@ -124,7 +124,7 @@
   box-shadow: inset 0 -2px 0 var(--ink);
 }
 .rtabs button span {
-  font-family: var(--mono);
+  font-weight: 560;
   font-size: 12px;
   color: var(--ink-3);
 }
@@ -233,7 +233,7 @@
 }
 .art-hd h1 {
   font-size: clamp(38px, 5.4vw, 68px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.038em;
   line-height: 1.02;
   font-weight: 680;
   margin-top: 28px;
@@ -315,9 +315,8 @@
 }
 .toc h6 {
   font-size: 12px;
-  font-family: var(--mono);
   color: var(--ink-3);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 10px;
   letter-spacing: 0.02em;
 }
@@ -470,7 +469,7 @@
 }
 .ab-hero h1 {
   font-size: clamp(46px, 8vw, 112px);
-  letter-spacing: -0.058em;
+  letter-spacing: -0.038em;
   line-height: 0.95;
   font-weight: 690;
   max-width: 13ch;
@@ -486,7 +485,7 @@
   gap: 48px;
 }
 .mission .lb {
-  font-family: var(--mono);
+  font-weight: 560;
   font-size: 13px;
   color: var(--ink-3);
   padding-top: 10px;
@@ -510,17 +509,11 @@
 }
 .vrow {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 48px;
   padding: 40px 0;
   border-bottom: 1px solid var(--line);
   align-items: start;
-}
-.vrow .n {
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--blue-tx);
-  padding-top: 6px;
 }
 .vrow h3 {
   font-size: clamp(24px, 2.4vw, 30px);
@@ -537,9 +530,6 @@
 }
 .dark .vrow p {
   color: #b7bdc9;
-}
-.dark .vrow .n {
-  color: #4ade8a;
 }
 .ttl {
   display: grid;
@@ -568,7 +558,7 @@
   box-shadow: 0 0 0 4px var(--blue-soft);
 }
 .ttl .y {
-  font-family: var(--mono);
+  font-weight: 560;
   font-size: 13px;
   color: var(--ink-3);
 }
@@ -693,7 +683,7 @@
 }
 .pl-hero h1 {
   font-size: clamp(46px, 7.6vw, 104px);
-  letter-spacing: -0.056em;
+  letter-spacing: -0.038em;
   line-height: 0.96;
   font-weight: 690;
   max-width: 12ch;
@@ -755,7 +745,7 @@
 }
 .lg-hd h1 {
   font-size: clamp(40px, 5.6vw, 72px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.038em;
   line-height: 1;
   font-weight: 680;
   margin-top: 24px;
@@ -810,7 +800,7 @@
   align-items: baseline;
 }
 .legal .prose h2 .no {
-  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   color: var(--ink-3);
   font-weight: 500;
@@ -827,7 +817,6 @@
   padding: 26px 28px;
 }
 .tldr h6 {
-  font-family: var(--mono);
   font-size: 12px;
   color: var(--blue-tx);
   font-weight: 550;
@@ -980,7 +969,7 @@
 }
 .nf h1 {
   font-size: clamp(40px, 6vw, 72px);
-  letter-spacing: -0.05em;
+  letter-spacing: -0.038em;
   line-height: 1;
   font-weight: 680;
   margin-top: 16px;
@@ -1007,7 +996,7 @@
 }
 .pr-hero h1 {
   font-size: clamp(44px, 6.8vw, 92px);
-  letter-spacing: -0.055em;
+  letter-spacing: -0.038em;
   line-height: 0.96;
   font-weight: 690;
   max-width: 13ch;

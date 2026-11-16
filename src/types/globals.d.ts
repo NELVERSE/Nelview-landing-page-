@@ -1,4 +1,4 @@
-// Globals shared between the classic scripts in src/scripts.
+// Globals the scripts in src/scripts share through window.
 interface NvApp {
   signin: string;
   start: string;
@@ -26,7 +26,10 @@ interface Window {
     rec: Record<string, unknown>,
   ) => Promise<{ ok?: boolean; [key: string]: unknown }>;
   nvFdata: (form: HTMLFormElement) => Record<string, string>;
+  nvSubmit: (
+    form: HTMLFormElement,
+    rec: Record<string, unknown>,
+    done: (res: { ok?: boolean; [key: string]: unknown }) => void,
+  ) => void;
   nvRevealAll?: () => void;
-  Motion?: any;
-  Lenis?: any;
 }

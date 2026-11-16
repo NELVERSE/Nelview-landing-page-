@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style id="nv-guard">
+      html {
+        background: #fff;
+      }
+      body {
+        opacity: 0;
+        animation: nvShow 0.01s 0.25s forwards;
+      }
+      @keyframes nvShow {
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy · Nelview</title>
+    <meta
+      name="description"
+      content="How Nelview collects, uses and protects your personal data and your research."
+    />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      rel="preload"
+      href="assets/fonts/geist-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+    <link rel="stylesheet" href="../styles/site.css" />
+    <link rel="stylesheet" href="../styles/pages.css" />
+    <link rel="stylesheet" href="../styles/color.css" />
+    <link rel="stylesheet" href="../styles/theme.css" />
+  </head>
+  <body data-page="legal" data-doc="privacy">
+    <div data-site-header></div>
+    <main>
+      <div class="wrap">
+        <header
+          class="lg-hd"
+          id="lg-hd"
+          data-screen-label="Privacy Policy header"
+        ></header>
+        <div class="legal" data-screen-label="Privacy Policy body">
+          <aside class="toc" id="toc"></aside>
+          <div class="prose" id="lg-b"></div>
+        </div>
+      </div>
+    </main>
+    <div data-site-footer></div>
+    <script type="module" src="../scripts/legal.ts"></script>
+    <script type="module" src="../scripts/site.ts"></script>
+    <script type="module" src="../scripts/i18n.ts"></script>
+    <script type="module" src="../scripts/motion.ts"></script>
+  </body>
+</html>
