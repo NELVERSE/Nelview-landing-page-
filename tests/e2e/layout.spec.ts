@@ -61,14 +61,5 @@ for (const width of [360, 390, 430]) {
       expect(result.barsWidth, "bars squeezed").toBeGreaterThan(120);
       expect(result.wrapped, "expert detail text wraps").toEqual([]);
     });
-
-    test("home: audience tiles take a full row each", async ({ page }) => {
-      await page.goto("/");
-      const widths = await page
-        .locator(".nt-4 .nt-c")
-        .evaluateAll((tiles) => tiles.map((t) => Math.round(t.getBoundingClientRect().width)));
-      expect(widths).toHaveLength(4);
-      for (const w of widths) expect(w).toBeGreaterThan(width * 0.8);
-    });
   });
 }

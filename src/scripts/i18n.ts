@@ -360,6 +360,13 @@
     "is desk-rejected before peer review. Not for lack of ideas, for lack of":
       "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback.": "retours rigoureux.",
+    "Compare plans.": "Comparer les offres.",
+    "Billing questions.": "Questions de facturation.",
+    "Questions from universities.": "Questions des universités.",
+    "From reviewers in the network.": "Des évaluateurs du réseau.",
+    "Reviewer questions.": "Questions des évaluateurs.",
+    "Our five commitments.": "Nos cinq engagements.",
+    "Apply to become a Nelview reviewer.": "Candidatez pour devenir évaluateur Nelview.",
     "Know where your paper stands.": "Sachez où en est votre article.",
     "A 0–100 readiness score, with the fixes that move it.": "Un score de préparation de 0 à 100, avec les corrections qui le font progresser.",
     "Catch a predatory journal before you submit.": "Repérez une revue prédatrice avant de soumettre.",
@@ -800,7 +807,7 @@
     "e.g. My final-year thesis, or a manuscript heading to a journal.":
       "ex. Mon mémoire de fin d'études, ou un manuscrit destiné à une revue.",
     // sign in
-    "Sign in to Nelview": "Se connecter à Nelview",
+    "Sign in to Nelview.": "Se connecter à Nelview.",
     "Nelview is in private beta. Join the waitlist and we'll email you when your spot opens.":
       "Nelview est en bêta privée. Rejoignez la liste d'attente et nous vous écrirons dès qu'une place se libère.",
     "Researcher or student": "Chercheur ou étudiant",
@@ -812,7 +819,7 @@
       "Une bonne recherche ne devrait pas attendre des mois pour être évaluée.",
     "Try Nelview": "Essayer Nelview gratuitement",
     "Meet the team": "Rencontrer l'équipe",
-    "What we believe": "Nos convictions",
+    "What we believe.": "Nos convictions.",
     "Where the story is now.": "Où en est l'histoire.",
     "The people building Nelview.": "Les personnes qui construisent Nelview.",
     "What comes next.": "La suite.",

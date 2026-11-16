@@ -29,8 +29,8 @@ src/
     legal.ts        privacy / terms / cookies / security content
     posts.ts        blog posts
     pages/          one script per page that needs its own behaviour
-  styles/           theme.css is the current design and loads last; site.css, pages.css,
-                    story.css and color.css are the older layers it builds on
+  styles/           theme.css is the current design and loads last; site.css, pages.css
+                    and color.css are the older layers it builds on
   demo/             React source of that animated demo
   types/            shared type declarations
 public/             files copied to the site as they are: images, the product video, tool logos

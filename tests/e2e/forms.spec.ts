@@ -108,8 +108,8 @@ test.describe("newsletter and alerts", () => {
     page,
     backend,
   }) => {
-    await page.goto("/");
-    const form = page.locator("form.nl-f");
+    await page.goto("/resources");
+    const form = page.locator("form[data-list='Newsletter']");
     await form.locator("input[type=email]").fill("n@x.org");
 
     backend.mode = "reject";
@@ -125,11 +125,11 @@ test.describe("newsletter and alerts", () => {
   });
 
   test("the send error is translated in French", async ({ page, backend }) => {
-    await page.goto("/");
+    await page.goto("/resources");
     await page.evaluate(() => (window as any).nvLang("fr", true));
     backend.mode = "down";
-    await page.locator("form.nl-f input[type=email]").fill("n@x.org");
-    await page.locator("form.nl-f button").click();
+    await page.locator("form[data-list='Newsletter'] input[type=email]").fill("n@x.org");
+    await page.locator("form[data-list='Newsletter'] button").click();
     await expect(page.locator(".nv-send-err")).toContainText("L'envoi a échoué");
   });
 
