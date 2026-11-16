@@ -149,7 +149,41 @@ function seoMeta(): Plugin {
       if (description)
         meta({ property: "og:description", content: description });
       meta({ property: "og:image", content: `${SITE_URL}/og-image.png` });
+      meta({ property: "og:image:width", content: "1200" });
+      meta({ property: "og:image:height", content: "630" });
+      meta({
+        property: "og:image:alt",
+        content: "Nelview: the pre-submission audit for research",
+      });
       meta({ name: "twitter:card", content: "summary_large_image" });
+      meta({ name: "twitter:image", content: `${SITE_URL}/og-image.png` });
+
+      // On the home page, tell search engines the site's name and logo, so a
+      // result shows "Nelview" and the mark rather than the bare domain.
+      if (path === "/index.html")
+        tags.push({
+          tag: "script",
+          attrs: { type: "application/ld+json" },
+          children: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Nelview",
+              alternateName: ["Nelview AI", "nelview.com"],
+              url: `${SITE_URL}/`,
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Nelview",
+              url: `${SITE_URL}/`,
+              logo: `${SITE_URL}/icon-512.png`,
+              email: "team@nelview.com",
+              sameAs: ["https://www.linkedin.com/showcase/nelview/"],
+            },
+          ]),
+          injectTo: "head",
+        });
       return tags;
     },
     closeBundle() {

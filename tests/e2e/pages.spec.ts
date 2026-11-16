@@ -144,11 +144,38 @@ test("every page declares the favicon set and the files exist", async ({ page, r
         'link[rel="icon"], link[rel="apple-touch-icon"], link[rel="manifest"]',
       )].map((link) => link.href),
     );
-    expect(icons.length, `${path} icon links`).toBe(4);
+    expect(icons.length, `${path} icon links`).toBe(5);
     for (const url of icons)
       expect((await request.get(url)).status(), url).toBe(200);
   }
   const manifest = await (await request.get("/site.webmanifest")).json();
   for (const icon of manifest.icons)
     expect((await request.get(`/${icon.src}`)).status(), icon.src).toBe(200);
+});
+
+test("the home page tells search engines its name, logo and cover image", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  const data = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent())!,
+  );
+  expect(data.map((entry: { "@type": string }) => entry["@type"])).toEqual([
+    "WebSite",
+    "Organization",
+  ]);
+  expect(data[0].name).toBe("Nelview");
+
+  // The cover image and logo are absolute production URLs; check the files ship.
+  for (const file of ["og-image.png", "icon-512.png"])
+    expect((await request.head(`/${file}`)).status(), file).toBe(200);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    "content",
+    /\/og-image\.png$/,
+  );
+  await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute(
+    "content",
+    "1200",
+  );
 });
