@@ -74,7 +74,7 @@ test("header product links point at a section that exists", async ({ page }) => 
   await page.setViewportSize({ width: 1366, height: 800 });
   await page.goto("/");
   const targets = await page.evaluate(() =>
-    [...document.querySelectorAll<HTMLAnchorElement>('a[href*="index.html#"]')].map(
+    [...document.querySelectorAll<HTMLAnchorElement>('a[href^="./#"]')].map(
       (link) => link.hash,
     ),
   );

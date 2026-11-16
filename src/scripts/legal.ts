@@ -21,7 +21,7 @@ window.NV_LEGAL = {
       ],
       [
         "Your content",
-        'You keep all rights to the documents you upload. You give us a limited licence to process them only to provide the review you asked for. We do not use your documents to train models, and we delete them after review as described in our <a href="privacy.html">Privacy Policy</a>.',
+        'You keep all rights to the documents you upload. You give us a limited licence to process them only to provide the review you asked for. We do not use your documents to train models, and we delete them after review as described in our <a href="privacy">Privacy Policy</a>.',
       ],
       [
         "What Nelview does and does not do",
@@ -92,7 +92,7 @@ window.NV_LEGAL = {
       ],
       [
         "Cookies",
-        'We use essential cookies to keep you signed in, and optional analytics cookies only with your consent. See our <a href="cookies.html">Cookie Policy</a>.',
+        'We use essential cookies to keep you signed in, and optional analytics cookies only with your consent. See our <a href="cookies">Cookie Policy</a>.',
       ],
       [
         "Contact",
@@ -199,7 +199,7 @@ window.NV_LEGAL = {
         return (
           "<a href='" +
           x +
-          ".html'" +
+          "'" +
           (x === k ? " class='on'" : "") +
           ">" +
           N[x] +
