@@ -71,7 +71,7 @@ test("a missing nested URL gets a fully styled 404 page", async ({ page }) => {
   await page.goto("/404.html");
   await expect(page.locator("footer.ftr")).toBeVisible();
   expect(nested).toEqual(await look());
-  expect(nested.home).toBe("/index.html");
+  expect(nested.home).toBe("/");
 });
 
 test("the 404 page stays inside a github.io project path", async ({ browser }) => {
@@ -96,13 +96,13 @@ test("the 404 page stays inside a github.io project path", async ({ browser }) =
   await expect(page.locator("footer.ftr")).toBeVisible();
   await expect(page.locator(".brand").first()).toHaveAttribute(
     "href",
-    "index.html",
+    "./",
   );
   expect(
     await page.evaluate(
       () => (document.querySelector(".brand") as HTMLAnchorElement).href,
     ),
-  ).toBe("https://nelverse.github.io/Nelview-landing-page-/index.html");
+  ).toBe("https://nelverse.github.io/Nelview-landing-page-/");
   expect(outside, "requests outside the project path").toEqual([]);
   await context.close();
 });

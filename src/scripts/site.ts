@@ -5,10 +5,10 @@
   var PORTAL_BASE = "https://app.nelview.com"; // change to your portal domain
 
   var APP = {
-    signin: "signin.html",
-    start: "waitlist.html",
+    signin: "signin",
+    start: "waitlist",
     inst: PORTAL_BASE + "/institution/onboarding",
-    expert: "apply.html",
+    expert: "apply",
     expertPortal: PORTAL_BASE + "/expert",
     instPortal: PORTAL_BASE + "/institution",
   };
@@ -129,37 +129,37 @@
           "cpu",
           "AI Review Engine",
           "A 0–100 readiness score across methods, novelty, stats and ethics",
-          "index.html#how",
+          "./#how",
         ],
         [
           "edit",
           "Document Editor",
           "Fix issues section by section, in context",
-          "index.html#how",
+          "./#how",
         ],
         [
           "shield",
           "Journal Check",
           "DOAJ and COPE legitimacy, predatory red flags",
-          "index.html#how",
+          "./#how",
         ],
         [
           "book",
           "Citation Manager",
           "Sync Zotero and Mendeley, catch missing refs",
-          "index.html#how",
+          "./#how",
         ],
         [
           "layers",
           "Journal Formatter",
           "Match any journal's guidelines in seconds",
-          "index.html#how",
+          "./#how",
         ],
         [
           "users",
           "Expert Review",
           "Named human reviewers, double-blind",
-          "experts.html",
+          "experts",
         ],
       ],
       cols: 2,
@@ -167,7 +167,7 @@
         "New",
         "Pass marks per programme",
         "Institutions can now set their own criteria, bands and pass marks.",
-        "institutions.html",
+        "institutions",
         "assets/story/classroom.webp",
       ],
     },
@@ -178,32 +178,32 @@
           "file",
           "Researchers & authors",
           "Submit with confidence, not hope",
-          "index.html#how",
+          "./#how",
         ],
         [
           "building",
           "Universities",
           "Seats, criteria and analytics at scale",
-          "institutions.html",
+          "institutions",
         ],
         [
           "grad",
           "Supervisors & lecturers",
           "Spend time on the thinking, not the typos",
-          "institutions.html#supervisors",
+          "institutions#supervisors",
         ],
         [
           "award",
           "Expert reviewers",
           "Earn by reviewing work in your field",
-          "experts.html",
+          "experts",
         ],
       ],
       cols: 2,
       foot: [
         "Planning a rollout?",
         "Book a demo",
-        "contact.html",
+        "contact",
         "assets/story/library.png",
       ],
     },
@@ -214,34 +214,34 @@
           "book",
           "Blog & guides",
           "Writing on review, journals and grants",
-          "resources.html",
+          "resources",
         ],
         [
           "flag",
           "Predatory journal guide",
           "Seven red flags and how to check",
-          "journal-guide.html",
+          "journal-guide",
         ],
-        ["search", "FAQ", "Answers to common questions", "index.html#faq"],
+        ["search", "FAQ", "Answers to common questions", "./#faq"],
         [
           "heart",
           "About & mission",
           "Our mission and the people behind it",
-          "about.html",
+          "about",
         ],
         [
           "award",
           "Research Pledge",
           "How every subscription funds research",
-          "pledge.html",
+          "pledge",
         ],
-        ["mail", "Contact & support", "Talk to our team", "contact.html"],
+        ["mail", "Contact & support", "Talk to our team", "contact"],
       ],
       cols: 1,
       post: [
         "GUIDE",
         "Spotting a predatory journal in 5 minutes",
-        "journal-guide.html",
+        "journal-guide",
         "assets/story/factcheck.png",
       ],
     },
@@ -400,14 +400,14 @@
   var h = document.querySelector("[data-site-header]");
   if (h) {
     h.outerHTML =
-      "<header class='hdr' id='hdr'><div class='wrap'><a class='brand' href='index.html'><span class='mk'>" +
+      "<header class='hdr' id='hdr'><div class='wrap'><a class='brand' href='./'><span class='mk'>" +
       mark("#0A0D14") +
       "</span>Nelview</a><nav class='nav'>" +
       dd("product") +
       dd("solutions") +
       "<a class='nl" +
       (ACT === "pricing" ? " on" : "") +
-      "' href='pricing.html'>Pricing</a>" +
+      "' href='pricing'>Pricing</a>" +
       dd("resources") +
       "</nav><div class='hdr-r'><a class='si' href='" +
       APP.signin +
@@ -416,7 +416,7 @@
       "'>Get started</a><button class='burger' id='burger' aria-label='Open menu'>" +
       ic("menu", 20) +
       "</button></div></div></header>" +
-      "<div class='mnav' id='mnav'><div class='mnav-top'><a class='brand' href='index.html'><span class='mk'>" +
+      "<div class='mnav' id='mnav'><div class='mnav-top'><a class='brand' href='./'><span class='mk'>" +
       mark("#0A0D14") +
       "</span>Nelview</a><button class='burger' style='display:inline-flex' id='mclose' aria-label='Close menu'>" +
       ic("x", 20) +
@@ -434,7 +434,7 @@
           );
         })
         .join("") +
-      "<a class='l' href='pricing.html'>Pricing</a><a class='l' href='contact.html'>Book a demo</a><div class='row'><a class='btn btn-g btn-lg' href='" +
+      "<a class='l' href='pricing'>Pricing</a><a class='l' href='contact'>Book a demo</a><div class='row'><a class='btn btn-g btn-lg' href='" +
       APP.signin +
       "'>Sign in</a><a class='btn btn-p btn-lg' href='" +
       APP.start +
@@ -450,17 +450,24 @@
         e.stopPropagation();
       });
     });
+    var closeMenus = function () {
+      document.querySelectorAll(".dd.open").forEach(function (x) {
+        x.classList.remove("open");
+      });
+    };
     document.addEventListener("click", function (e) {
-      if (!e.target.closest(".dd"))
-        document.querySelectorAll(".dd.open").forEach(function (x) {
-          x.classList.remove("open");
-        });
+      // A link to a place on the current page does not reload it, so the menu
+      // has to close itself; so does a click anywhere outside the menu.
+      if (!e.target.closest(".dd") || e.target.closest(".dd a")) closeMenus();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeMenus();
     });
   }
   var f = document.querySelector("[data-site-footer]");
   if (f) {
     f.outerHTML =
-      "<footer class='ftr'><div class='wrap'><div class='ftr-top'><div><a class='brand' href='index.html'><span class='mk'>" +
+      "<footer class='ftr'><div class='wrap'><div class='ftr-top'><div><a class='brand' href='./'><span class='mk'>" +
       mark("#FFFFFF") +
       "</span>Nelview</a><p>The pre-submission audit for research. An AI peer-review platform by <b style='color:#fff;font-weight:560'>Nelverse</b>, built in Africa for researchers everywhere.</p><div class='ct'><a href='mailto:team@nelview.com'>" +
       ic("mail", 15) +
@@ -471,13 +478,13 @@
       "+233 25 680 9108</a><span style='display:inline-flex;gap:8px;align-items:center'>" +
       ic("pin", 15) +
       "Accra, Ghana</span></div></div>" +
-      "<div class='col'><h5>Product</h5><a href='index.html#how'>AI Review Engine</a><a href='index.html#how'>Document Editor</a><a href='index.html#how'>Journal Check</a><a href='index.html#how'>Citation Manager</a><a href='index.html#how'>Journal Formatter</a></div>" +
-      "<div class='col'><h5>Solutions</h5><a href='index.html#how'>Researchers &amp; authors</a><a href='institutions.html'>Universities</a><a href='institutions.html#supervisors'>Supervisors &amp; lecturers</a><a href='experts.html'>Expert reviewers</a><a href='pricing.html'>Pricing</a></div>" +
-      "<div class='col'><h5>Resources</h5><a href='resources.html'>Blog &amp; guides</a><a href='journal-guide.html'>Predatory journal guide</a><a href='index.html#faq'>FAQ</a><a href='contact.html'>Help &amp; support</a></div>" +
-      "<div class='col'><h5>Company</h5><a href='about.html'>About &amp; mission</a><a href='pledge.html'>Research Pledge</a><a href='experts.html'>Join the reviewer network</a><a href='contact.html'>Contact</a></div></div>" +
+      "<div class='col'><h5>Product</h5><a href='./#how'>AI Review Engine</a><a href='./#how'>Document Editor</a><a href='./#how'>Journal Check</a><a href='./#how'>Citation Manager</a><a href='./#how'>Journal Formatter</a></div>" +
+      "<div class='col'><h5>Solutions</h5><a href='./#how'>Researchers &amp; authors</a><a href='institutions'>Universities</a><a href='institutions#supervisors'>Supervisors &amp; lecturers</a><a href='experts'>Expert reviewers</a><a href='pricing'>Pricing</a></div>" +
+      "<div class='col'><h5>Resources</h5><a href='resources'>Blog &amp; guides</a><a href='journal-guide'>Predatory journal guide</a><a href='./#faq'>FAQ</a><a href='contact'>Help &amp; support</a></div>" +
+      "<div class='col'><h5>Company</h5><a href='about'>About &amp; mission</a><a href='pledge'>Research Pledge</a><a href='experts'>Join the reviewer network</a><a href='contact'>Contact</a></div></div>" +
       "<div class='ftr-bot'><div class='ftr-soc'><span>© 2026 Nelverse · Nelview</span>" +
       soc() +
-      "</div><div class='row'><a href='privacy.html'>Privacy</a><a href='terms.html'>Terms</a><a href='security.html'>Security</a><a href='cookies.html'>Cookies</a><span class='lang'><b>English</b><span title='French version coming soon'>Français · soon</span></span></div></div></div></footer>";
+      "</div><div class='row'><a href='privacy'>Privacy</a><a href='terms'>Terms</a><a href='security'>Security</a><a href='cookies'>Cookies</a><span class='lang'><b>English</b><span title='French version coming soon'>Français · soon</span></span></div></div></div></footer>";
   }
   document.querySelectorAll("[data-ic]").forEach(function (e) {
     var s = +e.getAttribute("data-s") || 18;
@@ -763,7 +770,7 @@
     d.innerHTML =
       "<div class='cns-in'><span class='ico'>" +
       ic("shield", 18) +
-      "</span><div class='cns-tx'><b>We respect your privacy</b><p>We use essential cookies to run Nelview and, with your consent, analytics to improve it. We never sell your data. Read our <a href='privacy.html'>Privacy policy</a> and <a href='cookies.html'>Cookie policy</a>.</p></div><div class='cns-b'><button type='button' class='btn btn-g btn-sm' data-c='essential'>Essential only</button><button type='button' class='btn btn-p btn-sm' data-c='all'>Accept</button></div></div>";
+      "</span><div class='cns-tx'><b>We respect your privacy</b><p>We use essential cookies to run Nelview and, with your consent, analytics to improve it. We never sell your data. Read our <a href='privacy'>Privacy policy</a> and <a href='cookies'>Cookie policy</a>.</p></div><div class='cns-b'><button type='button' class='btn btn-g btn-sm' data-c='essential'>Essential only</button><button type='button' class='btn btn-p btn-sm' data-c='all'>Accept</button></div></div>";
     document.body.appendChild(d);
     requestAnimationFrame(function () {
       setTimeout(function () {

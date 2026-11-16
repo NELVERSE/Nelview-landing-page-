@@ -23,7 +23,7 @@
           "</span>";
   }
   function url(p) {
-    return "article.html?p=" + p.s;
+    return "article?p=" + p.s;
   }
   function cover(p) {
     return (

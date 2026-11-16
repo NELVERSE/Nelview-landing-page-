@@ -97,7 +97,7 @@
   document.getElementById("rel").innerHTML = rel
     .map(function (r) {
       return (
-        "<a class='post' href='article.html?p=" +
+        "<a class='post' href='article?p=" +
         r.s +
         "'><div class='cover " +
         r.cv +
