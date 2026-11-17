@@ -10,49 +10,13 @@ into a Google Sheet (openable in Excel). ~5 minutes, free, no add-ons.
 ## 2. Add the script
 
 2. In the sheet: **Extensions → Apps Script**.
-3. Delete whatever is there and paste this in, then click the **Save** icon:
+3. Delete whatever is there, open `apps-script/Code.gs` from this repository,
+   copy **all** of it, paste it in, and click the **Save** icon.
 
-```javascript
-function doPost(e) {
-  var lock = LockService.getScriptLock();
-  lock.tryLock(30000);
-  try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet =
-      ss.getSheetByName("Applications") || ss.insertSheet("Applications");
-    var cols = [
-      "submitted_at",
-      "stage",
-      "name",
-      "email",
-      "country",
-      "role",
-      "institution",
-      "fields",
-      "reviews",
-      "supervises",
-      "working_on",
-      "heard",
-    ];
-    if (sheet.getLastRow() === 0) sheet.appendRow(cols);
-    var data = JSON.parse(e.postData.contents);
-    sheet.appendRow(
-      cols.map(function (c) {
-        return data[c] || "";
-      }),
-    );
-    return ContentService.createTextOutput(
-      JSON.stringify({ ok: true }),
-    ).setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(
-      JSON.stringify({ ok: false, error: String(err) }),
-    ).setMimeType(ContentService.MimeType.JSON);
-  } finally {
-    lock.releaseLock();
-  }
-}
-```
+   That one script handles every form on the site: the waitlist and full
+   application, expert applications (with the CV saved to Drive), contact
+   messages, demo requests, the newsletter and the Research Pledge alerts. The
+   forms are told apart by the `stage` value they send.
 
 ## 3. Deploy it as a web app
 
