@@ -360,6 +360,18 @@
     "is desk-rejected before peer review. Not for lack of ideas, for lack of":
       "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback.": "retours rigoureux.",
+    "Questions, answered.": "Vos questions, nos réponses.",
+    "Everything people ask about reviews, plans, university rollouts and reviewing for Nelview. Can't find it?": "Tout ce que l'on nous demande sur les évaluations, les formules, les déploiements en université et l'évaluation pour Nelview. Vous ne trouvez pas ?",
+    ", or": ", ou",
+    "read every question": "lisez toutes les questions",
+    "About Nelview.": "À propos de Nelview.",
+    "What the platform does and how it differs from other tools.": "Ce que fait la plateforme et en quoi elle se distingue des autres outils.",
+    "Plans and payment.": "Formules et paiement.",
+    "Pricing is being finalised for launch.": "Les tarifs sont en cours de finalisation pour le lancement.",
+    "For universities.": "Pour les universités.",
+    "Seats, criteria and rollout for departments and faculties.": "Licences, critères et déploiement pour les départements et les facultés.",
+    "For reviewers.": "Pour les évaluateurs.",
+    "Reviewing for Nelview as an expert.": "Évaluer pour Nelview en tant qu'expert.",
     // Inner pages: pricing, institutions, experts, pledge, about, contact, resources, apply, articles
     "\"What won me over was the rigour. It holds work to the same bar I do in my own reviews.\"": "« Ce qui m'a convaincue, c'est la rigueur. Il tient un travail au même niveau d'exigence que dans mes propres évaluations. »",
     "Research Integrity · Sorbonne": "Intégrité de la recherche · Sorbonne",

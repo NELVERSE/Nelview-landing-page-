@@ -11,6 +11,7 @@ const PAGES = [
   "/experts",
   "/pledge",
   "/about",
+  "/faq",
   "/contact",
   "/journal-guide",
   "/resources",

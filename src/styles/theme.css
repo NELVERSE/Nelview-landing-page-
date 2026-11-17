@@ -99,8 +99,14 @@ h3 em {
 /* Inside product previews and on dark panels the button keeps the product green. */
 .mock .btn-p,
 .dark .btn-p {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: var(--blue-2);
+  border-color: var(--blue-2);
+  color: #fff;
+}
+.mock .btn-p:hover,
+.dark .btn-p:hover {
+  background: #166534;
+  border-color: #166534;
 }
 .btn-g {
   border-radius: var(--radius-s);
@@ -975,4 +981,92 @@ h1.h2 {
 .recs .r > .tag {
   flex: none;
   white-space: nowrap;
+}
+
+/* ---------- expert review tiers: three cards ---------- */
+.xrows {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.xrow {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: #fff;
+  transition: border-color 0.2s;
+}
+.xrow:hover {
+  border-color: var(--line-2);
+}
+.xrows > :nth-child(1) {
+  --hue: var(--c-blue);
+  --hue-soft: var(--c-blue-soft);
+}
+.xrows > :nth-child(2) {
+  --hue: var(--c-amber);
+  --hue-soft: var(--c-amber-soft);
+}
+.xrows > :nth-child(3) {
+  --hue: var(--c-violet);
+  --hue-soft: var(--c-violet-soft);
+}
+.xrow .ico {
+  background: var(--hue-soft);
+  margin-bottom: 18px;
+}
+.xrow h3 {
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.xrow p {
+  margin-top: 8px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.xrow .xm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: auto;
+  padding: 18px 0 20px;
+}
+.xrow p + .xm {
+  margin-top: 22px;
+}
+.xrow .t {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+.xrow .p {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+.xrow .btn {
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .xrows {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* A soft button on a coloured band: dark text, dark outline. */
+.imgband .btn-o {
+  border-color: rgba(10, 13, 20, 0.3);
+  color: var(--ink);
+}
+.imgband .btn-o:hover {
+  border-color: var(--ink);
+  color: var(--ink);
 }
