@@ -554,8 +554,13 @@
   });
   var hdr = document.getElementById("hdr");
   if (hdr) {
+    // The shadow switches on and off with a gap between the two points, so the
+    // bounce at the very top of a phone page cannot make it flicker.
     var onS = function () {
-      hdr.classList.toggle("sc", window.scrollY > 8);
+      var y = window.scrollY,
+        on = hdr.classList.contains("sc");
+      if (y > 24 && !on) hdr.classList.add("sc");
+      else if (y < 4 && on) hdr.classList.remove("sc");
     };
     window.addEventListener("scroll", onS, { passive: true });
     onS();

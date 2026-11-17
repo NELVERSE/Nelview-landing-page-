@@ -1794,10 +1794,6 @@ main .photo:hover img {
   }
 }
 /* ===== Responsive pass ===== */
-html,
-body {
-  overflow-x: clip;
-}
 img,
 video,
 iframe {
