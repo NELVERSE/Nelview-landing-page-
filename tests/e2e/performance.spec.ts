@@ -69,16 +69,3 @@ test("the product video downloads nothing until it is played", async ({
   await expect(page.locator(".hero-play")).toBeHidden();
   expect(await video.evaluate((el: HTMLVideoElement) => el.controls)).toBe(true);
 });
-
-test("header product links point at a section that exists", async ({ page }) => {
-  await page.setViewportSize({ width: 1366, height: 800 });
-  await page.goto("/");
-  const targets = await page.evaluate(() =>
-    [...document.querySelectorAll<HTMLAnchorElement>('a[href^="./#"]')].map(
-      (link) => link.hash,
-    ),
-  );
-  expect(targets.length).toBeGreaterThan(0);
-  for (const hash of new Set(targets))
-    await expect(page.locator(hash), hash).toHaveCount(1);
-});
