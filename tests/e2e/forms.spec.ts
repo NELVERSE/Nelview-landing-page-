@@ -224,3 +224,27 @@ test.describe("reviewer application", () => {
       expect(sent[field], field).toBeTruthy();
   });
 });
+
+test.describe("country lists", () => {
+  for (const [path, select] of [["/waitlist", "#f_country"], ["/apply", "select[name=country]"]] as const) {
+    test(`${path} lists every country, with English values in any language`, async ({ page }) => {
+      await page.addInitScript(() => localStorage.setItem("nv_lang", "fr"));
+      await page.goto(path);
+      const options = await page.locator(`${select} option`).evaluateAll((els) =>
+        els.map((o) => [(o as HTMLOptionElement).value, o.textContent!.trim()]),
+      );
+      expect(options.length).toBeGreaterThan(195);
+      expect(options[0][0]).toBe("");
+      expect(options.at(-1)![0]).toBe("Other");
+      const values = options.map((o) => o[0]);
+      expect(new Set(values).size, "duplicate countries").toBe(values.length);
+      for (const country of ["Ghana", "Nigeria", "Cameroon", "Côte d'Ivoire", "Japan", "Brazil", "Vanuatu", "Zimbabwe", "United States"])
+        expect(values, country).toContain(country);
+      // Shown in French, but the value sent to the backend stays English.
+      const cameroon = options.find((o) => o[0] === "Cameroon")!;
+      expect(cameroon[1]).toBe("Cameroun");
+      await page.locator(select).selectOption("Cameroon");
+      expect(await page.locator(select).inputValue()).toBe("Cameroon");
+    });
+  }
+});
