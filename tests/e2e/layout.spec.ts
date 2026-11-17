@@ -2,7 +2,7 @@ import { test, expect } from "./fixtures";
 
 // On a phone, cards must use their width: the icon sits beside its title, not
 // above it, and visuals fill the card instead of floating in empty space.
-const PAGES = ["/", "/institutions", "/experts", "/contact", "/pledge"];
+const PAGES = ["/", "/institutions", "/experts", "/contact", "/pledge", "/about"];
 
 for (const width of [360, 390, 430]) {
   test.describe(`cards on a ${width}px phone`, () => {

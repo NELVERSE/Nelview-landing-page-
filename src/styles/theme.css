@@ -757,7 +757,7 @@ main .nt > :nth-child(6n + 6) {
    on one row with the text full width underneath, and let visuals use the
    whole card. */
 @media (max-width: 640px) {
-  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) {
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c, .vrow):has(> .ico:first-child) {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     column-gap: 14px;
@@ -765,15 +765,15 @@ main .nt > :nth-child(6n + 6) {
     align-items: center;
     align-content: start;
   }
-  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) > * {
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c, .vrow):has(> .ico:first-child) > * {
     grid-column: 1 / -1;
   }
-  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) > .ico {
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c, .vrow):has(> .ico:first-child) > .ico {
     grid-column: 1;
     grid-row: 1;
     margin: 0;
   }
-  :is(.feat, .nums > div, .flow > div, .card, .nt-c):has(> .ico:first-child) > .ico + * {
+  :is(.feat, .nums > div, .flow > div, .card, .nt-c, .vrow):has(> .ico:first-child) > .ico + * {
     grid-column: 2;
     grid-row: 1;
     margin: 0;
@@ -1089,4 +1089,72 @@ h1.h2 {
   padding: 0;
   display: flex;
   align-items: flex-start;
+}
+
+/* ---------- principle cards (About, Research Pledge) ---------- */
+.vrows {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.vrow {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: #fff;
+}
+.vrow .ico {
+  background: var(--hue-soft);
+  margin-bottom: 18px;
+}
+.vrow h3 {
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.vrow p {
+  margin-top: 10px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+/* Five cards: three on the first row, two wider ones under them. */
+.vrows:has(> :nth-child(5):last-child) {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.vrows:has(> :nth-child(5):last-child) > * {
+  grid-column: span 2;
+}
+.vrows:has(> :nth-child(5):last-child) > :nth-child(n + 4) {
+  grid-column: span 3;
+}
+.plx-who .vrows {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (max-width: 1080px) {
+  .vrows,
+  .vrows:has(> :nth-child(5):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .vrows:has(> :nth-child(5):last-child) > *,
+  .vrows:has(> :nth-child(5):last-child) > :nth-child(n + 4) {
+    grid-column: auto;
+  }
+  .vrows > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .plx-who .vrows {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .vrows,
+  .vrows:has(> :nth-child(5):last-child) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vrows > :last-child:nth-child(odd) {
+    grid-column: auto;
+  }
 }

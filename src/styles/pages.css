@@ -504,26 +504,6 @@
 .mission p + p {
   margin-top: 28px;
 }
-.vrows {
-  border-top: 1px solid var(--line);
-}
-.vrow {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: 48px;
-  padding: 40px 0;
-  border-bottom: 1px solid var(--line);
-  align-items: start;
-}
-.vrow h3 {
-  font-size: clamp(24px, 2.4vw, 30px);
-  letter-spacing: -0.035em;
-  line-height: 1.12;
-}
-.vrow p {
-  color: var(--ink-2);
-  font-size: 16.5px;
-}
 .dark .vrows,
 .dark .vrow {
   border-color: #232a39;
@@ -1211,13 +1191,11 @@
   .fp,
   .nlb,
   .mission,
-  .vrow,
   .cta2,
   .funds2 {
     grid-template-columns: minmax(0, 1fr);
   }
-  .mission,
-  .vrow {
+  .mission {
     gap: 16px;
   }
   .pgrid,

@@ -158,3 +158,21 @@ test("the expert review tiers are three cards, one per row on a phone", async ({
   await page.setViewportSize({ width: 390, height: 800 });
   expect(await columns()).toBe(1);
 });
+
+test("About and Pledge principles are cards in a grid, not ruled rows", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const [path, perRow, rows] of [["/about", 4, 1], ["/pledge", 5, 2]] as const) {
+    await page.goto(path);
+    const first = page.locator(".vrows").first();
+    expect(await first.locator(".vrow").count(), path).toBe(perRow);
+    const lefts = await first.locator(".vrow").evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().left)));
+    const tops = await first.locator(".vrow").evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().top)));
+    expect(new Set(tops).size, `${path}: rows of cards`).toBe(rows);
+    expect(lefts.length, path).toBe(perRow);
+    const style = await first.locator(".vrow").first().evaluate((el) => {
+      const s = getComputedStyle(el);
+      return [s.borderTopWidth, s.borderRadius];
+    });
+    expect(style, path).toEqual(["1px", "12px"]);
+  }
+});

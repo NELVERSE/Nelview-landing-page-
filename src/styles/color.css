@@ -1288,23 +1288,6 @@ main .photo:hover img {
     aspect-ratio: 4/3;
   }
 }
-.plx-who .vrow {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: 4px 16px;
-  align-items: start;
-}
-.plx-who .vrow .n {
-  grid-row: span 2;
-}
-.plx-who .vrow h3,
-.plx-who .vrow p {
-  grid-column: 2;
-  margin: 0;
-}
-.plx-who .vrow p {
-  margin-top: 6px;
-}
 /* floating pill nav */
 [data-site-header] {
   height: 88px;
