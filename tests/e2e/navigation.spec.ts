@@ -3,7 +3,7 @@ import { test, expect } from "./fixtures";
 // Every internal link is a clean, relative URL ("pricing", "./"), so a link
 // to the page you are on is a same-page jump rather than a reload, and no
 // visit takes a detour through a redirect from "/pricing.html" to "/pricing".
-const PAGES = ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/contact", "/journal-guide", "/resources", "/apply", "/waitlist", "/signin", "/privacy", "/terms"];
+const PAGES = ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/faq", "/contact", "/journal-guide", "/resources", "/apply", "/waitlist", "/signin", "/privacy", "/terms"];
 
 test("internal links are clean URLs that exist and point at real sections", async ({ page, request }) => {
   const seen = new Map<string, string>();
@@ -129,4 +129,19 @@ test("the language choice survives moving between pages and going back", async (
   await page.goBack();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+});
+
+test("the FAQ links in the menu and footer open the FAQ page at its top", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/pricing");
+  await page.evaluate(() => scrollTo(0, 1500));
+  await page.locator("footer a[href='faq']").click();
+  await expect(page).toHaveURL(/\/faq$/);
+  await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(0);
+  await expect(page.locator("main h1")).toHaveText("Questions, answered.");
+  expect(await page.locator("main details").count()).toBeGreaterThan(15);
+  await page.goto("/");
+  await page.locator(".dd-t", { hasText: "Resources" }).click();
+  await page.locator(".dd.open a[href='faq']").click();
+  await expect(page).toHaveURL(/\/faq$/);
 });

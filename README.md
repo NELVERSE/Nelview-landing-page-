@@ -63,6 +63,17 @@ The first time, install the test browser with `pnpm exec playwright install chro
 - **Portal links**: `PORTAL_BASE` at the top of `src/scripts/site.ts` (default `https://app.nelview.com`). Portal links in `src/pages/apply.html` and `src/pages/institutions.html` use the same domain.
 - **Sign in / Get started**: both route to `signin.html` / `waitlist.html` during the private beta (`APP` in `site.ts`).
 
+## Product pictures
+
+The product screens on the home, institutions and experts pages are images
+(`public/assets/mockups`): a WebP for still screens, a GIF where bars fill in,
+each with a French version that `i18n.ts` swaps in. The live version of each
+screen is `src/pages/_mockups.html` (development only, never built). After
+changing its text or layout, run `pnpm run mockups` (needs ImageMagick) and put
+the new sizes from `scripts/mockup-sizes.json` into the `<img>` tags. The
+program-criteria preview on the institutions page and the earnings calculator
+on the experts page stay live because visitors interact with them.
+
 ## Branches: preview and production
 
 | Branch    | Purpose    | What happens on push                                                             |

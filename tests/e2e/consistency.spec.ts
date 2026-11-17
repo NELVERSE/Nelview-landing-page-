@@ -147,3 +147,14 @@ test("headings have no italic accent", async ({ page }) => {
   }
   expect(italic).toEqual([]);
 });
+
+test("the expert review tiers are three cards, one per row on a phone", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/pricing");
+  const columns = () =>
+    page.evaluate(() => new Set([...document.querySelectorAll<HTMLElement>(".xrow")].map((c) => Math.round(c.getBoundingClientRect().left))).size);
+  expect(await page.locator(".xrow").count()).toBe(3);
+  expect(await columns()).toBe(3);
+  await page.setViewportSize({ width: 390, height: 800 });
+  expect(await columns()).toBe(1);
+});

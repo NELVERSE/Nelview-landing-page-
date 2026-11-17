@@ -222,7 +222,7 @@
           "Seven red flags and how to check",
           "journal-guide",
         ],
-        ["search", "FAQ", "Answers to common questions", "./"],
+        ["search", "FAQ", "Answers to common questions", "faq"],
         [
           "heart",
           "About & mission",
@@ -254,6 +254,7 @@
       price: "pricing",
       res: "resources",
       about: "resources",
+      faq: "resources",
       contact: "resources",
     }[page] || "";
   function mi(it) {
@@ -496,7 +497,7 @@
       "Accra, Ghana</span></div></div>" +
       "<div class='col'><h5>Product</h5><a href='./'>AI Review Engine</a><a href='./'>Document Editor</a><a href='journal-guide'>Journal Check</a><a href='./'>Citation Manager</a><a href='./'>Journal Formatter</a></div>" +
       "<div class='col'><h5>Solutions</h5><a href='./'>Researchers &amp; authors</a><a href='institutions'>Universities</a><a href='institutions'>Supervisors &amp; lecturers</a><a href='experts'>Expert reviewers</a><a href='pricing'>Pricing</a></div>" +
-      "<div class='col'><h5>Resources</h5><a href='resources'>Blog &amp; guides</a><a href='journal-guide'>Predatory journal guide</a><a href='./'>FAQ</a><a href='contact'>Help &amp; support</a></div>" +
+      "<div class='col'><h5>Resources</h5><a href='resources'>Blog &amp; guides</a><a href='journal-guide'>Predatory journal guide</a><a href='faq'>FAQ</a><a href='contact'>Help &amp; support</a></div>" +
       "<div class='col'><h5>Company</h5><a href='about'>About &amp; mission</a><a href='pledge'>Research Pledge</a><a href='experts'>Join the reviewer network</a><a href='contact'>Contact</a></div></div>" +
       "<div class='ftr-bot'><div class='ftr-soc'><span>© 2026 Nelverse · Nelview</span>" +
       soc() +
