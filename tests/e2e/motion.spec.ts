@@ -71,3 +71,29 @@ test.describe("with reduced motion", () => {
     expect(waiting).toBe(0);
   });
 });
+
+test("the tools row scrolls by itself from left to right", async ({ page }) => {
+  await page.goto("/");
+  const first = () => page.evaluate(() => document.querySelector(".logo-track li")!.getBoundingClientRect().left);
+  const before = await first();
+  await page.waitForTimeout(600);
+  expect(await first(), "logos move rightwards").toBeGreaterThan(before + 5);
+  // Two identical lists, one hidden from screen readers, so the loop has no seam.
+  const lists = await page.evaluate(() => [...document.querySelectorAll(".logo-track")].map((ul) => ul.textContent));
+  expect(lists).toHaveLength(2);
+  expect(lists[0]).toBe(lists[1]);
+  await expect(page.locator(".logo-track").nth(1)).toHaveAttribute("aria-hidden", "true");
+});
+
+test.describe("with reduced motion", () => {
+  test.use({ reducedMotion: "reduce" });
+
+  test("the tools row stays still and shows each tool once", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator(".logo-track").nth(1)).toBeHidden();
+    const first = () => page.evaluate(() => document.querySelector(".logo-track li")!.getBoundingClientRect().left);
+    const before = await first();
+    await page.waitForTimeout(400);
+    expect(await first()).toBe(before);
+  });
+});
