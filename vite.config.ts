@@ -277,8 +277,11 @@ export default defineConfig({
     outDir,
     emptyOutDir: true,
     rollupOptions: {
+      // Files starting with "_" (the mock-up render source) are development-only.
       input: Object.fromEntries(
-        listPages().map((page) => [
+        listPages()
+          .filter((page) => !/(^|\/)_/.test(page))
+          .map((page) => [
           page.replace(/\.html$/, ""),
           resolve(pagesDir, page),
         ]),

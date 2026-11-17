@@ -1794,6 +1794,22 @@
       } catch (e) {}
     }
     if (changed) run(document.body);
+    // Pictures of the product carry their own text, so each has a French version.
+    document.querySelectorAll("img[data-src-fr]").forEach(function (img) {
+      if (!img.hasAttribute("data-src-en")) {
+        img.setAttribute("data-src-en", img.getAttribute("src"));
+        img.setAttribute("data-alt-en", img.getAttribute("alt") || "");
+      }
+      var fr = l === "fr";
+      img.setAttribute(
+        "src",
+        img.getAttribute(fr ? "data-src-fr" : "data-src-en"),
+      );
+      img.setAttribute(
+        "alt",
+        img.getAttribute(fr ? "data-alt-fr" : "data-alt-en") || "",
+      );
+    });
     observer.disconnect();
     if (l === "fr")
       observer.observe(document.body, { childList: true, subtree: true });

@@ -179,3 +179,45 @@ test("the home page tells search engines its name, logo and cover image", async 
     "1200",
   );
 });
+
+test("product mock-ups are real pictures, each with a French version", async ({ page, request }) => {
+  const shots = [
+    ["/", 3],
+    ["/institutions", 2],
+    ["/experts", 1],
+  ] as const;
+  for (const [path, count] of shots) {
+    await page.goto(path);
+    await page.evaluate(() => (window as any).nvRevealAll?.());
+    const images = await page.locator("img.shot").evaluateAll((els) =>
+      els.map((el) => {
+        const img = el as HTMLImageElement;
+        return { src: img.getAttribute("src")!, fr: img.dataset.srcFr!, alt: img.alt, w: img.width, h: img.height };
+      }),
+    );
+    expect(images, path).toHaveLength(count);
+    for (const image of images) {
+      expect(image.alt.length, image.src).toBeGreaterThan(30);
+      expect(image.w && image.h, image.src).toBeTruthy();
+      for (const url of [image.src, image.fr]) {
+        const response = await request.get(`/${url}`);
+        expect(response.status(), url).toBe(200);
+        expect(response.headers()["content-type"], url).toMatch(/image\/(webp|gif)/);
+        expect((await response.body()).length, `${url} is heavy`).toBeLessThan(250_000);
+      }
+    }
+  }
+  // Pictures with bars that fill in are GIFs; the rest are still images.
+  await page.goto("/");
+  expect(await page.locator("img.shot").evaluateAll((els) => els.map((e) => (e as HTMLImageElement).getAttribute("src")!.split(".").pop()))).toEqual(["gif", "webp", "webp"]);
+});
+
+test("the pictures switch to French with the language", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("nv_lang", "fr"));
+  await page.goto("/");
+  const first = page.locator("img.shot").first();
+  await expect(first).toHaveAttribute("src", /home-score-fr\.gif$/);
+  await expect(first).toHaveAttribute("alt", /Score de préparation/);
+  await page.locator("[data-lang='en']").first().click();
+  await expect(first).toHaveAttribute("src", /home-score\.gif$/);
+});

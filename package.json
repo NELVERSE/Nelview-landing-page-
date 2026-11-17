@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "node --test \"tests/unit/*.test.mjs\"",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "mockups": "node scripts/render-mockups.mjs"
   },
   "dependencies": {
     "motion": "11.11.13",
