@@ -1,6 +1,6 @@
 import { test, expect } from "./fixtures";
 
-// Every internal link is a clean, relative URL ("pricing", "./#faq"), so a link
+// Every internal link is a clean, relative URL ("pricing", "./"), so a link
 // to the page you are on is a same-page jump rather than a reload, and no
 // visit takes a detour through a redirect from "/pricing.html" to "/pricing".
 const PAGES = ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/contact", "/journal-guide", "/resources", "/apply", "/waitlist", "/signin", "/privacy", "/terms"];
@@ -28,19 +28,45 @@ test("internal links are clean URLs that exist and point at real sections", asyn
   }
 });
 
-test("a link to a section of the current page does not reload it", async ({ page }) => {
+test("a menu link to the page you are on scrolls to its top without reloading", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
-  await page.evaluate(() => ((window as any).__still_here = true));
+  await page.evaluate(() => {
+    (window as any).__still_here = true;
+    scrollTo(0, 2400);
+  });
   await page.locator(".dd-t").first().click();
-  await page.locator(".dd.open a[href='./#how']").first().click();
-  await expect(page).toHaveURL(/\/#how$/);
+  await page.locator(".dd.open a[href='./']").first().click();
+  await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(0);
+  await expect(page).toHaveURL(/\/$/);
   expect(await page.evaluate(() => (window as any).__still_here), "the page reloaded").toBe(true);
   await expect(page.locator(".dd.open")).toHaveCount(0);
-  const top = await page.evaluate(() => document.getElementById("how")!.getBoundingClientRect().top);
-  const header = await page.evaluate(() => document.getElementById("hdr")!.getBoundingClientRect().bottom);
-  expect(top).toBeGreaterThanOrEqual(header - 1);
-  expect(top).toBeLessThan(header + 60);
+});
+
+test("menu and footer links open the page they name at its top", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const [from, link, to] of [
+    ["/pricing", "footer a[href='institutions']", /\/institutions$/],
+    ["/about", "footer a[href='journal-guide']", /\/journal-guide$/],
+    ["/pricing", "header a.nl[href='pricing']", /\/pricing$/],
+  ] as const) {
+    await page.goto(from);
+    await page.evaluate(() => scrollTo(0, 1800));
+    await page.locator(link).first().click();
+    await expect(page).toHaveURL(to);
+    expect(new URL(page.url()).hash, `${from} -> ${link}`).toBe("");
+    await expect.poll(() => page.evaluate(() => Math.round(scrollY)), `${from} -> ${link}`).toBe(0);
+  }
+});
+
+test("no menu or footer link points into the middle of a page", async ({ page }) => {
+  for (const path of ["/", "/pricing"]) {
+    await page.goto(path);
+    const hashed = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLAnchorElement>("#hdr a, #mnav a, .ftr a")].map((a) => a.getAttribute("href")!).filter((h) => h.includes("#")),
+    );
+    expect(hashed, path).toEqual([]);
+  }
 });
 
 test("Escape and clicking away close the header menus", async ({ page }) => {
@@ -63,8 +89,10 @@ test.describe("on a phone", () => {
     await page.evaluate(() => ((window as any).__still_here = true));
     await page.locator("#burger").click();
     await page.locator("#mnav summary").first().click();
-    await page.locator("#mnav a[href='./#how']").first().click();
-    await expect(page).toHaveURL(/\/#how$/);
+    await page.evaluate(() => scrollTo(0, 2400));
+    await page.locator("#mnav a[href='./']").first().click();
+    await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(0);
+    await expect(page).toHaveURL(/\/$/);
     expect(await page.evaluate(() => (window as any).__still_here), "the page reloaded").toBe(true);
     await expect(page.locator("#mnav")).not.toHaveClass(/open/);
     expect(await page.evaluate(() => document.body.style.overflow)).toBe("");

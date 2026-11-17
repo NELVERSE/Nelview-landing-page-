@@ -129,31 +129,31 @@
           "cpu",
           "AI Review Engine",
           "A 0–100 readiness score across methods, novelty, stats and ethics",
-          "./#how",
+          "./",
         ],
         [
           "edit",
           "Document Editor",
           "Fix issues section by section, in context",
-          "./#how",
+          "./",
         ],
         [
           "shield",
           "Journal Check",
           "DOAJ and COPE legitimacy, predatory red flags",
-          "./#how",
+          "journal-guide",
         ],
         [
           "book",
           "Citation Manager",
           "Sync Zotero and Mendeley, catch missing refs",
-          "./#how",
+          "./",
         ],
         [
           "layers",
           "Journal Formatter",
           "Match any journal's guidelines in seconds",
-          "./#how",
+          "./",
         ],
         [
           "users",
@@ -178,7 +178,7 @@
           "file",
           "Researchers & authors",
           "Submit with confidence, not hope",
-          "./#how",
+          "./",
         ],
         [
           "building",
@@ -190,7 +190,7 @@
           "grad",
           "Supervisors & lecturers",
           "Spend time on the thinking, not the typos",
-          "institutions#supervisors",
+          "institutions",
         ],
         [
           "award",
@@ -222,7 +222,7 @@
           "Seven red flags and how to check",
           "journal-guide",
         ],
-        ["search", "FAQ", "Answers to common questions", "./#faq"],
+        ["search", "FAQ", "Answers to common questions", "./"],
         [
           "heart",
           "About & mission",
@@ -463,6 +463,22 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") closeMenus();
     });
+    // Menu and footer links always land at the top of the page they name. On
+    // another page that is where it opens; on the current page nothing would
+    // happen, so scroll to the top instead.
+    var tidy = function (path) {
+      return path.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+    };
+    document.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest && e.target.closest("#hdr a, #mnav a, .ftr a");
+      if (!a || a.target === "_blank" || a.origin !== location.origin) return;
+      if (tidy(a.pathname) !== tidy(location.pathname) || a.search !== location.search || a.hash) return;
+      e.preventDefault();
+      if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+      var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: calm ? "auto" : "smooth" });
+    });
   }
   var f = document.querySelector("[data-site-footer]");
   if (f) {
@@ -478,9 +494,9 @@
       "+233 25 680 9108</a><span style='display:inline-flex;gap:8px;align-items:center'>" +
       ic("pin", 15) +
       "Accra, Ghana</span></div></div>" +
-      "<div class='col'><h5>Product</h5><a href='./#how'>AI Review Engine</a><a href='./#how'>Document Editor</a><a href='./#how'>Journal Check</a><a href='./#how'>Citation Manager</a><a href='./#how'>Journal Formatter</a></div>" +
-      "<div class='col'><h5>Solutions</h5><a href='./#how'>Researchers &amp; authors</a><a href='institutions'>Universities</a><a href='institutions#supervisors'>Supervisors &amp; lecturers</a><a href='experts'>Expert reviewers</a><a href='pricing'>Pricing</a></div>" +
-      "<div class='col'><h5>Resources</h5><a href='resources'>Blog &amp; guides</a><a href='journal-guide'>Predatory journal guide</a><a href='./#faq'>FAQ</a><a href='contact'>Help &amp; support</a></div>" +
+      "<div class='col'><h5>Product</h5><a href='./'>AI Review Engine</a><a href='./'>Document Editor</a><a href='journal-guide'>Journal Check</a><a href='./'>Citation Manager</a><a href='./'>Journal Formatter</a></div>" +
+      "<div class='col'><h5>Solutions</h5><a href='./'>Researchers &amp; authors</a><a href='institutions'>Universities</a><a href='institutions'>Supervisors &amp; lecturers</a><a href='experts'>Expert reviewers</a><a href='pricing'>Pricing</a></div>" +
+      "<div class='col'><h5>Resources</h5><a href='resources'>Blog &amp; guides</a><a href='journal-guide'>Predatory journal guide</a><a href='./'>FAQ</a><a href='contact'>Help &amp; support</a></div>" +
       "<div class='col'><h5>Company</h5><a href='about'>About &amp; mission</a><a href='pledge'>Research Pledge</a><a href='experts'>Join the reviewer network</a><a href='contact'>Contact</a></div></div>" +
       "<div class='ftr-bot'><div class='ftr-soc'><span>© 2026 Nelverse · Nelview</span>" +
       soc() +
