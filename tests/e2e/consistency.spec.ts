@@ -233,3 +233,36 @@ test("page titles use one of the two shared sizes, 404 included", async ({ page 
   }
   expect([...sizes.keys()].sort(), JSON.stringify([...sizes.entries()])).toEqual(["46.08px/660", "69.12px/660"]);
 });
+
+test("the home hero is colourful, and the photo cards carry no blend mode or filter", async ({ page }) => {
+  await page.goto("/");
+  const hero = await page.evaluate(() => getComputedStyle(document.querySelector(".hero2")!).backgroundImage);
+  expect(hero.match(/radial-gradient/g)?.length ?? 0, "colour pools behind the headline").toBeGreaterThanOrEqual(4);
+  // Blend modes and filters on large photos freeze mobile Safari: the colour is baked into the files.
+  const heavy = await page.evaluate(() =>
+    [...document.querySelectorAll<HTMLElement>(".pc-c img, .ex-hero-bg img")]
+      .map((img) => {
+        const s = getComputedStyle(img);
+        return `${s.mixBlendMode}/${s.filter}`;
+      })
+      .filter((v) => v !== "normal/none"),
+  );
+  expect(heavy).toEqual([]);
+  await page.goto("/experts");
+  expect(await page.evaluate(() => getComputedStyle(document.querySelector(".ex-hero-bg img")!).filter)).toBe("none");
+});
+
+test("tapping a home photo card opens its page, ready and scrollable", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 800 });
+  for (const [index, path] of [[0, /\/pledge$/], [1, /\/pledge$/], [2, /\/contact$/]] as const) {
+    await page.goto("/");
+    await page.evaluate(() => (window as any).nvRevealAll?.());
+    await page.locator(".pc-c").nth(index).scrollIntoViewIfNeeded();
+    await page.locator(".pc-c").nth(index).click();
+    await expect(page).toHaveURL(path);
+    await expect(page.locator("html")).toHaveClass(/nv-ready/);
+    await page.evaluate(() => scrollTo(0, 600));
+    expect(await page.evaluate(() => Math.round(scrollY))).toBe(600);
+    expect(await page.evaluate(() => Math.round(document.getElementById("hdr")!.getBoundingClientRect().top))).toBe(0);
+  }
+});

@@ -608,11 +608,6 @@
     var bleed = document.body.hasAttribute("data-bleed")
       ? document.querySelector("main > section")
       : null;
-    var sizeHdr = function () {
-      document.documentElement.style.setProperty("--hdr-h", hdr.offsetHeight + "px");
-    };
-    sizeHdr();
-    window.addEventListener("resize", sizeHdr);
     var onS = function () {
       var y = window.scrollY,
         on = hdr.classList.contains("sc");
@@ -620,12 +615,19 @@
       // the bounce at the very top of a phone page cannot make it flicker.
       if (y > 24 && !on) hdr.classList.add("sc");
       else if (y < 4 && on) hdr.classList.remove("sc");
-      if (bleed) {
-        var over = bleed.getBoundingClientRect().bottom > 56;
-        if (hdr.classList.contains("on-dark") !== over)
-          hdr.classList.toggle("on-dark", over);
-      }
     };
+    // Light text while the colour hero is behind the bar. An observer, not a
+    // scroll handler: nothing is measured on every frame.
+    if (bleed) {
+      if ("IntersectionObserver" in window)
+        new IntersectionObserver(
+          function (entries) {
+            hdr.classList.toggle("on-dark", entries[entries.length - 1].isIntersecting);
+          },
+          { rootMargin: "-56px 0px 0px 0px" },
+        ).observe(bleed);
+      else hdr.classList.add("on-dark");
+    }
     window.addEventListener("scroll", onS, { passive: true });
     onS();
 

@@ -587,12 +587,16 @@ main .nt > :nth-child(6n + 6) {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(1);
-  mix-blend-mode: multiply;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.pc-c:hover img {
-  transform: scale(1.03);
+/* The colour wash is baked into the photos (pnpm run duotone): no blend mode or
+   filter, which freeze mobile Safari on large photos. */
+@media (hover: hover) {
+  .pc-c img {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pc-c:hover img {
+    transform: scale(1.03);
+  }
 }
 .pc-c::after {
   content: "";
@@ -1615,10 +1619,10 @@ h1 .hl,
 }
 
 /* Colour heroes run to the very top; the bar floats over them with no fill. */
-[data-bleed] .sh {
-  margin-bottom: calc(-1 * var(--hdr-h));
-}
+/* The first section is pulled up under the bar (not the bar pushed over it):
+   a negative margin on a sticky element misbehaves in mobile Safari. */
 [data-bleed] main > section:first-child {
+  margin-top: calc(-1 * var(--hdr-h));
   padding-top: calc(var(--hero-top) + var(--hdr-h));
 }
 .sh.on-dark {
@@ -2071,4 +2075,34 @@ section {
   font-size: 14.5px;
   font-weight: 500;
   line-height: 1.55;
+}
+
+/* ---------- home hero: colour ---------- */
+/* Soft pools of the brand colours behind the headline. Plain gradients only:
+   blurred shapes and filters are what make phones struggle. */
+.hero2 {
+  position: relative;
+  background:
+    radial-gradient(52% 62% at 6% 2%, rgba(18, 161, 80, 0.26) 0%, transparent 70%),
+    radial-gradient(46% 58% at 96% 4%, rgba(255, 176, 58, 0.34) 0%, transparent 70%),
+    radial-gradient(48% 60% at 102% 58%, rgba(117, 80, 230, 0.24) 0%, transparent 72%),
+    radial-gradient(48% 60% at -2% 62%, rgba(223, 79, 58, 0.22) 0%, transparent 72%),
+    radial-gradient(44% 50% at 50% 104%, rgba(47, 111, 237, 0.18) 0%, transparent 72%),
+    #fff;
+}
+.hero2 .display {
+  color: #0a1f17;
+}
+.hero2 .hero-proof p {
+  color: var(--ink-2);
+}
+@media (max-width: 640px) {
+  .hero2 {
+    background:
+      radial-gradient(70% 36% at 0% 0%, rgba(18, 161, 80, 0.28) 0%, transparent 72%),
+      radial-gradient(70% 34% at 100% 6%, rgba(255, 176, 58, 0.36) 0%, transparent 72%),
+      radial-gradient(80% 30% at 100% 62%, rgba(117, 80, 230, 0.24) 0%, transparent 74%),
+      radial-gradient(80% 30% at 0% 70%, rgba(223, 79, 58, 0.22) 0%, transparent 74%),
+      #fff;
+  }
 }
