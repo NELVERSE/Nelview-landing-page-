@@ -1,6 +1,6 @@
 import { test, expect } from "./fixtures";
 
-// The floating navigation bar must stay put while the page scrolls underneath
+// The navigation bar must stay put while the page scrolls underneath
 // it, and the page must not jump when the bar is drawn.
 for (const viewport of [
   { name: "desktop", width: 1440, height: 900 },
@@ -21,11 +21,11 @@ for (const viewport of [
         }).observe({ type: "layout-shift", buffered: true });
       });
       await page.goto("/");
-      await expect(page.locator("#hdr .wrap")).toBeVisible();
+      await expect(page.locator("#hdr")).toBeVisible();
       await page.waitForTimeout(800);
 
       // Opaque and unblurred: a blurred translucent bar flickers over moving content.
-      const style = await page.locator("#hdr .wrap").evaluate((el) => {
+      const style = await page.locator("#hdr").evaluate((el) => {
         const css = getComputedStyle(el);
         return { blur: css.backdropFilter, alpha: css.backgroundColor };
       });
@@ -34,7 +34,7 @@ for (const viewport of [
 
       // Sample the bar on every frame while scrolling down and back up.
       await page.evaluate(() => {
-        const bar = document.querySelector("#hdr .wrap")!;
+        const bar = document.querySelector("#hdr")!;
         (window as any).__tops = new Set<number>();
         const tick = () => {
           (window as any).__tops.add(

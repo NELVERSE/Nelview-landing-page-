@@ -892,6 +892,7 @@ main .nt > :nth-child(6n + 6) {
 .hero2 .display,
 .hero-grid .display,
 .pl-hero h1,
+.nf h1,
 .pr-hero h1,
 .ab-hero h1,
 .phd h1,
@@ -1417,73 +1418,657 @@ h1 .hl,
   color: #4ade8a;
 }
 
-/* ---------- full-width colour heroes run to the top of the screen ---------- */
-/* The header floats over the panel instead of sitting above it on white. */
-[data-bleed] .hdr {
-  margin-bottom: calc(-1 * var(--hdr-h, 88px));
+
+/* ====================================================================== */
+/* Header: a full-width bar. One design on every page.                     */
+/* ====================================================================== */
+:root {
+  --hdr-h: 72px;
 }
-[data-bleed] main > section:first-child {
-  padding-top: calc(var(--hero-top) + var(--hdr-h, 88px));
+@media (max-width: 1120px) {
+  :root {
+    --hdr-h: 64px;
+  }
 }
-.hdr .wrap {
+[data-site-header] {
+  display: block;
+  height: var(--hdr-h);
+}
+.skip {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-s);
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 560;
+  transform: translateY(-200%);
+}
+.skip:focus {
+  transform: none;
+}
+.sh {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
   transition:
-    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s,
     background-color 0.25s,
     border-color 0.25s;
 }
-.hdr .brand,
-.hdr .nav .nl,
-.hdr .dd-t,
-.hdr-r .si {
+.sh.sc {
+  box-shadow: 0 10px 28px -20px rgba(10, 13, 20, 0.28);
+}
+.sh-in {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: calc(var(--hdr-h) - 1px);
+}
+.sh-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  font-size: 19px;
+  font-weight: 660;
+  letter-spacing: -0.035em;
+  color: var(--ink);
   transition: color 0.2s;
 }
-.hdr.on-dark .wrap {
+.sh-brand .mk svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+.sh-brand .mk svg * {
+  transition: fill 0.2s;
+}
+.sh-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-inline: auto;
+}
+.sh-link,
+.sh-t {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 540;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+.sh-link:hover,
+.sh-t:hover,
+.sh-dd.open > .sh-t {
+  color: var(--ink);
+  background: var(--card);
+}
+.sh-link.on,
+.sh-dd.on > .sh-t {
+  color: var(--ink);
+}
+.sh-link.on::after,
+.sh-dd.on > .sh-t::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--hl, #12a150);
+}
+.sh-t .chev {
+  transition: transform 0.2s;
+}
+.sh-dd.open > .sh-t .chev {
+  transform: rotate(180deg);
+}
+.sh-dd {
+  position: relative;
+}
+/* Keeps the menu open while the pointer crosses the gap under the button. */
+.sh-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-m);
+  color: var(--ink);
+  transition: background-color 0.15s;
+}
+.sh-item:hover,
+.sh-item:focus-visible {
+  background: var(--card);
+}
+.sh-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--c-green-soft);
+  color: var(--c-green);
+}
+.sh-item b {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.sh-item small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+.sh-foot-t {
+  flex: 1;
+}
+.sh-end {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: none;
+}
+.sh-signin {
+  font-size: 15px;
+  font-weight: 540;
+  color: var(--ink-2);
+  transition: color 0.2s;
+}
+.sh-signin:hover {
+  color: var(--ink);
+}
+.sh-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* Colour heroes run to the very top; the bar floats over them with no fill. */
+[data-bleed] .sh {
+  margin-bottom: calc(-1 * var(--hdr-h));
+}
+[data-bleed] main > section:first-child {
+  padding-top: calc(var(--hero-top) + var(--hdr-h));
+}
+.sh.on-dark {
   background: transparent;
-  border-color: rgba(255, 255, 255, 0.26);
+  border-bottom-color: rgba(255, 255, 255, 0.16);
   box-shadow: none;
 }
-.hdr.on-dark .brand,
-.hdr.on-dark .nav .nl.on,
-.hdr.on-dark .dd.on .dd-t {
+.sh.on-dark .sh-brand,
+.sh.on-dark .sh-link.on,
+.sh.on-dark .sh-dd.on > .sh-t {
   color: #fff;
 }
-.hdr.on-dark .brand svg * {
+.sh.on-dark .sh-brand .mk svg * {
   fill: #fff;
 }
-.hdr.on-dark .nav .nl,
-.hdr.on-dark .dd-t,
-.hdr.on-dark .hdr-r .si {
+.sh.on-dark .sh-link,
+.sh.on-dark .sh-t,
+.sh.on-dark .sh-signin {
   color: rgba(255, 255, 255, 0.86);
 }
-.hdr.on-dark .nav .nl:hover,
-.hdr.on-dark .dd-t:hover {
+.sh.on-dark .sh-link:hover,
+.sh.on-dark .sh-t:hover,
+.sh.on-dark .sh-dd.open > .sh-t,
+.sh.on-dark .sh-signin:hover {
   color: #fff;
+  background: rgba(255, 255, 255, 0.12);
 }
-.hdr.on-dark .nav .nl::after,
-.hdr.on-dark .dd-t::after {
-  background: #fff;
+.sh.on-dark .sh-signin:hover {
+  background: none;
 }
-.hdr.on-dark .hdr-r .btn-d {
+.sh.on-dark .sh-link.on::after,
+.sh.on-dark .sh-dd.on > .sh-t::after {
+  background: #4ade8a;
+}
+.sh.on-dark .sh-cta {
   background: #fff;
   border-color: #fff;
   color: var(--forest);
 }
-.hdr.on-dark .lsw {
+.sh.on-dark .lsw {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.26);
 }
-.hdr.on-dark .lsw button {
+.sh.on-dark .lsw button {
   color: rgba(255, 255, 255, 0.82);
 }
-.hdr.on-dark .lsw button.on {
+.sh.on-dark .lsw button.on {
   background: #fff;
   color: var(--ink);
 }
-.hdr.on-dark .burger {
+.sh.on-dark .sh-burger {
   background: transparent;
   border-color: rgba(255, 255, 255, 0.3);
   color: #fff;
 }
-.hdr.on-dark .dd-p {
+
+/* Phone and tablet: the bar keeps the logo, the language and a menu button;
+   everything else lives in the full-screen sheet. */
+.sh-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: none;
+  flex-direction: column;
+  background: #fff;
+}
+.sh-sheet.open {
+  display: flex;
+}
+.sh-sheet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: var(--hdr-h);
+  padding: 0 20px;
+  border-bottom: 1px solid var(--line);
+  box-sizing: border-box;
+}
+.sh-sheet-body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px 20px 24px;
+}
+.sh-acc summary,
+.sh-sheet-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
   color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.sh-acc summary::-webkit-details-marker {
+  display: none;
+}
+.sh-acc[open] summary .chev {
+  transform: rotate(180deg);
+}
+.sh-acc-b {
+  display: grid;
+  gap: 2px;
+  padding: 8px 0 12px;
+  border-bottom: 1px solid var(--line);
+}
+.sh-acc[open] summary {
+  border-bottom: 0;
+}
+.sh-sheet-foot {
+  display: grid;
+  gap: 12px;
+  flex: none;
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+.sh-sheet-foot .lsw {
+  justify-self: start;
+}
+@media (max-width: 1120px) {
+  .sh-nav,
+  .sh-signin,
+  .sh-cta {
+    display: none;
+  }
+  .sh-burger {
+    display: inline-flex;
+  }
+  .sh-end {
+    margin-left: auto;
+    gap: 12px;
+  }
+  .sh-in {
+    gap: 16px;
+  }
+}
+@media (max-width: 420px) {
+  .sh-end > .lsw {
+    display: none;
+  }
+}
+@media (min-width: 1121px) {
+  .sh-sheet {
+    display: none !important;
+  }
+}
+
+/* In-page links stop below the bar. */
+[id],
+section {
+  scroll-margin-top: calc(var(--hdr-h) + 16px);
+}
+
+/* ---------- desktop dropdown panels: the original design, unchanged ---------- */
+/* The links in the panels took their type from the old bar's link rule. */
+.dd a {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.dd a:hover {
+  color: var(--ink);
+  background: var(--bg-3);
+}
+.dd a.on {
+  color: var(--ink);
+  font-weight: 600;
+}
+/* from site.css */
+.dd-p {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgba(10, 13, 20, 0.04),
+    0 24px 60px -20px rgba(10, 13, 20, 0.22);
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.16s,
+    transform 0.16s,
+    visibility 0.16s;
+  z-index: 60;
+}
+/* from site.css */
+.dd.open .dd-p {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+/* from site.css */
+.dd-product .dd-grid {
+  width: 540px;
+}
+/* from site.css */
+.dd-solutions {
+  flex-direction: column;
+}
+/* from site.css */
+.dd-solutions .dd-grid {
+  width: 520px;
+}
+/* from site.css */
+.dd-resources .dd-grid {
+  width: 300px;
+}
+/* from site.css */
+.dd-grid {
+  display: grid;
+  gap: 2px;
+}
+/* from site.css */
+.mi {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--ink);
+}
+/* from site.css */
+.mi:hover {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+/* from site.css */
+.mi:hover .ico {
+  background: var(--blue);
+  color: #fff;
+}
+/* from site.css */
+.mi .ico {
+  width: 34px;
+  height: 34px;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+/* from site.css */
+.mi b {
+  display: block;
+  font-size: 14px;
+  font-weight: 580;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+/* from site.css */
+.mi small {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-3);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+/* from site.css */
+.dd-feat {
+  width: 220px;
+  border-radius: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--ink);
+}
+/* from site.css */
+.dd-feat:hover {
+  color: var(--ink);
+  border-color: var(--line-2);
+}
+/* from site.css */
+.dd-feat .tag {
+  align-self: flex-start;
+}
+/* from site.css */
+.dd-feat b {
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  font-weight: 620;
+}
+/* from site.css */
+.dd-feat small {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.45;
+}
+/* from site.css */
+.dd-feat .go {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 560;
+  color: var(--blue-tx);
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+/* from site.css */
+.dd-post {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+/* from site.css */
+.dd-post:hover {
+  color: #fff;
+}
+/* from site.css */
+.dd-post .k {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #4ade8a;
+}
+/* from site.css */
+.dd-post b {
+  font-size: 20px;
+}
+/* from site.css */
+.dd-post .go {
+  color: #fff;
+}
+/* from site.css */
+.dd-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+/* from site.css */
+.dd-foot a {
+  font-weight: 580;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+/* from color.css */
+.dd-post {
+  background: var(--forest);
+  border-color: var(--forest);
+}
+/* from color.css */
+.dd-post .k {
+  color: var(--sun);
+}
+/* from color.css */
+.mi b {
+  font-size: 15px;
+}
+/* from color.css */
+.mi small {
+  font-size: 13.5px;
+}
+/* from color.css */
+.dd-feat {
+  padding: 10px 10px 16px;
+}
+/* from color.css */
+.dd-feat > *:not(.dd-img) {
+  margin: 0 8px;
+}
+/* from color.css */
+.dd-img {
+  display: block;
+  height: 120px;
+  border-radius: 9px;
+  overflow: hidden;
+  margin-bottom: 6px;
+  background: var(--bg-3);
+}
+/* from color.css */
+.dd-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+/* from color.css */
+.dd-feat:hover .dd-img img {
+  transform: scale(1.05);
+}
+/* from color.css */
+.dd-post .dd-img {
+  height: 110px;
+}
+/* from color.css */
+.dd-foot {
+  gap: 12px;
+}
+/* from color.css */
+.dd-th {
+  width: 44px;
+  height: 44px;
+  border-radius: 9px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-3);
+}
+/* from color.css */
+.dd-th img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* from color.css */
+.sh-nav .dd-feat,
+.sh-nav .dd-feat:hover {
+  color: var(--ink);
+}
+/* from color.css */
+.sh-nav .dd-post,
+.sh-nav .dd-post:hover {
+  color: #fff;
+}
+/* from color.css */
+.sh-nav .dd-post b {
+  color: #fff;
+}
+/* from color.css */
+.sh-nav .mi,
+.sh-nav .mi:hover {
+  color: var(--ink);
+}
+/* from theme.css */
+.sh.on-dark .dd-p {
+  color: var(--ink);
+}
+
+.sh-nav .mi {
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.55;
 }

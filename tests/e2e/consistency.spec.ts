@@ -209,7 +209,7 @@ for (const width of [1280, 390]) {
       await page.evaluate(() => (window as any).nvRevealAll?.());
       const top = await page.evaluate(() => Math.round(document.querySelector("main > section")!.getBoundingClientRect().top));
       expect(top, `${path}: the green starts at the top of the screen`).toBe(0);
-      const fill = () => page.evaluate(() => getComputedStyle(document.querySelector(".hdr .wrap")!).backgroundColor);
+      const fill = () => page.evaluate(() => getComputedStyle(document.querySelector("#hdr")!).backgroundColor);
       await expect.poll(fill, `${path}: header over the hero`).toBe("rgba(0, 0, 0, 0)");
       await page.evaluate(() => scrollTo(0, 2200));
       await expect.poll(fill, `${path}: header once the hero is gone`).not.toBe("rgba(0, 0, 0, 0)");
@@ -219,3 +219,17 @@ for (const width of [1280, 390]) {
     }
   });
 }
+
+test("page titles use one of the two shared sizes, 404 included", async ({ page }) => {
+  const sizes = new Map<string, string[]>();
+  for (const path of ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/faq", "/contact", "/journal-guide", "/resources", "/no-such-page", "/apply", "/signin", "/privacy"]) {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(path);
+    const style = await page.evaluate(() => {
+      const s = getComputedStyle(document.querySelector("main h1")!);
+      return `${s.fontSize}/${s.fontWeight}`;
+    });
+    sizes.set(style, [...(sizes.get(style) || []), path]);
+  }
+  expect([...sizes.keys()].sort(), JSON.stringify([...sizes.entries()])).toEqual(["46.08px/660", "69.12px/660"]);
+});

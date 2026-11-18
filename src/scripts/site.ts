@@ -257,6 +257,78 @@
       faq: "resources",
       contact: "resources",
     }[page] || "";
+  /* socials: add a URL to show that network in the footer */
+  var SOCIAL = {
+    linkedin: "https://www.linkedin.com/showcase/nelview/",
+    x: "",
+    instagram: "",
+    facebook: "",
+    youtube: "",
+    tiktok: "",
+  };
+  var SOCI = {
+    linkedin: [
+      "LinkedIn",
+      "<path d='M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z'/>",
+    ],
+    x: [
+      "X",
+      "<path d='M17.75 3h3.07l-6.72 7.68L22 21h-6.19l-4.85-6.34L5.4 21H2.33l7.19-8.21L2 3h6.34l4.38 5.8L17.75 3zm-1.08 16.2h1.7L7.4 4.72H5.58L16.67 19.2z'/>",
+    ],
+    instagram: [
+      "Instagram",
+      "<path d='M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM12 2.5c-2.6 0-2.9 0-3.9.06-3.5.16-5.4 2.1-5.54 5.54C2.5 9.1 2.5 9.4 2.5 12s0 2.9.06 3.9c.16 3.44 2.07 5.38 5.54 5.54 1 .05 1.3.06 3.9.06s2.9 0 3.9-.06c3.44-.16 5.39-2.08 5.54-5.54.05-1 .06-1.3.06-3.9s0-2.9-.06-3.9c-.15-3.43-2.07-5.38-5.54-5.54C14.9 2.5 14.6 2.5 12 2.5z'/>",
+    ],
+    facebook: [
+      "Facebook",
+      "<path d='M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z'/>",
+    ],
+    youtube: [
+      "YouTube",
+      "<path d='M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z'/>",
+    ],
+    tiktok: [
+      "TikTok",
+      "<path d='M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.7a2.9 2.9 0 1 1-2-2.7V9.5a6.3 6.3 0 1 0 5.4 6.2V8.8a8.2 8.2 0 0 0 3.8 1.2V6.7z'/>",
+    ],
+  };
+  function soc() {
+    var o = "";
+    for (var k in SOCIAL) {
+      if (SOCIAL[k])
+        o +=
+          "<a class='soc' href='" +
+          SOCIAL[k] +
+          "' target='_blank' rel='noopener' aria-label='Nelview on " +
+          SOCI[k][0] +
+          "' title='" +
+          SOCI[k][0] +
+          "'><svg width='17' height='17' viewBox='0 0 24 24' fill='currentColor'>" +
+          SOCI[k][1] +
+          "</svg></a>";
+    }
+    return o ? "<div class='socs'>" + o + "</div>" : "";
+  }
+  /* ---- Header: a full-width bar, mega-menus, and a full-screen menu on phones ---- */
+  function esc(t) {
+    return String(t).replace(/&/g, "&amp;");
+  }
+  function chev() {
+    return "<svg class='chev' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M6 9l6 6 6-6'/></svg>";
+  }
+  function shItem(it) {
+    return (
+      "<a class='sh-item' href='" +
+      it[3] +
+      "'><span class='sh-ic'>" +
+      ic(it[0], 18) +
+      "</span><span><b>" +
+      esc(it[1]) +
+      "</b><small>" +
+      it[2] +
+      "</small></span></a>"
+    );
+  }
   function mi(it) {
     return (
       "<a class='mi' href='" +
@@ -335,135 +407,228 @@
         "</a></div>";
     return h + "</div>";
   }
-  function dd(k) {
+  function shMenu(k) {
+    var m = MENU[k],
+      id = "dd-" + k;
     return (
-      "<div class='dd" +
+      "<div class='sh-dd dd" +
       (ACT === k ? " on" : "") +
-      "'><button class='dd-t' type='button' aria-haspopup='true'>" +
-      MENU[k].l +
-      "<svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg></button>" +
-      panel(k) +
+      "'><button class='sh-t' type='button' aria-expanded='false' aria-controls='" +
+      id +
+      "'>" +
+      m.l +
+      chev() +
+      "</button>" +
+      panel(k).replace("<div class='dd-p ", "<div id='" + id + "' class='dd-p ") +
       "</div>"
     );
   }
-  /* socials: add a URL to show that network in the footer */
-  var SOCIAL = {
-    linkedin: "https://www.linkedin.com/showcase/nelview/",
-    x: "",
-    instagram: "",
-    facebook: "",
-    youtube: "",
-    tiktok: "",
-  };
-  var SOCI = {
-    linkedin: [
-      "LinkedIn",
-      "<path d='M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z'/>",
-    ],
-    x: [
-      "X",
-      "<path d='M17.75 3h3.07l-6.72 7.68L22 21h-6.19l-4.85-6.34L5.4 21H2.33l7.19-8.21L2 3h6.34l4.38 5.8L17.75 3zm-1.08 16.2h1.7L7.4 4.72H5.58L16.67 19.2z'/>",
-    ],
-    instagram: [
-      "Instagram",
-      "<path d='M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM12 2.5c-2.6 0-2.9 0-3.9.06-3.5.16-5.4 2.1-5.54 5.54C2.5 9.1 2.5 9.4 2.5 12s0 2.9.06 3.9c.16 3.44 2.07 5.38 5.54 5.54 1 .05 1.3.06 3.9.06s2.9 0 3.9-.06c3.44-.16 5.39-2.08 5.54-5.54.05-1 .06-1.3.06-3.9s0-2.9-.06-3.9c-.15-3.43-2.07-5.38-5.54-5.54C14.9 2.5 14.6 2.5 12 2.5z'/>",
-    ],
-    facebook: [
-      "Facebook",
-      "<path d='M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z'/>",
-    ],
-    youtube: [
-      "YouTube",
-      "<path d='M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z'/>",
-    ],
-    tiktok: [
-      "TikTok",
-      "<path d='M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.7a2.9 2.9 0 1 1-2-2.7V9.5a6.3 6.3 0 1 0 5.4 6.2V8.8a8.2 8.2 0 0 0 3.8 1.2V6.7z'/>",
-    ],
-  };
-  function soc() {
-    var o = "";
-    for (var k in SOCIAL) {
-      if (SOCIAL[k])
-        o +=
-          "<a class='soc' href='" +
-          SOCIAL[k] +
-          "' target='_blank' rel='noopener' aria-label='Nelview on " +
-          SOCI[k][0] +
-          "' title='" +
-          SOCI[k][0] +
-          "'><svg width='17' height='17' viewBox='0 0 24 24' fill='currentColor'>" +
-          SOCI[k][1] +
-          "</svg></a>";
-    }
-    return o ? "<div class='socs'>" + o + "</div>" : "";
+  function shLang() {
+    return "<div class='lsw' role='group' aria-label='Language'><button type='button' data-lang='en'>EN</button><button type='button' data-lang='fr'>FR</button></div>";
   }
   var h = document.querySelector("[data-site-header]");
   if (h) {
+    var brand = function (cls) {
+      return (
+        "<a class='" +
+        cls +
+        "' href='./' aria-label='Nelview home'><span class='mk'>" +
+        mark("#0A0D14") +
+        "</span>Nelview</a>"
+      );
+    };
     h.outerHTML =
-      "<header class='hdr' id='hdr'><div class='wrap'><a class='brand' href='./'><span class='mk'>" +
-      mark("#0A0D14") +
-      "</span>Nelview</a><nav class='nav'>" +
-      dd("product") +
-      dd("solutions") +
-      "<a class='nl" +
+      "<a class='skip' href='#main'>Skip to content</a>" +
+      "<header class='sh' id='hdr'><div class='wrap sh-in'>" +
+      brand("sh-brand") +
+      "<nav class='sh-nav' aria-label='Main'>" +
+      shMenu("product") +
+      shMenu("solutions") +
+      "<a class='sh-link" +
       (ACT === "pricing" ? " on" : "") +
       "' href='pricing'>Pricing</a>" +
-      dd("resources") +
-      "</nav><div class='hdr-r'><a class='si' href='" +
-      APP.signin +
-      "'>Sign in</a><a class='btn btn-d btn-sm' href='" +
+      shMenu("resources") +
+      "</nav><div class='sh-end'>" +
+      shLang() +
+      "<a class='sh-signin' href='" +
       APP.start +
-      "'>Get started</a><button class='burger' id='burger' aria-label='Open menu'>" +
+      "'>Join our waitlist</a><a class='btn btn-p btn-sm sh-cta' href='contact'>Book a demo</a><button class='sh-burger' id='burger' type='button' aria-label='Open menu' aria-expanded='false' aria-controls='mnav'>" +
       ic("menu", 20) +
       "</button></div></div></header>" +
-      "<div class='mnav' id='mnav'><div class='mnav-top'><a class='brand' href='./'><span class='mk'>" +
-      mark("#0A0D14") +
-      "</span>Nelview</a><button class='burger' style='display:inline-flex' id='mclose' aria-label='Close menu'>" +
+      "<div class='sh-sheet' id='mnav' role='dialog' aria-modal='true' aria-label='Menu'><div class='sh-sheet-top'>" +
+      brand("sh-brand") +
+      "<button class='sh-burger' id='mclose' type='button' aria-label='Close menu'>" +
       ic("x", 20) +
-      "</button></div>" +
+      "</button></div><div class='sh-sheet-body'>" +
       ["product", "solutions", "resources"]
         .map(function (k) {
           return (
-            "<details class='mgrp'><summary>" +
+            "<details class='sh-acc'><summary>" +
             MENU[k].l +
-            "<span class='pl'>" +
-            ic("plus", 15) +
-            "</span></summary><div class='mgrp-b'>" +
-            MENU[k].items.map(mi).join("") +
+            chev() +
+            "</summary><div class='sh-acc-b'>" +
+            MENU[k].items.map(shItem).join("") +
             "</div></details>"
           );
         })
         .join("") +
-      "<a class='l' href='pricing'>Pricing</a><a class='l' href='contact'>Book a demo</a><div class='row'><a class='btn btn-g btn-lg' href='" +
-      APP.signin +
-      "'>Sign in</a><a class='btn btn-p btn-lg' href='" +
+      "<a class='sh-sheet-link' href='pricing'>Pricing</a></div><div class='sh-sheet-foot'>" +
+      shLang() +
+      "<a class='btn btn-g btn-lg' href='" +
       APP.start +
-      "'>Get started</a></div></div>";
-    document.querySelectorAll(".dd-t").forEach(function (t) {
-      t.addEventListener("click", function (e) {
-        var d = t.parentNode,
-          o = d.classList.contains("open");
-        document.querySelectorAll(".dd.open").forEach(function (x) {
-          x.classList.remove("open");
-        });
-        if (!o) d.classList.add("open");
-        e.stopPropagation();
+      "'>Join our waitlist</a><a class='btn btn-p btn-lg' href='contact'>Book a demo</a></div></div>";
+    var main = document.querySelector("main");
+    if (main && !main.id) main.id = "main";
+
+    var hdr = document.getElementById("hdr"),
+      dds = [].slice.call(hdr.querySelectorAll(".sh-dd"));
+    var openDd = function (dd) {
+      dds.forEach(function (x) {
+        if (x !== dd) setDd(x, false);
       });
-    });
+      setDd(dd, true);
+    };
+    var setDd = function (dd, on) {
+      dd.classList.toggle("open", on);
+      dd.querySelector(".sh-t").setAttribute("aria-expanded", on ? "true" : "false");
+    };
     var closeMenus = function () {
-      document.querySelectorAll(".dd.open").forEach(function (x) {
-        x.classList.remove("open");
+      dds.forEach(function (x) {
+        setDd(x, false);
       });
     };
+    var timer;
+    dds.forEach(function (dd) {
+      var t = dd.querySelector(".sh-t");
+      t.addEventListener("click", function (e) {
+        e.stopPropagation();
+        // With a mouse the menu has usually opened on hover already, so a
+        // click keeps it open; on a touch screen a tap toggles it.
+        if (dd.classList.contains("open") && !matchMedia("(hover: hover)").matches)
+          setDd(dd, false);
+        else openDd(dd);
+      });
+      // Pointer users: open on hover, with a short delay so crossing the bar
+      // does not flash menus.
+      dd.addEventListener("mouseenter", function () {
+        if (!matchMedia("(hover: hover)").matches) return;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          openDd(dd);
+        }, 90);
+      });
+      dd.addEventListener("mouseleave", function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          setDd(dd, false);
+        }, 160);
+      });
+      // Keyboard: arrows move between entries, Escape closes and returns.
+      dd.addEventListener("keydown", function (e) {
+        var items = [].slice.call(dd.querySelectorAll(".mi, .dd-feat, .dd-foot a"));
+        var i = items.indexOf(document.activeElement);
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (!dd.classList.contains("open")) openDd(dd);
+          (items[i + 1] || items[0]).focus();
+        } else if (e.key === "ArrowUp" && i >= 0) {
+          e.preventDefault();
+          (items[i - 1] || t).focus();
+        } else if (e.key === "Escape") {
+          setDd(dd, false);
+          t.focus();
+        }
+      });
+      dd.addEventListener("focusout", function (e) {
+        if (!dd.contains(e.relatedTarget)) setDd(dd, false);
+      });
+    });
+    // A link to a place on the current page does not reload it, so the menu
+    // closes itself; so does a click anywhere outside the menu.
     document.addEventListener("click", function (e) {
-      // A link to a place on the current page does not reload it, so the menu
-      // has to close itself; so does a click anywhere outside the menu.
-      if (!e.target.closest(".dd") || e.target.closest(".dd a")) closeMenus();
+      if (!e.target.closest(".sh-dd") || e.target.closest(".dd-p a"))
+        closeMenus();
+    });
+
+    // Phone menu: a full-screen sheet with the focus kept inside it.
+    var mn = document.getElementById("mnav"),
+      bg = document.getElementById("burger"),
+      back = document.getElementById("mclose");
+    var shut = function () {
+      if (!mn.classList.contains("open")) return;
+      mn.classList.remove("open");
+      document.body.style.overflow = "";
+      bg.setAttribute("aria-expanded", "false");
+      bg.focus();
+    };
+    bg.addEventListener("click", function () {
+      mn.classList.add("open");
+      document.body.style.overflow = "hidden";
+      bg.setAttribute("aria-expanded", "true");
+      back.focus();
+    });
+    back.addEventListener("click", shut);
+    mn.addEventListener("click", function (e) {
+      if (e.target.closest("a")) {
+        mn.classList.remove("open");
+        document.body.style.overflow = "";
+        bg.setAttribute("aria-expanded", "false");
+      }
+    });
+    mn.addEventListener("keydown", function (e) {
+      if (e.key !== "Tab") return;
+      var f = [].slice
+        .call(mn.querySelectorAll("a[href], button, summary"))
+        .filter(function (x) {
+          return x.offsetParent !== null;
+        });
+      if (!f.length) return;
+      var first = f[0],
+        last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeMenus();
+      if (e.key === "Escape") {
+        closeMenus();
+        shut();
+      }
     });
+    window.addEventListener("resize", function () {
+      if (innerWidth > 1120 && mn.classList.contains("open")) shut();
+    });
+
+    // Bar state: a hairline shadow once the page has moved, light text over a
+    // full-width colour hero (data-bleed on <body>) until it has scrolled away.
+    var bleed = document.body.hasAttribute("data-bleed")
+      ? document.querySelector("main > section")
+      : null;
+    var sizeHdr = function () {
+      document.documentElement.style.setProperty("--hdr-h", hdr.offsetHeight + "px");
+    };
+    sizeHdr();
+    window.addEventListener("resize", sizeHdr);
+    var onS = function () {
+      var y = window.scrollY,
+        on = hdr.classList.contains("sc");
+      // The shadow switches on and off with a gap between the two points, so
+      // the bounce at the very top of a phone page cannot make it flicker.
+      if (y > 24 && !on) hdr.classList.add("sc");
+      else if (y < 4 && on) hdr.classList.remove("sc");
+      if (bleed) {
+        var over = bleed.getBoundingClientRect().bottom > 56;
+        if (hdr.classList.contains("on-dark") !== over)
+          hdr.classList.toggle("on-dark", over);
+      }
+    };
+    window.addEventListener("scroll", onS, { passive: true });
+    onS();
+
     // Menu and footer links always land at the top of the page they name. On
     // another page that is where it opens; on the current page nothing would
     // happen, so scroll to the top instead.
@@ -553,56 +718,6 @@
         "'/></svg>",
     );
   });
-  var hdr = document.getElementById("hdr");
-  if (hdr) {
-    // The shadow switches on and off with a gap between the two points, so the
-    // bounce at the very top of a phone page cannot make it flicker.
-    // Pages that open on a full-width colour panel (data-bleed on <body>) let
-    // it run to the very top of the screen: the header floats over it with no
-    // fill, in light colours, until the panel has scrolled away.
-    var bleed = document.body.hasAttribute("data-bleed")
-      ? document.querySelector("main > section")
-      : null;
-    var sizeHdr = function () {
-      document.documentElement.style.setProperty(
-        "--hdr-h",
-        hdr.offsetHeight + "px",
-      );
-    };
-    sizeHdr();
-    window.addEventListener("resize", sizeHdr);
-    var onS = function () {
-      var y = window.scrollY,
-        on = hdr.classList.contains("sc");
-      if (y > 24 && !on) hdr.classList.add("sc");
-      else if (y < 4 && on) hdr.classList.remove("sc");
-      if (bleed) {
-        var over = bleed.getBoundingClientRect().bottom > 56;
-        if (hdr.classList.contains("on-dark") !== over)
-          hdr.classList.toggle("on-dark", over);
-      }
-    };
-    window.addEventListener("scroll", onS, { passive: true });
-    onS();
-  }
-  var mn = document.getElementById("mnav");
-  if (mn) {
-    document.getElementById("burger").onclick = function () {
-      mn.classList.add("open");
-      document.body.style.overflow = "hidden";
-    };
-    var cl = function () {
-      mn.classList.remove("open");
-      document.body.style.overflow = "";
-    };
-    document.getElementById("mclose").onclick = cl;
-    mn.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", cl);
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") cl();
-    });
-  }
   document.querySelectorAll("[data-tabs]").forEach(function (t) {
     var g = t.getAttribute("data-tabs");
     t.querySelectorAll("button").forEach(function (b) {

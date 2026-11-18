@@ -35,12 +35,12 @@ test("a menu link to the page you are on scrolls to its top without reloading", 
     (window as any).__still_here = true;
     scrollTo(0, 2400);
   });
-  await page.locator(".dd-t").first().click();
-  await page.locator(".dd.open a[href='./']").first().click();
+  await page.locator(".sh-t").first().click();
+  await page.locator(".sh-dd.open a[href='./']").first().click();
   await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(0);
   await expect(page).toHaveURL(/\/$/);
   expect(await page.evaluate(() => (window as any).__still_here), "the page reloaded").toBe(true);
-  await expect(page.locator(".dd.open")).toHaveCount(0);
+  await expect(page.locator(".sh-dd.open")).toHaveCount(0);
 });
 
 test("menu and footer links open the page they name at its top", async ({ page }) => {
@@ -48,7 +48,7 @@ test("menu and footer links open the page they name at its top", async ({ page }
   for (const [from, link, to] of [
     ["/pricing", "footer a[href='institutions']", /\/institutions$/],
     ["/about", "footer a[href='journal-guide']", /\/journal-guide$/],
-    ["/pricing", "header a.nl[href='pricing']", /\/pricing$/],
+    ["/pricing", "header a.sh-link[href='pricing']", /\/pricing$/],
   ] as const) {
     await page.goto(from);
     await page.evaluate(() => scrollTo(0, 1800));
@@ -72,13 +72,13 @@ test("no menu or footer link points into the middle of a page", async ({ page })
 test("Escape and clicking away close the header menus", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/pricing");
-  await page.locator(".dd-t").first().click();
-  await expect(page.locator(".dd.open")).toHaveCount(1);
+  await page.locator(".sh-t").first().click();
+  await expect(page.locator(".sh-dd.open")).toHaveCount(1);
   await page.keyboard.press("Escape");
-  await expect(page.locator(".dd.open")).toHaveCount(0);
-  await page.locator(".dd-t").first().click();
+  await expect(page.locator(".sh-dd.open")).toHaveCount(0);
+  await page.locator(".sh-t").first().click();
   await page.mouse.click(1240, 700);
-  await expect(page.locator(".dd.open")).toHaveCount(0);
+  await expect(page.locator(".sh-dd.open")).toHaveCount(0);
 });
 
 test.describe("on a phone", () => {
@@ -100,10 +100,10 @@ test.describe("on a phone", () => {
 
   test("menu links reach their pages", async ({ page }) => {
     await page.goto("/");
-    for (const [label, path] of [["Pricing", /\/pricing$/], ["Book a demo", /\/contact$/]] as const) {
+    for (const [label, path] of [["Pricing", /\/pricing$/], ["Book a demo", /\/contact$/], ["Join our waitlist", /\/waitlist$/]] as const) {
       await page.goto("/");
       await page.locator("#burger").click();
-      await page.locator("#mnav a.l", { hasText: label }).click();
+      await page.locator("#mnav a", { hasText: label }).click();
       await expect(page).toHaveURL(path);
       await expect(page.locator("main h1").first()).toBeVisible();
     }
@@ -122,7 +122,7 @@ test("arriving on a section of a generated page scrolls to it", async ({ page })
 test("the language choice survives moving between pages and going back", async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("nv_lang", "fr"));
   await page.goto("/");
-  await page.locator("header.hdr a.nl[href='pricing']").click();
+  await page.locator("header.sh a.sh-link[href='pricing']").click();
   await expect(page).toHaveURL(/\/pricing$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "fr");
   await expect(page.locator("main h1").first()).toContainText("Une évaluation honnête");
@@ -141,8 +141,8 @@ test("the FAQ links in the menu and footer open the FAQ page at its top", async 
   await expect(page.locator("main h1")).toHaveText("Questions, answered.");
   expect(await page.locator("main details").count()).toBeGreaterThan(15);
   await page.goto("/");
-  await page.locator(".dd-t", { hasText: "Resources" }).click();
-  await page.locator(".dd.open a[href='faq']").click();
+  await page.locator(".sh-t", { hasText: "Resources" }).click();
+  await page.locator(".sh-dd.open a[href='faq']").click();
   await expect(page).toHaveURL(/\/faq$/);
 });
 
@@ -211,8 +211,8 @@ test.describe("institutions page", () => {
     await page.goto("/pricing");
     await expect(page.locator("footer a[href='institutions']", { hasText: /^Institutions$/ })).toHaveCount(1);
     await page.setViewportSize({ width: 1280, height: 900 });
-    await page.locator(".dd-t", { hasText: "Solutions" }).click();
-    await expect(page.locator(".dd.open a[href='institutions'] b, .dd.open a[href='institutions']").first()).toContainText("Institutions");
+    await page.locator(".sh-t", { hasText: "Solutions" }).click();
+    await expect(page.locator(".sh-dd.open a[href='institutions'] b, .sh-dd.open a[href='institutions']").first()).toContainText("Institutions");
   });
 });
 
@@ -226,3 +226,44 @@ test("the Institutions hero shows the real institution dashboard", async ({ page
   await page.goto("/institutions");
   await expect(page.locator(".inst-hero img.dash")).toHaveAttribute("alt", /Tableau de bord/);
 });
+
+test("the two header buttons are Join our waitlist and Book a demo", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  for (const path of ["/", "/pricing", "/about", "/institutions"]) {
+    await page.goto(path);
+    await expect(page.locator("#hdr .sh-signin"), path).toHaveText("Join our waitlist");
+    await expect(page.locator("#hdr .sh-signin"), path).toHaveAttribute("href", "waitlist");
+    await expect(page.locator("#hdr .sh-cta"), path).toHaveText("Book a demo");
+    await expect(page.locator("#hdr .sh-cta"), path).toHaveAttribute("href", "contact");
+  }
+  await page.goto("/pricing");
+  await page.locator("#hdr .sh-cta").click();
+  await expect(page).toHaveURL(/\/contact$/);
+  await page.locator("#hdr .sh-signin").click();
+  await expect(page).toHaveURL(/\/waitlist$/);
+});
+
+for (const width of [1280, 390]) {
+  test(`every page has the same header at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    const seen = new Map<string, string[]>();
+    for (const path of ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/faq", "/contact", "/journal-guide", "/resources", "/apply", "/signin", "/privacy", "/terms", "/article?p=desk-rejection", "/no-such-page"]) {
+      await page.goto(path);
+      await page.evaluate(() => scrollTo(0, 0));
+      const info = await page.evaluate(() => {
+        const bar = document.getElementById("hdr")!;
+        const box = bar.getBoundingClientRect();
+        return JSON.stringify({
+          height: Math.round(box.height),
+          left: Math.round(box.left),
+          width: Math.round(box.width),
+          links: [...bar.querySelectorAll("a")].map((a) => a.getAttribute("href")).join(","),
+          main: !!document.querySelector("main#main"),
+        });
+      });
+      seen.set(info, [...(seen.get(info) || []), path]);
+    }
+    // Pages with a colour hero lay the same bar over it; all other facts match.
+    expect([...seen.entries()].map(([k, v]) => `${v.join(" ")} :: ${k}`), "the header differs between pages").toHaveLength(1);
+  });
+}

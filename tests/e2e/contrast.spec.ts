@@ -12,6 +12,7 @@ for (const width of [1280, 390]) {
     for (const path of PAGES) {
       await page.goto(path);
       await page.evaluate(() => (window as any).nvRevealAll?.());
+      await page.waitForTimeout(350); // the header finishes fading to its light colours
       weak.push(
         ...(await page.evaluate((route) => {
           const parse = (s: string) => {

@@ -360,6 +360,13 @@
     "is desk-rejected before peer review. Not for lack of ideas, for lack of":
       "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback.": "retours rigoureux.",
+    "Join our waitlist": "Rejoindre la liste d'attente",
+    "Skip to content": "Aller au contenu",
+    "Open menu": "Ouvrir le menu",
+    "Close menu": "Fermer le menu",
+    "Main": "Principal",
+    "Menu": "Menu",
+    "Nelview home": "Accueil Nelview",
     "Universities · Mentors · Research bodies": "Universités · Mentors · Organismes de recherche",
     "Rigorous review for every researcher you support.": "Une évaluation rigoureuse pour chaque chercheur que vous accompagnez.",
     "Set your criteria, pass marks and score bands once. Universities lead the way, and research mentors and research bodies use the same tools, so every researcher gets structured feedback before they submit.": "Définissez une fois vos critères, vos seuils de réussite et vos niveaux de notes. Les universités ouvrent la voie, et les mentors et organismes de recherche utilisent les mêmes outils, afin que chaque chercheur reçoive des retours structurés avant de soumettre.",
@@ -1896,33 +1903,22 @@
   function sw() {
     return "<div class='lsw' role='group' aria-label='Language'><button type='button' data-lang='en'>EN</button><button type='button' data-lang='fr'>FR</button></div>";
   }
-  var hr =
-    document.querySelector(".hdr-r") || document.querySelector(".wl-hdr .wrap");
-  if (hr) {
+  var hr = document.querySelector(".wl-hdr .wrap");
+  if (hr && !hr.querySelector(".lsw")) {
     var t = document.createElement("div");
     t.innerHTML = sw();
     var el = t.firstChild;
-    if (hr.classList.contains("hdr-r")) hr.insertBefore(el, hr.firstChild);
-    else {
-      var bk = hr.querySelector(".back");
-      var g = document.createElement("div");
-      g.style.cssText = "display:flex;gap:16px;align-items:center";
-      hr.insertBefore(g, bk);
-      g.appendChild(el);
-      g.appendChild(bk);
-    }
+    var bk = hr.querySelector(".back");
+    var g = document.createElement("div");
+    g.style.cssText = "display:flex;gap:16px;align-items:center";
+    hr.insertBefore(g, bk);
+    g.appendChild(el);
+    g.appendChild(bk);
   }
   var fl = document.querySelector(".ftr .lang");
   if (fl)
     fl.outerHTML =
       "<span class='lang lang-f'><button type='button' data-lang='en'>English</button><button type='button' data-lang='fr'>Français</button></span>";
-  var mr = document.querySelector(".mnav .row");
-  if (mr) {
-    var d = document.createElement("div");
-    d.innerHTML = sw();
-    d.firstChild.classList.add("lsw-m");
-    mr.parentNode.insertBefore(d.firstChild, mr);
-  }
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-lang]");
     if (b) set(b.getAttribute("data-lang"), true);
