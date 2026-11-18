@@ -20,7 +20,7 @@
     <title>Institutions · Nelview</title>
     <meta
       name="description"
-      content="Give every student structured feedback measured against your own criteria and pass marks. Nelview for universities, departments and research offices."
+      content="Set your own criteria and pass marks once. Nelview for universities first, and for research consultants, mentors and academic research bodies."
     />
     <link rel="icon" href="favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
@@ -43,36 +43,106 @@
   </head>
   <body data-page="inst">
     <div data-site-header></div>
-    <main>
-      <section
-        class="hero"
-        style="padding-top: 88px"
-        data-screen-label="Institutions hero"
-      >
-        <div class="wrap hero-grid">
-          <div>
-            <h1 class="display">
-              Rigorous review for every student.
-            </h1>
-            <p class="lead">
-              Give every student the structured feedback only a few ever get,
-              measured against your own criteria and pass marks. Supervisors see
-              who needs them, and no one submits to a predatory journal again.
-            </p>
-            <div class="row">
-              <a class="btn btn-p btn-lg" href="contact?topic=institution"
-                >Set up your institution<span data-ic="arrow"></span></a
-              ><a class="btn btn-g btn-lg" href="contact">Book a demo</a>
-            </div>
-            <div class="micro">
-              <span data-ic="check">Students never pay</span
-              ><span data-ic="check">Live in under a week</span
-              ><span data-ic="lock">SSO and data residency</span>
-            </div>
+    <main id="main">
+      <section class="hero inst-hero sc" data-screen-label="Institutions hero">
+        <div class="wrap">
+          <a class="pill-badge" href="#audiences"
+            >Universities · Mentors · Research bodies<span data-ic="arrow" data-s="14"></span
+          ></a>
+          <h1 class="display" data-i18n="h_inst">Rigorous review for every <em>researcher you support</em>.</h1>
+          <p class="lead">
+            Set your criteria, pass marks and score bands once. Universities
+            lead the way, and research mentors and research bodies use the same
+            tools, so every researcher gets structured feedback before they
+            submit.
+          </p>
+          <div class="row">
+            <a class="btn btn-p btn-lg" href="contact?topic=institution"
+              >Set up your institution<span data-ic="arrow"></span></a
+            ><a class="btn btn-g btn-lg" href="contact">Book a demo</a>
           </div>
-          <img class="shot shot-mock" src="assets/mockups/inst-config.gif" data-src-fr="assets/mockups/inst-config-fr.gif" alt="Review configuration for the MSc Public Health programme with 412 seats: criteria weights of 30%, 25%, 25% and 20%, a pass mark of 65 and score bands." data-alt-fr="Configuration de l'évaluation du master en santé publique, 412 licences : pondérations de 30 %, 25 %, 25 % et 20 %, seuil de réussite de 65 et niveaux de notes." width="527" height="460" loading="lazy" decoding="async">
+          <div class="micro">
+            <span data-ic="check">Students never pay</span
+            ><span data-ic="check">Live in under a week</span
+            ><span data-ic="lock">SSO and data residency</span>
+          </div>
+          <div class="stage stage-wide">
+            <img
+              class="dash"
+              src="assets/web/institution-dashboard-1600.webp"
+              srcset="assets/web/institution-dashboard-800.webp 800w, assets/web/institution-dashboard-1600.webp 1600w, assets/web/institution-dashboard-2000.webp 2000w"
+              sizes="(max-width: 1200px) 92vw, 1100px"
+              alt="Nelview institution dashboard for the University of Ghana: student seats, weekly active users, gate pass rate, students at risk, projects by stage and items that need attention."
+              data-alt-fr="Tableau de bord Nelview d'un établissement, l'Université du Ghana : licences étudiantes, utilisateurs actifs, taux de réussite, étudiants à risque, projets par étape et points à traiter."
+              width="2000"
+              height="1233"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
         </div>
       </section>
+
+      <section class="sec" id="audiences" data-screen-label="Who it is for">
+        <div class="wrap">
+          <div class="sec-head sc">
+            <h2 class="h2">One platform for every kind of institution.</h2>
+            <p class="lead">
+              Universities are our main focus. Research mentors and research
+              bodies use the same tools, tuned to how they work.
+            </p>
+          </div>
+          <div class="pcards inst-cards">
+            <div class="pcard pcard-lead hue-amber">
+              <span class="pic" data-ic="building" data-s="22"></span>
+              <h3>Universities</h3>
+              <p>
+                Faculties, departments and research offices give every student
+                criteria-based feedback, and supervisors see who needs them
+                first.
+              </p>
+              <ul class="checks">
+                <li data-ic="check">Criteria and pass marks per programme</li>
+                <li data-ic="check">Supervisor queue and approvals</li>
+                <li data-ic="check">Free seats for every student</li>
+              </ul>
+              <a class="pbtn" href="#universities">Explore for universities</a>
+            </div>
+            <div class="pcard hue-violet">
+              <span class="pic" data-ic="users" data-s="22"></span>
+              <h3>Research consultants and mentors</h3>
+              <p>
+                Guide each mentee with scores, flags and a clear trail of
+                changes, then bring in a named expert when it matters.
+              </p>
+              <a class="pbtn" href="#mentors">See mentor tools</a>
+            </div>
+            <div class="pcard hue-coral">
+              <span class="pic" data-ic="globe" data-s="22"></span>
+              <h3>Research bodies</h3>
+              <p>
+                Institutes, councils and academic societies set the criteria
+                for their calls so applicants check readiness before they
+                submit.
+              </p>
+              <a class="pbtn" href="#research-bodies">See research bodies</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec-sm" id="universities" data-screen-label="Universities">
+        <div class="wrap">
+          <div class="sec-head sc">
+            <h2 class="h2">For universities.</h2>
+            <p class="lead">
+              Our main focus: every faculty and programme gets its own
+              criteria, and students never pay.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section class="sec-sm prow-s" data-screen-label="Photo row">
         <div class="wrap">
           <div class="prow prow-3">
@@ -368,6 +438,100 @@
         </div>
       </section>
 
+      <section class="sec" id="mentors" data-screen-label="Mentors">
+        <div class="wrap">
+          <div class="split-head">
+            <h2 class="h2">For research consultants and mentors.</h2>
+            <p class="lead">
+              Whether you guide one researcher or a whole group, you see where
+              each one stands and spend your time on the thinking.
+            </p>
+          </div>
+          <div class="feats">
+            <div class="feat">
+              <span class="ico lg" data-ic="users" data-s="20"></span>
+              <h4>Every mentee in one queue</h4>
+              <p>
+                Scores, trends and flags are there before you open a single
+                file.
+              </p>
+            </div>
+            <div class="feat">
+              <span class="ico lg" data-ic="sliders" data-s="20"></span>
+              <h4>Your standards, applied</h4>
+              <p>
+                Set the criteria and pass mark for each mentee or cohort, and
+                every review follows them.
+              </p>
+            </div>
+            <div class="feat">
+              <span class="ico lg" data-ic="award" data-s="20"></span>
+              <h4>A named expert when it matters</h4>
+              <p>
+                Commission a human reviewer for high-stakes work, with escrow
+                and a signed report.
+              </p>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 32px">
+            <a class="btn btn-p" href="contact?topic=institution&role=mentor"
+              >Talk about mentoring</a
+            ><a class="btn btn-g" href="pricing">See the Team plan</a>
+          </div>
+          <p class="muted" style="margin-top: 14px; font-size: 14px">
+            Groups of up to 10 start on the Team plan.
+          </p>
+        </div>
+      </section>
+
+      <section class="sec alt" id="research-bodies" data-screen-label="Research bodies">
+        <div class="wrap">
+          <div class="split-head">
+            <h2 class="h2">For academic research bodies.</h2>
+            <p class="lead">
+              Research institutes, councils and academic societies can set the
+              standard for a call or programme and see how applicants and
+              grantees are doing.
+            </p>
+          </div>
+          <div class="feats">
+            <div class="feat">
+              <span class="ico lg" data-ic="target" data-s="20"></span>
+              <h4>Criteria for every call</h4>
+              <p>
+                Define the rubric, weights and pass mark for each programme, and
+                share it so applicants know the bar.
+              </p>
+            </div>
+            <div class="feat">
+              <span class="ico lg" data-ic="file" data-s="20"></span>
+              <h4>Applicants check before they submit</h4>
+              <p>
+                Grant and research proposals are reviewed against your criteria
+                first, so reviewers see stronger work.
+              </p>
+            </div>
+            <div class="feat">
+              <span class="ico lg" data-ic="chart" data-s="20"></span>
+              <h4>See the whole programme</h4>
+              <p>
+                Analytics and reporting show how a cohort is doing and where the
+                common gaps are.
+              </p>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 32px">
+            <a class="btn btn-p" href="contact?topic=institution&role=research-body"
+              >Talk to us</a
+            ><a class="btn btn-g" href="contact">Book a demo</a>
+          </div>
+          <p class="muted" style="margin-top: 14px; font-size: 14px">
+            Documents are never used for training, and data residency options
+            are available.
+          </p>
+        </div>
+      </section>
+
       <section class="sec" data-screen-label="Quote">
         <div class="wrap">
           <div class="qband">
@@ -389,7 +553,7 @@
       <section class="sec alt" data-screen-label="Institutions FAQ">
         <div class="wrap faq-grid">
           <div>
-            <h2 class="h2">Questions from universities.</h2>
+            <h2 class="h2">Questions from institutions.</h2>
             <p class="muted" style="margin-top: 20px">
               Something else? <a href="contact">Book a call</a>.
             </p>
@@ -433,6 +597,25 @@
                 seat returns to your pool.
               </div>
             </details>
+            <details>
+              <summary>Can research consultants and mentors use Nelview?</summary>
+              <div class="a">
+                Yes. Mentors and consultants review their mentees' work in shared
+                projects, set criteria and a pass mark for each, and can
+                commission a named expert when it matters. Groups of up to 10
+                start on the Team plan; larger organisations use the
+                Institution plan.
+              </div>
+            </details>
+            <details>
+              <summary>Can a research body or funder use it for its programmes?</summary>
+              <div class="a">
+                Yes. Set your own criteria, weights and pass mark for each call
+                or programme so applicants can check readiness before they
+                submit, and use analytics to see how a cohort is doing. Tell us
+                about your programme and we will set up a pilot.
+              </div>
+            </details>
           </div>
         </div>
       </section>
@@ -444,10 +627,10 @@
               class="display"
               style="max-width: 16ch; margin: 0 auto"
             >
-              Bring Nelview to your university.
+              Bring Nelview to your institution.
             </h2>
             <p class="lead">
-              Pilot with one department, then scale across the institution.
+              Pilot with one department, programme or cohort, then scale across the institution.
             </p>
             <div class="row">
               <a class="btn btn-w btn-lg" href="contact?topic=institution"

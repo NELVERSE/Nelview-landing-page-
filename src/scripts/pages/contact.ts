@@ -46,6 +46,14 @@
   });
   var q = new URLSearchParams(location.search).get("topic");
   if (q === "contact" || q === "general") set("msg");
+  // Links from the Institutions page can name who is asking.
+  var who = new URLSearchParams(location.search).get("role");
+  var roles = {
+    mentor: "Research consultant / mentor",
+    "research-body": "Research body / funder",
+  };
+  var pick = document.querySelector("select[name=role]");
+  if (pick && roles[who]) pick.value = roles[who];
   f.addEventListener("nv:sent", function () {
     var t = document.querySelector(".ct-tabs");
     if (t) t.style.display = "none";

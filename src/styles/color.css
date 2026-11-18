@@ -16,9 +16,6 @@
 body {
   background: var(--bg);
 }
-.hdr {
-  background: rgba(255, 255, 255, 0.9);
-}
 .ann {
   background: var(--forest);
   color: #d8e6dd;
@@ -42,7 +39,6 @@ body {
 .calc-out,
 .nlb,
 .pl-hero,
-.dd-post,
 .plan.dk {
   background: var(--forest);
   border-color: var(--forest);
@@ -56,8 +52,7 @@ body {
   border-color: #246c4e;
 }
 .calc-n,
-.pl-hero .g,
-.dd-post .k {
+.pl-hero .g {
   color: var(--sun);
 }
 .card,
@@ -541,11 +536,6 @@ body {
 .pgrid .post h3 {
   font-size: 22px;
 }
-.nav .nl,
-.dd-t,
-.hdr-r .si {
-  font-size: 15.5px;
-}
 .btn {
   font-size: 16px;
 }
@@ -554,12 +544,6 @@ body {
 }
 .btn-lg {
   font-size: 17px;
-}
-.mi b {
-  font-size: 15px;
-}
-.mi small {
-  font-size: 13.5px;
 }
 .eyebrow,
 .pill,
@@ -642,96 +626,11 @@ body {
 }
 
 /* nav: never wrap, fit longer French labels */
-.nav .nl,
-.dd-t,
-.hdr-r .si,
-.hdr-r .btn,
 .brand {
   white-space: nowrap;
 }
-.hdr-r {
-  gap: 10px;
-  flex-shrink: 0;
-}
-@media (min-width: 1081px) {
-  .hdr .wrap {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 24px;
-  }
-  .nav {
-    justify-content: center;
-  }
-}
-@media (min-width: 1081px) and (max-width: 1240px) {
-  .nav .nl,
-  .dd-t {
-    padding: 8px 9px;
-    font-size: 15px;
-  }
-  .hdr-r .si {
-    padding: 8px 6px;
-  }
-}
 
 /* dropdown imagery */
-.dd-feat {
-  padding: 10px 10px 16px;
-}
-.dd-feat > *:not(.dd-img) {
-  margin: 0 8px;
-}
-.dd-img {
-  display: block;
-  height: 120px;
-  border-radius: 9px;
-  overflow: hidden;
-  margin-bottom: 6px;
-  background: var(--bg-3);
-}
-.dd-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s;
-}
-.dd-feat:hover .dd-img img {
-  transform: scale(1.05);
-}
-.dd-post .dd-img {
-  height: 110px;
-}
-.dd-foot {
-  gap: 12px;
-}
-.dd-th {
-  width: 44px;
-  height: 44px;
-  border-radius: 9px;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: var(--bg-3);
-}
-.dd-th img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.nav .dd-feat,
-.nav .dd-feat:hover {
-  color: var(--ink);
-}
-.nav .dd-post,
-.nav .dd-post:hover {
-  color: #fff;
-}
-.nav .dd-post b {
-  color: #fff;
-}
-.nav .mi,
-.nav .mi:hover {
-  color: var(--ink);
-}
 
 /* demo video */
 .demo-vid {
@@ -910,8 +809,6 @@ footer .soc:hover,
     background-position: 0 0;
   }
 }
-.hdr .nav > a,
-.hdr .dd-t,
 .ftr .col a,
 .btn {
   position: relative;
@@ -1288,119 +1185,12 @@ main .photo:hover img {
     aspect-ratio: 4/3;
   }
 }
-.plx-who .vrow {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: 4px 16px;
-  align-items: start;
-}
-.plx-who .vrow .n {
-  grid-row: span 2;
-}
-.plx-who .vrow h3,
-.plx-who .vrow p {
-  grid-column: 2;
-  margin: 0;
-}
-.plx-who .vrow p {
-  margin-top: 6px;
-}
 /* floating pill nav */
 [data-site-header] {
   height: 88px;
   border: 0;
 }
-.hdr {
-  top: 0;
-  padding: 12px 16px 4px;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: 0 !important;
-  pointer-events: none;
-}
-.hdr .wrap {
-  pointer-events: auto;
-  height: 72px;
-  padding: 0 12px 0 26px;
-  /* Opaque on purpose. A translucent bar with a backdrop blur is redrawn on
-     every scroll frame and flickers over video and animated content. */
-  background: #faf8f2;
-  overflow: visible;
-  border: 1px solid rgba(15, 59, 42, 0.08);
-  border-radius: 22px;
-  box-shadow: 0 12px 32px -22px rgba(15, 59, 42, 0.35);
-  transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hdr.sc .wrap {
-  box-shadow: 0 18px 44px -24px rgba(15, 59, 42, 0.45);
-}
-.nav .nl,
-.dd-t {
-  font-size: 15.5px;
-  color: var(--ink-2);
-  position: relative;
-  background: none !important;
-  padding: 10px 14px;
-}
-.nav .nl:hover,
-.dd-t:hover,
-.dd:hover .dd-t,
-.dd.open .dd-t,
-.nav .nl.on,
-.dd.on .dd-t {
-  color: var(--forest, #0f3b2a);
-}
-.nav .nl::after,
-.dd-t::after {
-  content: "";
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 2px;
-  height: 2.5px;
-  border-radius: 2px;
-  background: var(--forest, #0f3b2a);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.dd-t::after {
-  right: 30px;
-}
-.nav .nl:hover::after,
-.dd-t:hover::after,
-.dd:hover .dd-t::after,
-.dd.open .dd-t::after,
-.nav .nl.on::after,
-.dd.on .dd-t::after {
-  transform: scaleX(1);
-}
-.hdr-r .btn {
-  background: var(--forest, #0f3b2a) !important;
-  color: #7ef0aa !important;
-  border: 0 !important;
-  border-radius: 14px;
-  height: 48px;
-  padding: 0 22px;
-  font-size: 15.5px;
-  font-weight: 550;
-}
-.hdr-r .btn:hover {
-  background: var(--forest-2, #154d37) !important;
-}
-.hdr-r .si {
-  font-size: 15.5px;
-}
 @media (max-width: 1080px) {
-  .hdr .wrap {
-    height: 64px;
-    padding: 0 10px 0 20px;
-    border-radius: 18px;
-  }
-  .hdr {
-    padding: 10px 12px 4px;
-  }
   [data-site-header] {
     height: 78px;
   }
@@ -2071,22 +1861,8 @@ table {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 28px 16px;
   }
-  .hdr .wrap {
-    height: 60px;
-    padding: 0 8px 0 16px;
-    border-radius: 16px;
-  }
   [data-site-header] {
     height: 74px; /* the drawn bar: 10px above, 60px bar, 4px below */
-  }
-  .hdr-r .si {
-    display: none;
-  }
-  .hdr-r .btn {
-    height: 40px;
-    padding: 0 14px;
-    font-size: 14px;
-    border-radius: 11px;
   }
   .nv-intro {
     font-size: clamp(44px, 14vw, 72px);
@@ -2098,9 +1874,6 @@ table {
 @media (max-width: 400px) {
   .wrap {
     padding-inline: 16px;
-  }
-  .hdr-r .btn {
-    display: none;
   }
   .st-team,
   .board {
@@ -2118,12 +1891,6 @@ table {
   }
 }
 @supports (padding: max(0px)) {
-  @media (max-width: 640px) {
-    .hdr {
-      padding-left: max(10px, env(safe-area-inset-left));
-      padding-right: max(10px, env(safe-area-inset-right));
-    }
-  }
 }
 /* final glitch fixes */
 @media (max-width: 900px) {
@@ -2156,14 +1923,9 @@ table {
 .photo {
   background: var(--bg-3, #ebedef);
 }
-.hdr .nav > a span.rl,
 .ftr .col a span.rl {
   height: 1.25em;
   line-height: 1.25;
-}
-.nav .nl::after,
-.dd-t::after {
-  bottom: 0;
 }
 :focus-visible {
   outline: 2px solid var(--g, #1bb35c);

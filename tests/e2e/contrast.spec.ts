@@ -12,6 +12,7 @@ for (const width of [1280, 390]) {
     for (const path of PAGES) {
       await page.goto(path);
       await page.evaluate(() => (window as any).nvRevealAll?.());
+      await page.waitForTimeout(350); // the header finishes fading to its light colours
       weak.push(
         ...(await page.evaluate((route) => {
           const parse = (s: string) => {
@@ -39,7 +40,7 @@ for (const width of [1280, 390]) {
             return acc;
           };
           const out: string[] = [];
-          for (const el of document.querySelectorAll<HTMLElement>(".btn")) {
+          for (const el of document.querySelectorAll<HTMLElement>(".btn, .pbtn")) {
             if (!el.offsetParent || !(el.textContent || "").trim()) continue;
             const bg = backdrop(el);
             const fg = over(parse(getComputedStyle(el).color), bg);

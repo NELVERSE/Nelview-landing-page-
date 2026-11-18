@@ -40,7 +40,7 @@ for (const viewport of [
           sideScroll:
             document.documentElement.scrollWidth >
             document.documentElement.clientWidth,
-          hasHeader: !!document.querySelector("header.hdr, .wl-hdr"),
+          hasHeader: !!document.querySelector("header.sh, .wl-hdr"),
         }));
         expect(state.title).toContain("Nelview");
         expect(state.brokenImages).toEqual([]);
@@ -130,7 +130,7 @@ test("the mobile menu opens and the language switch works", async ({ page }) => 
   await page.goto("/");
   await page.click("#burger");
   await expect(page.locator("#mnav")).toHaveClass(/open/);
-  await page.locator(".mnav [data-lang=fr]").click();
+  await page.locator("#mnav [data-lang=fr]").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "fr");
   await expect(page.locator("h1")).toContainText("audit");
   await expect(page.locator("h1")).toContainText("recherche");
@@ -183,7 +183,7 @@ test("the home page tells search engines its name, logo and cover image", async 
 test("product mock-ups are real pictures, each with a French version", async ({ page, request }) => {
   const shots = [
     ["/", 3],
-    ["/institutions", 2],
+    ["/institutions", 1],
     ["/experts", 1],
   ] as const;
   for (const [path, count] of shots) {

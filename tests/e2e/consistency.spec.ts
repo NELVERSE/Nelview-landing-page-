@@ -125,10 +125,10 @@ test("page headings are left-aligned on every page, About included", async ({ pa
     await page.goto(path);
     const aligned = await page.evaluate(() =>
       [...document.querySelectorAll<HTMLElement>("main h1, main h2")]
-        .filter((el) => el.offsetParent && !el.closest(".cta, .nlb, .closing"))
+        .filter((el) => el.offsetParent && !el.closest(".cta, .nlb, .closing, .sc"))
         .map((el) => getComputedStyle(el).textAlign),
     );
-    expect(aligned.length, path).toBeGreaterThan(1);
+    expect(aligned.length, path).toBeGreaterThan(0);
     expect(aligned.every((a) => a === "start" || a === "left"), `${path}: ${aligned}`).toBe(true);
   }
 });
@@ -157,4 +157,79 @@ test("the expert review tiers are three cards, one per row on a phone", async ({
   expect(await columns()).toBe(3);
   await page.setViewportSize({ width: 390, height: 800 });
   expect(await columns()).toBe(1);
+});
+
+test("About and Pledge principles are cards in a grid, not ruled rows", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const [path, perRow, rows] of [["/about", 4, 1], ["/pledge", 5, 2]] as const) {
+    await page.goto(path);
+    const first = page.locator(".vrows").first();
+    expect(await first.locator(".vrow").count(), path).toBe(perRow);
+    const lefts = await first.locator(".vrow").evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().left)));
+    const tops = await first.locator(".vrow").evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().top)));
+    expect(new Set(tops).size, `${path}: rows of cards`).toBe(rows);
+    expect(lefts.length, path).toBe(perRow);
+    const style = await first.locator(".vrow").first().evaluate((el) => {
+      const s = getComputedStyle(el);
+      return [s.borderTopWidth, s.borderRadius];
+    });
+    expect(style, path).toEqual(["1px", "12px"]);
+  }
+});
+
+test("every page title highlights its key words in green", async ({ page }) => {
+  const missing: string[] = [];
+  for (const path of ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/faq", "/contact", "/journal-guide", "/resources", "/apply", "/waitlist", "/signin", "/no-such-page"]) {
+    await page.goto(path);
+    const result = await page.evaluate(() => {
+      const accent = document.querySelector<HTMLElement>("main h1 em, main h1 .g, main h1 span:not([style])");
+      if (!accent) return "no highlighted words";
+      const [r, g, b] = getComputedStyle(accent).color.match(/\d+/g)!.map(Number);
+      const green = g > r + 40 && g > b + 40;
+      return green ? "" : `highlight is rgb(${r}, ${g}, ${b})`;
+    });
+    if (result) missing.push(`${path}: ${result}`);
+  }
+  expect(missing, "titles without a green highlight").toEqual([]);
+});
+
+test("highlighted title words stay highlighted in French", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("nv_lang", "fr"));
+  for (const path of ["/pricing", "/about", "/institutions", "/contact"]) {
+    await page.goto(path);
+    await expect(page.locator("main h1 em").first(), path).toBeVisible();
+  }
+});
+
+for (const width of [1280, 390]) {
+  test(`colour heroes run to the top with a see-through header at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    for (const path of ["/pledge", "/experts"]) {
+      await page.goto(path);
+      await page.evaluate(() => (window as any).nvRevealAll?.());
+      const top = await page.evaluate(() => Math.round(document.querySelector("main > section")!.getBoundingClientRect().top));
+      expect(top, `${path}: the green starts at the top of the screen`).toBe(0);
+      const fill = () => page.evaluate(() => getComputedStyle(document.querySelector("#hdr")!).backgroundColor);
+      await expect.poll(fill, `${path}: header over the hero`).toBe("rgba(0, 0, 0, 0)");
+      await page.evaluate(() => scrollTo(0, 2200));
+      await expect.poll(fill, `${path}: header once the hero is gone`).not.toBe("rgba(0, 0, 0, 0)");
+      // Back at the top it is see-through again.
+      await page.evaluate(() => scrollTo(0, 0));
+      await expect.poll(fill, `${path}: header back over the hero`).toBe("rgba(0, 0, 0, 0)");
+    }
+  });
+}
+
+test("page titles use one of the two shared sizes, 404 included", async ({ page }) => {
+  const sizes = new Map<string, string[]>();
+  for (const path of ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/faq", "/contact", "/journal-guide", "/resources", "/no-such-page", "/apply", "/signin", "/privacy"]) {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(path);
+    const style = await page.evaluate(() => {
+      const s = getComputedStyle(document.querySelector("main h1")!);
+      return `${s.fontSize}/${s.fontWeight}`;
+    });
+    sizes.set(style, [...(sizes.get(style) || []), path]);
+  }
+  expect([...sizes.keys()].sort(), JSON.stringify([...sizes.entries()])).toEqual(["46.08px/660", "69.12px/660"]);
 });

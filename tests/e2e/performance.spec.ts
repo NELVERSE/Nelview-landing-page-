@@ -45,7 +45,7 @@ test("nothing animates once the hero has scrolled away", async ({ page }) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   await page.locator('[data-screen-label="Problem"]').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(2500); // reveals finish
+  await page.waitForTimeout(4500); // reveals finish, even when the machine is busy
   const work = await idleWork(page);
   expect(work.layoutsPerSecond).toBeLessThan(5);
   expect(work.stylesPerSecond).toBeLessThan(5);

@@ -51,7 +51,7 @@ test("the hero is readable straight away", async ({ page }) => {
 
 test("following a link in the header lands on that page", async ({ page }) => {
   await page.goto("/");
-  await page.locator("header.hdr a.nl[href='pricing']").click();
+  await page.locator("header.sh a.sh-link[href='pricing']").click();
   await expect(page).toHaveURL(/pricing/);
   await expect(page.locator("main h1")).toBeVisible();
 });
