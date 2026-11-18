@@ -11,5 +11,5 @@
     "isolatedModules": true,
     "types": ["vite/client"]
   },
-  "include": ["src/scripts", "src/types", "vite.config.ts"]
+  "include": ["src/scripts", "src/types", "build", "vite.config.ts"]
 }

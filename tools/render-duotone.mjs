@@ -10,8 +10,7 @@ import sharp from "sharp";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const web = join(dirname(fileURLToPath(import.meta.url)), "..", "public", "assets", "web");
-const story = join(dirname(fileURLToPath(import.meta.url)), "..", "public", "assets", "story");
+const photos = join(dirname(fileURLToPath(import.meta.url)), "..", "public", "assets", "photos");
 
 // [source, output, colour] — colours are the --c-coral, --c-blue and --c-amber tokens.
 const washes = [
@@ -21,19 +20,19 @@ const washes = [
 ];
 
 for (const [src, out, colour] of washes) {
-  const grey = await sharp(join(web, src)).resize({ width: 900 }).grayscale().toBuffer();
+  const grey = await sharp(join(photos, src)).resize({ width: 900 }).grayscale().toBuffer();
   const { width, height } = await sharp(grey).metadata();
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(colour.slice(i, i + 2), 16));
   const info = await sharp({ create: { width, height, channels: 3, background: { r, g, b } } })
     .composite([{ input: grey, blend: "multiply" }])
     .webp({ quality: 80, effort: 6 })
-    .toFile(join(web, out));
+    .toFile(join(photos, out));
   console.log(out, `${info.width}x${info.height}`, `${Math.round(info.size / 1024)} KB`);
 }
 
 // The experts hero photo was dimmed with filter: grayscale(0.35).
-const muted = await sharp(join(story, "reviewing.png"))
+const muted = await sharp(join(photos, "reviewing.png"))
   .modulate({ saturation: 0.65 })
   .webp({ quality: 80, effort: 6 })
-  .toFile(join(story, "reviewing-muted.webp"));
+  .toFile(join(photos, "reviewing-muted.webp"));
 console.log("reviewing-muted.webp", `${muted.width}x${muted.height}`, `${Math.round(muted.size / 1024)} KB`);

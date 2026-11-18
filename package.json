@@ -12,8 +12,8 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test \"tests/unit/*.test.mjs\"",
     "test:e2e": "playwright test",
-    "mockups": "node scripts/render-mockups.mjs",
-    "duotone": "node scripts/render-duotone.mjs"
+    "mockups": "node tools/render-mockups.mjs",
+    "duotone": "node tools/render-duotone.mjs"
   },
   "dependencies": {
     "motion": "11.11.13",

@@ -1,8 +1,8 @@
-/* theme.css: the current visual design. Loaded last on every page.
+/* theme.css: the current visual design. The last layer imported by main.css.
  *
  * Principles: white pages, bold sans headlines, flat colour fields instead of
  * gradients and glows, near-black primary buttons, hairline borders, one
- * radius scale. Older rules in site.css / pages.css / color.css that this file
+ * radius scale. Older rules in base.css / pages.css / palette.css that this file
  * supersedes can be deleted as each page is revisited.
  */
 
@@ -1799,7 +1799,7 @@ section {
   color: var(--ink);
   font-weight: 600;
 }
-/* from site.css */
+/* from base.css */
 .dd-p {
   position: absolute;
   top: calc(100% + 10px);
@@ -1822,34 +1822,34 @@ section {
     visibility 0.16s;
   z-index: 60;
 }
-/* from site.css */
+/* from base.css */
 .dd.open .dd-p {
   opacity: 1;
   visibility: visible;
   transform: none;
 }
-/* from site.css */
+/* from base.css */
 .dd-product .dd-grid {
   width: 540px;
 }
-/* from site.css */
+/* from base.css */
 .dd-solutions {
   flex-direction: column;
 }
-/* from site.css */
+/* from base.css */
 .dd-solutions .dd-grid {
   width: 520px;
 }
-/* from site.css */
+/* from base.css */
 .dd-resources .dd-grid {
   width: 300px;
 }
-/* from site.css */
+/* from base.css */
 .dd-grid {
   display: grid;
   gap: 2px;
 }
-/* from site.css */
+/* from base.css */
 .mi {
   display: flex;
   gap: 12px;
@@ -1858,17 +1858,17 @@ section {
   border-radius: 10px;
   color: var(--ink);
 }
-/* from site.css */
+/* from base.css */
 .mi:hover {
   background: var(--bg-2);
   color: var(--ink);
 }
-/* from site.css */
+/* from base.css */
 .mi:hover .ico {
   background: var(--blue);
   color: #fff;
 }
-/* from site.css */
+/* from base.css */
 .mi .ico {
   width: 34px;
   height: 34px;
@@ -1876,7 +1876,7 @@ section {
     background 0.15s,
     color 0.15s;
 }
-/* from site.css */
+/* from base.css */
 .mi b {
   display: block;
   font-size: 14px;
@@ -1884,7 +1884,7 @@ section {
   letter-spacing: -0.01em;
   line-height: 1.3;
 }
-/* from site.css */
+/* from base.css */
 .mi small {
   display: block;
   font-size: 12.5px;
@@ -1892,7 +1892,7 @@ section {
   line-height: 1.4;
   margin-top: 2px;
 }
-/* from site.css */
+/* from base.css */
 .dd-feat {
   width: 220px;
   border-radius: 12px;
@@ -1904,29 +1904,29 @@ section {
   gap: 8px;
   color: var(--ink);
 }
-/* from site.css */
+/* from base.css */
 .dd-feat:hover {
   color: var(--ink);
   border-color: var(--line-2);
 }
-/* from site.css */
+/* from base.css */
 .dd-feat .tag {
   align-self: flex-start;
 }
-/* from site.css */
+/* from base.css */
 .dd-feat b {
   font-size: 16px;
   letter-spacing: -0.02em;
   line-height: 1.25;
   font-weight: 620;
 }
-/* from site.css */
+/* from base.css */
 .dd-feat small {
   font-size: 13px;
   color: var(--ink-3);
   line-height: 1.45;
 }
-/* from site.css */
+/* from base.css */
 .dd-feat .go {
   margin-top: auto;
   font-size: 13px;
@@ -1936,32 +1936,32 @@ section {
   gap: 4px;
   align-items: center;
 }
-/* from site.css */
+/* from base.css */
 .dd-post {
   background: var(--ink);
   border-color: var(--ink);
   color: #fff;
 }
-/* from site.css */
+/* from base.css */
 .dd-post:hover {
   color: #fff;
 }
-/* from site.css */
+/* from base.css */
 .dd-post .k {
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: #4ade8a;
 }
-/* from site.css */
+/* from base.css */
 .dd-post b {
   font-size: 20px;
 }
-/* from site.css */
+/* from base.css */
 .dd-post .go {
   color: #fff;
 }
-/* from site.css */
+/* from base.css */
 .dd-foot {
   display: flex;
   justify-content: space-between;
@@ -1972,39 +1972,39 @@ section {
   font-size: 13.5px;
   color: var(--ink-2);
 }
-/* from site.css */
+/* from base.css */
 .dd-foot a {
   font-weight: 580;
   display: inline-flex;
   gap: 4px;
   align-items: center;
 }
-/* from color.css */
+/* from palette.css */
 .dd-post {
   background: var(--forest);
   border-color: var(--forest);
 }
-/* from color.css */
+/* from palette.css */
 .dd-post .k {
   color: var(--sun);
 }
-/* from color.css */
+/* from palette.css */
 .mi b {
   font-size: 15px;
 }
-/* from color.css */
+/* from palette.css */
 .mi small {
   font-size: 13.5px;
 }
-/* from color.css */
+/* from palette.css */
 .dd-feat {
   padding: 10px 10px 16px;
 }
-/* from color.css */
+/* from palette.css */
 .dd-feat > *:not(.dd-img) {
   margin: 0 8px;
 }
-/* from color.css */
+/* from palette.css */
 .dd-img {
   display: block;
   height: 120px;
@@ -2013,26 +2013,26 @@ section {
   margin-bottom: 6px;
   background: var(--bg-3);
 }
-/* from color.css */
+/* from palette.css */
 .dd-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s;
 }
-/* from color.css */
+/* from palette.css */
 .dd-feat:hover .dd-img img {
   transform: scale(1.05);
 }
-/* from color.css */
+/* from palette.css */
 .dd-post .dd-img {
   height: 110px;
 }
-/* from color.css */
+/* from palette.css */
 .dd-foot {
   gap: 12px;
 }
-/* from color.css */
+/* from palette.css */
 .dd-th {
   width: 44px;
   height: 44px;
@@ -2041,27 +2041,27 @@ section {
   flex-shrink: 0;
   background: var(--bg-3);
 }
-/* from color.css */
+/* from palette.css */
 .dd-th img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-/* from color.css */
+/* from palette.css */
 .sh-nav .dd-feat,
 .sh-nav .dd-feat:hover {
   color: var(--ink);
 }
-/* from color.css */
+/* from palette.css */
 .sh-nav .dd-post,
 .sh-nav .dd-post:hover {
   color: #fff;
 }
-/* from color.css */
+/* from palette.css */
 .sh-nav .dd-post b {
   color: #fff;
 }
-/* from color.css */
+/* from palette.css */
 .sh-nav .mi,
 .sh-nav .mi:hover {
   color: var(--ink);
@@ -2104,5 +2104,137 @@ section {
       radial-gradient(80% 30% at 100% 62%, rgba(117, 80, 230, 0.24) 0%, transparent 74%),
       radial-gradient(80% 30% at 0% 70%, rgba(223, 79, 58, 0.22) 0%, transparent 74%),
       #fff;
+  }
+}
+
+/* Nelview findings card (home, "Not another AI writing tool"):
+   severity edge on each finding, where it was found, and a score row with the pass mark. */
+.vs-sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 14.5px;
+  color: #b9cbbf;
+}
+.vs-sum b {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 620;
+}
+.vs-sum span:last-child {
+  font-size: 13.5px;
+}
+.vs-f {
+  position: relative;
+  overflow: hidden;
+  padding-left: 20px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.vs-f::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--sev, #7fb596);
+}
+.vs-f.sev-r { --sev: #ff6b72; }
+.vs-f.sev-y { --sev: #f5b83d; }
+.vs-f.sev-b { --sev: #6fa8ff; }
+.vs-f.sev-r {
+  background: #1d5238;
+  border-color: #3a7a58;
+}
+.vs-f .tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+@media (hover: hover) {
+  .vs-f:hover {
+    transform: translateY(-2px);
+    background: #1d5238;
+  }
+}
+.vs-at {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  color: #cfe1d5;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+.vs-sc {
+  border-top: 1px solid #246c4e;
+  margin-top: 6px;
+  padding-top: 18px;
+  row-gap: 10px;
+}
+.vs-sc .bar {
+  position: relative;
+  overflow: visible;
+  height: 10px;
+}
+.vs-sc .bar > span {
+  background: linear-gradient(90deg, #e59a1a, #f5c04a);
+}
+.vs-pass {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: #fff;
+  border-radius: 2px;
+}
+.vs-verdict,
+.vs-passlb {
+  font-style: normal;
+  font-size: 13.5px;
+  color: #cfe1d5;
+}
+.vs-verdict {
+  grid-column: 1;
+  font-weight: 550;
+  color: #fff;
+}
+.vs-passlb {
+  grid-column: 2;
+  text-align: right;
+}
+@media (max-width: 640px) {
+  .vs-f {
+    padding-left: 18px;
+  }
+  .vs-verdict,
+  .vs-passlb {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+}
+.vs-n .vs-f {
+  grid-template-columns: 92px minmax(0, 1fr);
+}
+.vs-f .tag {
+  white-space: nowrap;
+}
+.vs-f .tag.b {
+  background: var(--c-blue-soft);
+  color: #1b4a9c;
+}
+.vs-sc {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+@media (max-width: 640px) {
+  .vs-n .vs-f {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
