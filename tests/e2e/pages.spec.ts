@@ -183,7 +183,7 @@ test("the home page tells search engines its name, logo and cover image", async 
 test("product mock-ups are real pictures, each with a French version", async ({ page, request }) => {
   const shots = [
     ["/", 3],
-    ["/institutions", 2],
+    ["/institutions", 1],
     ["/experts", 1],
   ] as const;
   for (const [path, count] of shots) {

@@ -215,3 +215,14 @@ test.describe("institutions page", () => {
     await expect(page.locator(".dd.open a[href='institutions'] b, .dd.open a[href='institutions']").first()).toContainText("Institutions");
   });
 });
+
+test("the Institutions hero shows the real institution dashboard", async ({ page }) => {
+  await page.goto("/institutions");
+  const dash = page.locator(".inst-hero img.dash");
+  await expect(dash).toBeVisible();
+  expect(await dash.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth)).toBeGreaterThan(700);
+  await expect(dash).toHaveAttribute("alt", /institution dashboard/i);
+  await page.addInitScript(() => localStorage.setItem("nv_lang", "fr"));
+  await page.goto("/institutions");
+  await expect(page.locator(".inst-hero img.dash")).toHaveAttribute("alt", /Tableau de bord/);
+});

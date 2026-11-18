@@ -1855,20 +1855,22 @@
     }
     if (changed) run(document.body);
     // Pictures of the product carry their own text, so each has a French version.
-    document.querySelectorAll("img[data-src-fr]").forEach(function (img) {
-      if (!img.hasAttribute("data-src-en")) {
-        img.setAttribute("data-src-en", img.getAttribute("src"));
-        img.setAttribute("data-alt-en", img.getAttribute("alt") || "");
-      }
+    document.querySelectorAll("img[data-src-fr], img[data-alt-fr]").forEach(function (img) {
       var fr = l === "fr";
-      img.setAttribute(
-        "src",
-        img.getAttribute(fr ? "data-src-fr" : "data-src-en"),
-      );
+      if (!img.hasAttribute("data-alt-en"))
+        img.setAttribute("data-alt-en", img.getAttribute("alt") || "");
       img.setAttribute(
         "alt",
         img.getAttribute(fr ? "data-alt-fr" : "data-alt-en") || "",
       );
+      if (img.hasAttribute("data-src-fr")) {
+        if (!img.hasAttribute("data-src-en"))
+          img.setAttribute("data-src-en", img.getAttribute("src"));
+        img.setAttribute(
+          "src",
+          img.getAttribute(fr ? "data-src-fr" : "data-src-en"),
+        );
+      }
     });
     observer.disconnect();
     if (l === "fr")
