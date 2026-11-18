@@ -177,3 +177,41 @@ test("pastel cards sit in one row with equal heights on desktop", async ({ page 
     expect(new Set(box.map((b) => b[1])).size, `${path}: equal heights`).toBe(1);
   }
 });
+
+test.describe("institutions page", () => {
+  test("covers universities first, then mentors and research bodies", async ({ page }) => {
+    await page.goto("/institutions");
+    await expect(page.locator("main h1")).toHaveText("Rigorous review for every researcher you support.");
+    const cards = page.locator("#audiences .pcard h3");
+    await expect(cards).toHaveText(["Universities", "Research consultants and mentors", "Research bodies"]);
+    // Universities is the main card: the widest.
+    const widths = await page.locator("#audiences .pcard").evaluateAll((els) => els.map((el) => el.getBoundingClientRect().width));
+    expect(widths[0]).toBeGreaterThan(widths[1] * 1.3);
+    for (const id of ["universities", "mentors", "research-bodies"]) await expect(page.locator(`#${id}`)).toHaveCount(1);
+  });
+
+  test("each audience button scrolls to its section", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    for (const [label, id] of [["See mentor tools", "mentors"], ["See research bodies", "research-bodies"], ["Explore for universities", "universities"]] as const) {
+      await page.goto("/institutions");
+      await page.locator(".pcard .pbtn", { hasText: label }).click();
+      await expect(page).toHaveURL(new RegExp(`#${id}$`));
+      await expect.poll(() => page.evaluate((i) => Math.round(document.getElementById(i)!.getBoundingClientRect().top), id)).toBeLessThan(200);
+    }
+  });
+
+  test("the mentor and research-body links pre-select who is asking on the contact form", async ({ page }) => {
+    for (const [role, value] of [["mentor", "Research consultant / mentor"], ["research-body", "Research body / funder"]] as const) {
+      await page.goto(`/contact?topic=institution&role=${role}`);
+      expect(await page.locator("select[name=role]").inputValue()).toBe(value);
+    }
+  });
+
+  test("the menu and footer call it Institutions", async ({ page }) => {
+    await page.goto("/pricing");
+    await expect(page.locator("footer a[href='institutions']", { hasText: /^Institutions$/ })).toHaveCount(1);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.locator(".dd-t", { hasText: "Solutions" }).click();
+    await expect(page.locator(".dd.open a[href='institutions'] b, .dd.open a[href='institutions']").first()).toContainText("Institutions");
+  });
+});
