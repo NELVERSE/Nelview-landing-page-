@@ -200,3 +200,22 @@ test("highlighted title words stay highlighted in French", async ({ page }) => {
     await expect(page.locator("main h1 em").first(), path).toBeVisible();
   }
 });
+
+for (const width of [1280, 390]) {
+  test(`colour heroes run to the top with a see-through header at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    for (const path of ["/pledge", "/experts"]) {
+      await page.goto(path);
+      await page.evaluate(() => (window as any).nvRevealAll?.());
+      const top = await page.evaluate(() => Math.round(document.querySelector("main > section")!.getBoundingClientRect().top));
+      expect(top, `${path}: the green starts at the top of the screen`).toBe(0);
+      const fill = () => page.evaluate(() => getComputedStyle(document.querySelector(".hdr .wrap")!).backgroundColor);
+      await expect.poll(fill, `${path}: header over the hero`).toBe("rgba(0, 0, 0, 0)");
+      await page.evaluate(() => scrollTo(0, 2200));
+      await expect.poll(fill, `${path}: header once the hero is gone`).not.toBe("rgba(0, 0, 0, 0)");
+      // Back at the top it is see-through again.
+      await page.evaluate(() => scrollTo(0, 0));
+      await expect.poll(fill, `${path}: header back over the hero`).toBe("rgba(0, 0, 0, 0)");
+    }
+  });
+}

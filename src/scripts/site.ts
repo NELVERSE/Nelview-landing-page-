@@ -557,11 +557,30 @@
   if (hdr) {
     // The shadow switches on and off with a gap between the two points, so the
     // bounce at the very top of a phone page cannot make it flicker.
+    // Pages that open on a full-width colour panel (data-bleed on <body>) let
+    // it run to the very top of the screen: the header floats over it with no
+    // fill, in light colours, until the panel has scrolled away.
+    var bleed = document.body.hasAttribute("data-bleed")
+      ? document.querySelector("main > section")
+      : null;
+    var sizeHdr = function () {
+      document.documentElement.style.setProperty(
+        "--hdr-h",
+        hdr.offsetHeight + "px",
+      );
+    };
+    sizeHdr();
+    window.addEventListener("resize", sizeHdr);
     var onS = function () {
       var y = window.scrollY,
         on = hdr.classList.contains("sc");
       if (y > 24 && !on) hdr.classList.add("sc");
       else if (y < 4 && on) hdr.classList.remove("sc");
+      if (bleed) {
+        var over = bleed.getBoundingClientRect().bottom > 56;
+        if (hdr.classList.contains("on-dark") !== over)
+          hdr.classList.toggle("on-dark", over);
+      }
     };
     window.addEventListener("scroll", onS, { passive: true });
     onS();

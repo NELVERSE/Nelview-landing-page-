@@ -1416,3 +1416,74 @@ h1 .hl,
 .pl-hero h1 .g {
   color: #4ade8a;
 }
+
+/* ---------- full-width colour heroes run to the top of the screen ---------- */
+/* The header floats over the panel instead of sitting above it on white. */
+[data-bleed] .hdr {
+  margin-bottom: calc(-1 * var(--hdr-h, 88px));
+}
+[data-bleed] main > section:first-child {
+  padding-top: calc(var(--hero-top) + var(--hdr-h, 88px));
+}
+.hdr .wrap {
+  transition:
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s,
+    border-color 0.25s;
+}
+.hdr .brand,
+.hdr .nav .nl,
+.hdr .dd-t,
+.hdr-r .si {
+  transition: color 0.2s;
+}
+.hdr.on-dark .wrap {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow: none;
+}
+.hdr.on-dark .brand,
+.hdr.on-dark .nav .nl.on,
+.hdr.on-dark .dd.on .dd-t {
+  color: #fff;
+}
+.hdr.on-dark .brand svg * {
+  fill: #fff;
+}
+.hdr.on-dark .nav .nl,
+.hdr.on-dark .dd-t,
+.hdr.on-dark .hdr-r .si {
+  color: rgba(255, 255, 255, 0.86);
+}
+.hdr.on-dark .nav .nl:hover,
+.hdr.on-dark .dd-t:hover {
+  color: #fff;
+}
+.hdr.on-dark .nav .nl::after,
+.hdr.on-dark .dd-t::after {
+  background: #fff;
+}
+.hdr.on-dark .hdr-r .btn-d {
+  background: #fff;
+  border-color: #fff;
+  color: var(--forest);
+}
+.hdr.on-dark .lsw {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.26);
+}
+.hdr.on-dark .lsw button {
+  color: rgba(255, 255, 255, 0.82);
+}
+.hdr.on-dark .lsw button.on {
+  background: #fff;
+  color: var(--ink);
+}
+.hdr.on-dark .burger {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+.hdr.on-dark .dd-p {
+  color: var(--ink);
+}
