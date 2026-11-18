@@ -39,7 +39,7 @@ for (const width of [1280, 390]) {
             return acc;
           };
           const out: string[] = [];
-          for (const el of document.querySelectorAll<HTMLElement>(".btn")) {
+          for (const el of document.querySelectorAll<HTMLElement>(".btn, .pbtn")) {
             if (!el.offsetParent || !(el.textContent || "").trim()) continue;
             const bg = backdrop(el);
             const fg = over(parse(getComputedStyle(el).color), bg);

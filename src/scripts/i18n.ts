@@ -360,6 +360,14 @@
     "is desk-rejected before peer review. Not for lack of ideas, for lack of":
       "est rejeté avant même l'évaluation par les pairs. Non par manque d'idées, mais par manque de",
     "rigorous feedback.": "retours rigoureux.",
+    "Whatever your role, start here.": "Quel que soit votre rôle, commencez ici.",
+    "For researchers": "Pour les chercheurs",
+    "Upload a manuscript, grant or thesis and get a 0–100 readiness score in minutes.": "Téléversez un manuscrit, une demande de subvention ou une thèse et obtenez un score de préparation de 0 à 100 en quelques minutes.",
+    "Set your own criteria and pass marks, and give every student supervisor-level feedback.": "Définissez vos propres critères et seuils de réussite, et offrez à chaque étudiant des retours de niveau directeur.",
+    "For expert reviewers": "Pour les évaluateurs experts",
+    "Review work in your field, set your own rate and get paid through escrow.": "Évaluez des travaux dans votre domaine, fixez votre tarif et soyez payé par séquestre.",
+    "Email the team": "Écrire à l'équipe",
+    "Get involved.": "Participez.",
     // Country names (waitlist and apply forms)
     "Albania": "Albanie",
     "Algeria": "Algérie",

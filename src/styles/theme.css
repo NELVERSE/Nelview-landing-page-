@@ -983,51 +983,20 @@ h1.h2 {
   white-space: nowrap;
 }
 
-/* ---------- expert review tiers: three cards ---------- */
+/* ---------- expert review tiers: three pastel cards ---------- */
 .xrows {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
-.xrow {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 26px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-m);
-  background: #fff;
-  transition: border-color 0.2s;
-}
-.xrow:hover {
-  border-color: var(--line-2);
-}
 .xrows > :nth-child(1) {
-  --hue: var(--c-blue);
-  --hue-soft: var(--c-blue-soft);
-}
-.xrows > :nth-child(2) {
-  --hue: var(--c-amber);
   --hue-soft: var(--c-amber-soft);
 }
-.xrows > :nth-child(3) {
-  --hue: var(--c-violet);
+.xrows > :nth-child(2) {
   --hue-soft: var(--c-violet-soft);
 }
-.xrow .ico {
-  background: var(--hue-soft);
-  margin-bottom: 18px;
-}
-.xrow h3 {
-  font-size: 22px;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-}
-.xrow p {
-  margin-top: 8px;
-  font-size: 15.5px;
-  line-height: 1.5;
-  color: var(--ink-2);
+.xrows > :nth-child(3) {
+  --hue-soft: var(--c-coral-soft);
 }
 .xrow .xm {
   display: flex;
@@ -1035,26 +1004,25 @@ h1.h2 {
   align-items: center;
   justify-content: space-between;
   gap: 8px 16px;
+  align-self: stretch;
+  margin: 22px 0 24px;
   margin-top: auto;
-  padding: 18px 0 20px;
-}
-.xrow p + .xm {
-  margin-top: 22px;
+  padding-top: 22px;
 }
 .xrow .t {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: var(--ink-3);
+  color: rgba(10, 13, 20, 0.66);
 }
 .xrow .p {
   font-size: 20px;
   font-weight: 650;
   letter-spacing: -0.03em;
 }
-.xrow .btn {
-  width: 100%;
+.xrow .pbtn {
+  margin-top: 0;
 }
 @media (max-width: 900px) {
   .xrows {
@@ -1156,5 +1124,167 @@ h1.h2 {
   }
   .vrows > :last-child:nth-child(odd) {
     grid-column: auto;
+  }
+}
+
+/* ---------- pastel cards with a button ---------- */
+.pcards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.pcards.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.pcard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 28px;
+  border-radius: var(--radius-m);
+  background: var(--hue-soft, var(--c-amber-soft));
+  color: var(--ink);
+}
+.pcard .pic {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.pcard h3 {
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.pcard p {
+  margin: 10px 0 26px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: rgba(10, 13, 20, 0.72);
+}
+.pbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 22px;
+  margin-top: auto;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  text-align: center;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+.pbtn:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+.pbtn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* A grey strip of facts above a centred heading. */
+.proof-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 24px 32px;
+  border-radius: var(--radius-m);
+  background: #f3f3f1;
+  text-align: center;
+}
+.proof-strip > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.proof-strip .ps-i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--c-green);
+}
+.proof-strip b {
+  font-size: clamp(24px, 2.6vw, 32px);
+  line-height: 1;
+  font-weight: 660;
+  letter-spacing: -0.04em;
+}
+.proof-strip span:not(.ps-i) {
+  max-width: 28ch;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+.sec-head.sc {
+  max-width: none;
+  text-align: center;
+}
+.sec-head.sc .h2 {
+  max-width: 18ch;
+  margin-inline: auto;
+}
+.proof-strip + .sec-head.sc {
+  margin-top: clamp(48px, 6vw, 80px);
+}
+@media (max-width: 900px) {
+  .pcards,
+  .pcards.two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .proof-strip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    padding: 22px;
+  }
+}
+@media (max-width: 640px) {
+  /* Icon beside the title, text and button underneath. */
+  .pcard {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: center;
+    padding: 22px;
+  }
+  .pcard > * {
+    grid-column: 1 / -1;
+  }
+  .pcard > .pic {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+  }
+  .pcard > .pic + h3 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .pcard > p {
+    margin: 14px 0 20px;
+  }
+  .pcard > .pbtn {
+    justify-self: start;
+  }
+  .xrow .xm {
+    margin-top: 0;
+    padding-top: 0;
   }
 }

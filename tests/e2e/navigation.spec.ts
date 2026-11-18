@@ -145,3 +145,35 @@ test("the FAQ links in the menu and footer open the FAQ page at its top", async 
   await page.locator(".dd.open a[href='faq']").click();
   await expect(page).toHaveURL(/\/faq$/);
 });
+
+test("pastel cards each have a button that goes somewhere real", async ({ page, request }) => {
+  const expected: Record<string, number> = { "/": 3, "/pricing": 3, "/contact": 3, "/about": 2 };
+  for (const [path, count] of Object.entries(expected)) {
+    await page.goto(path);
+    const links = await page.locator(".pcard .pbtn").evaluateAll((els) => els.map((el) => [(el as HTMLAnchorElement).getAttribute("href")!, (el as HTMLAnchorElement).pathname]));
+    expect(links, path).toHaveLength(count);
+    for (const [href, route] of links) {
+      if (href.startsWith("mailto:")) continue;
+      expect((await request.get(route)).status(), `${path} -> ${href}`).toBe(200);
+    }
+  }
+  // The button is a real click target: it opens its page.
+  await page.goto("/");
+  await page.locator(".pcard .pbtn", { hasText: "See how it works" }).click();
+  await expect(page).toHaveURL(/\/institutions$/);
+});
+
+test("pastel cards sit in one row with equal heights on desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const path of ["/", "/pricing", "/contact"]) {
+    await page.goto(path);
+    const box = await page.locator(".pcards .pcard, .xrows .pcard").evaluateAll((els) =>
+      els.map((el) => {
+        const r = el.getBoundingClientRect();
+        return [Math.round(r.top), Math.round(r.height)];
+      }),
+    );
+    expect(new Set(box.map((b) => b[0])).size, `${path}: one row`).toBe(1);
+    expect(new Set(box.map((b) => b[1])).size, `${path}: equal heights`).toBe(1);
+  }
+});
