@@ -1730,6 +1730,16 @@
     "Pricing plans": "Offres tarifaires",
   };
   var FRH = {
+    h_about: "Une bonne recherche ne devrait pas attendre des <em>mois</em> pour être évaluée.",
+    h_contact: "Voyez Nelview sur vos <em>propres recherches</em>.",
+    h_experts: "Votre <em>expertise</em>, à vos conditions.",
+    h_faq: "Vos questions, nos <em>réponses</em>.",
+    h_inst: "Une évaluation rigoureuse pour chaque <em>chercheur que vous accompagnez</em>.",
+    h_price: "Une évaluation honnête ne devrait pas coûter <em>un semestre</em>.",
+    h_res: "Des guides pour <em>réussir à publier</em>.",
+    h_sign: "Se connecter à <em>Nelview</em>.",
+    h_404: "Cette page n'a pas réussi l'<em>évaluation</em>.",
+    h_apply: "Candidatez pour devenir <em>évaluateur</em> Nelview.",
     pband:
       "Des données ancrées dans la recherche <em>africaine</em>, évaluées selon un standard mondial.",
     pband2:

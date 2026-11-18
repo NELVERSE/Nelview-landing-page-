@@ -1389,3 +1389,30 @@ h1.h2 {
   -webkit-mask-image: linear-gradient(#000 76%, transparent);
   mask-image: linear-gradient(#000 76%, transparent);
 }
+
+/* ---------- highlighted words in page titles ---------- */
+/* The key phrase of every title is green, in the same typeface and weight. */
+:root {
+  --hl: #12a150;
+}
+h1 em,
+h1 .hl,
+.display em,
+.hero2 .acc {
+  font-style: normal;
+  font-weight: inherit;
+  color: var(--hl);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  animation: none;
+  padding: 0;
+}
+.dark h1 em,
+.dark .display em,
+.pl-hero h1 em,
+.cta .display em {
+  color: #4ade8a;
+}
+.pl-hero h1 .g {
+  color: #4ade8a;
+}

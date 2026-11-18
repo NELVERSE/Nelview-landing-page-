@@ -176,3 +176,27 @@ test("About and Pledge principles are cards in a grid, not ruled rows", async ({
     expect(style, path).toEqual(["1px", "12px"]);
   }
 });
+
+test("every page title highlights its key words in green", async ({ page }) => {
+  const missing: string[] = [];
+  for (const path of ["/", "/pricing", "/institutions", "/experts", "/pledge", "/about", "/faq", "/contact", "/journal-guide", "/resources", "/apply", "/waitlist", "/signin", "/no-such-page"]) {
+    await page.goto(path);
+    const result = await page.evaluate(() => {
+      const accent = document.querySelector<HTMLElement>("main h1 em, main h1 .g, main h1 span:not([style])");
+      if (!accent) return "no highlighted words";
+      const [r, g, b] = getComputedStyle(accent).color.match(/\d+/g)!.map(Number);
+      const green = g > r + 40 && g > b + 40;
+      return green ? "" : `highlight is rgb(${r}, ${g}, ${b})`;
+    });
+    if (result) missing.push(`${path}: ${result}`);
+  }
+  expect(missing, "titles without a green highlight").toEqual([]);
+});
+
+test("highlighted title words stay highlighted in French", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("nv_lang", "fr"));
+  for (const path of ["/pricing", "/about", "/institutions", "/contact"]) {
+    await page.goto(path);
+    await expect(page.locator("main h1 em").first(), path).toBeVisible();
+  }
+});
