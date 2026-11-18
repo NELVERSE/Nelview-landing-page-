@@ -18,33 +18,57 @@ Requires Node 20+ and [pnpm](https://pnpm.io) (the repo ships a `pnpm-lock.yaml`
 ## Project structure
 
 ```
-src/
-  pages/            HTML pages. src/pages/about.html is served as /about.html
-    demo/           the animated React demo (/demo/). No longer linked: the home page plays
-                    the product video instead
-  scripts/          TypeScript modules, bundled by Vite
-    site.ts         header, footer, menus, icons, form submission
-    i18n.ts         English / French switch, detected from browser and timezone
-    motion.ts       scroll reveals, bar fills and count-ups (Motion)
-    legal.ts        privacy / terms / cookies / security content
-    posts.ts        blog posts
-    pages/          one script per page that needs its own behaviour
-  styles/           theme.css is the current design and loads last; site.css, pages.css
-                    and color.css are the older layers it builds on
-  demo/             React source of that animated demo
-  types/            shared type declarations
-public/             files copied to the site as they are: images, the product video, tool logos
-                    (assets/logos), fonts, favicon set, robots.txt, sitemap.xml
+src/                          what the browser runs (the Vite root)
+  pages/                      HTML pages. src/pages/about.html is served as /about
+                              (files starting with _ are development-only)
+    demo/                     the animated React demo (/demo/), no longer linked
+  scripts/
+    site.ts                   entry on every page: runs the shell below
+    shell/                    the page shell, one concern per file
+      config.ts               portal addresses and the form endpoint
+      icons.ts                the Nelview mark and the icon set
+      menu.ts                 what is in the header menus
+      header.ts               the bar, mega-menus, phone menu, colour-hero behaviour
+      footer.ts               footer and social links
+      widgets.ts              inline icons, FAQ toggles, score rings, tabs
+      forms.ts                sending to the backend, success and failure states
+      ready.ts, consent.ts    loading skeleton, privacy banner
+    i18n.ts                   entry for the English / French switch
+    i18n/                     engine.ts (the switch), fr.ts and fr-html.ts (the French text)
+    motion.ts                 scroll reveals, bar fills and count-ups (Motion)
+    content/                  text that is data: posts.ts (blog), legal.ts (privacy, terms...)
+    pages/                    one script per page that needs its own behaviour
+  styles/
+    main.css                  the one stylesheet every page loads; imports the layers in order
+    base.css, pages.css,      four layers that build on each other (see main.css);
+    palette.css, theme.css    theme.css is the current design and goes last
+  demo/                       React source of the demo
+  types/                      shared type declarations
+public/                       copied to the site as they are
+  assets/
+    photos/                   photographs and photo-based images (colour washes baked in)
+    product/                  product pictures: rendered screens (WebP, GIF) and the dashboard
+    media/                    the product video, its poster, the demo's phone frame and music
+    logos/                    tool logos shown on the home page
+    fonts/                    web fonts and their licences
+  favicon and app icons, og-image.png, robots.txt, sitemap.xml
+build/                        the Vite build, in pieces: paths.ts, plugins/ (page routing,
+                              share-card tags, responsive images)
+tools/                        scripts run by hand: render-mockups.mjs, render-duotone.mjs
 tests/
-  unit/             form backend (apps-script/Code.gs) run under Node
-  e2e/              browser tests against the built site (Playwright)
-apps-script/        Google Apps Script backend: forms -> Google Sheet, Drive and emails
-docs/               notes that are not needed to run the project
-.github/workflows/  build and test checks
-vite.config.ts      build: pages, share-card tags, responsive images, preview builds
+  unit/                       form backend (apps-script/Code.gs) run under Node
+  e2e/                        browser tests against the built site (Playwright)
+apps-script/                  Google Apps Script backend: forms -> Sheet, Drive and emails
+docs/                         notes not needed to run the project (docs/archive: unused files)
+.github/workflows/            build and test checks
+vite.config.ts                wires build/ together
 ```
 
-Each page lists the scripts it needs, in order: `site.ts`, `i18n.ts`, its own page script if it has one, then `motion.ts`.
+Each page loads `main.css`, then the scripts it needs, in order: `site.ts`, `i18n.ts`, its own page script if it has one, then `motion.ts`.
+
+**Adding a page:** create `src/pages/name.html` (copy a similar page), add it to the menus in `src/scripts/shell/menu.ts` if it belongs there, add its French text to `src/scripts/i18n/fr.ts`, and add it to `public/sitemap.xml`.
+
+**Adding a picture:** put it in the matching `public/assets/` folder and refer to it as `assets/<folder>/<file>` (pages are all at the site root). Large pictures get responsive WebP versions at build time. `pnpm test:e2e` includes a check that every file a page refers to exists.
 
 ## Tests
 
@@ -66,11 +90,11 @@ The first time, install the test browser with `pnpm exec playwright install chro
 ## Product pictures
 
 The product screens on the home, institutions and experts pages are images
-(`public/assets/mockups`): a WebP for still screens, a GIF where bars fill in,
+(`public/assets/product`): a WebP for still screens, a GIF where bars fill in,
 each with a French version that `i18n.ts` swaps in. The live version of each
 screen is `src/pages/_mockups.html` (development only, never built). After
 changing its text or layout, run `pnpm run mockups` (needs ImageMagick) and put
-the new sizes from `scripts/mockup-sizes.json` into the `<img>` tags. The
+the new sizes from `tools/mockup-sizes.json` into the `<img>` tags. The
 program-criteria preview on the institutions page and the earnings calculator
 on the experts page stay live because visitors interact with them.
 
@@ -111,5 +135,5 @@ The scripts were ported from the original JavaScript and keep `// @ts-nocheck` a
 
 - Replace placeholder reviewer names, match percentages and academic board.
 - Replace stock photos with Nelview's own.
-- Add real blog content (`src/scripts/posts.ts`).
+- Add real blog content (`src/scripts/content/posts.ts`).
 - Legal review of privacy, terms, cookies.

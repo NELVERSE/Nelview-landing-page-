@@ -2,11 +2,11 @@
 //
 //   pnpm run mockups
 //
-// Also writes scripts/mockup-sizes.json: the width and height attributes the <img> tags need.
+// Also writes tools/mockup-sizes.json: the width and height attributes the <img> tags need.
 //
 // The source markup lives in src/pages/_mockups.html (never part of the site
 // build). Each <div data-mock="name" data-kind="png|gif"> becomes
-// public/assets/mockups/<name>.webp (still) or <name>.gif (bars filling in),
+// public/assets/product/<name>.webp (still) or <name>.gif (bars filling in),
 // in English and French (<name>-fr.*). Needs ImageMagick ("convert") for GIFs.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync } from "node:fs";
@@ -18,7 +18,7 @@ import { chromium } from "@playwright/test";
 import sharp from "sharp";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const outDir = join(root, "public", "assets", "mockups");
+const outDir = join(root, "public", "assets", "product");
 const SCALE = 2;
 const FPS = 14;
 const sizes = {};
@@ -93,5 +93,5 @@ try {
   await server.close();
 }
 
-writeFileSync(join(root, "scripts", "mockup-sizes.json"), JSON.stringify(sizes, null, 2) + "\n");
+writeFileSync(join(root, "tools", "mockup-sizes.json"), JSON.stringify(sizes, null, 2) + "\n");
 console.log("Rendered", Object.keys(sizes).length, "mock-ups:", JSON.stringify(sizes));

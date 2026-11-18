@@ -1,0 +1,17 @@
+/* main.css: the one stylesheet every page loads.
+ *
+ * The site's CSS is four layers that build on each other, imported here in
+ * cascade order. Later layers override earlier ones, so the order matters:
+ *
+ *   base.css     design tokens, reset, shared components (buttons, cards, forms, footer)
+ *   pages.css    layouts that belong to one page
+ *   palette.css  the warm colour layer applied over the first two
+ *   theme.css    the current design: tokens, components and pages (loaded last)
+ *
+ * New work goes in theme.css. Older rules the theme replaces can be removed
+ * from the earlier layers as each page is revisited.
+ */
+@import "./base.css";
+@import "./pages.css";
+@import "./palette.css";
+@import "./theme.css";

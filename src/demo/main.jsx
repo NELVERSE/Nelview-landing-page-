@@ -771,7 +771,7 @@ window.ReactDOM = { createRoot, flushSync };
             <Aurora T={T} P={P} a={aur} px={px} bg={bg * (1 - outro)} />
             <AudioTrack
               T={T}
-              src="../assets/audio/music.mp3"
+              src="../assets/media/audio/music.mp3"
               vol={window.__omEmbed && window.__embedMuted !== false ? 0 : 0.8}
               fadeOut={2.2}
               end={end}

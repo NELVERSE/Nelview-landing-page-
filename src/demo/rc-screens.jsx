@@ -1038,7 +1038,7 @@ function RcPhone({ children }) {
         />
       </div>
       <img
-        src="../assets/phone-frame.png"
+        src="../assets/media/phone-frame.png"
         alt=""
         style={{
           position: "absolute",
