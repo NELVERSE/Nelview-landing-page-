@@ -2106,3 +2106,135 @@ section {
       #fff;
   }
 }
+
+/* Nelview findings card (home, "Not another AI writing tool"):
+   severity edge on each finding, where it was found, and a score row with the pass mark. */
+.vs-sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 14.5px;
+  color: #b9cbbf;
+}
+.vs-sum b {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 620;
+}
+.vs-sum span:last-child {
+  font-size: 13.5px;
+}
+.vs-f {
+  position: relative;
+  overflow: hidden;
+  padding-left: 20px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.vs-f::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--sev, #7fb596);
+}
+.vs-f.sev-r { --sev: #ff6b72; }
+.vs-f.sev-y { --sev: #f5b83d; }
+.vs-f.sev-b { --sev: #6fa8ff; }
+.vs-f.sev-r {
+  background: #1d5238;
+  border-color: #3a7a58;
+}
+.vs-f .tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+@media (hover: hover) {
+  .vs-f:hover {
+    transform: translateY(-2px);
+    background: #1d5238;
+  }
+}
+.vs-at {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  color: #cfe1d5;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+.vs-sc {
+  border-top: 1px solid #246c4e;
+  margin-top: 6px;
+  padding-top: 18px;
+  row-gap: 10px;
+}
+.vs-sc .bar {
+  position: relative;
+  overflow: visible;
+  height: 10px;
+}
+.vs-sc .bar > span {
+  background: linear-gradient(90deg, #e59a1a, #f5c04a);
+}
+.vs-pass {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: #fff;
+  border-radius: 2px;
+}
+.vs-verdict,
+.vs-passlb {
+  font-style: normal;
+  font-size: 13.5px;
+  color: #cfe1d5;
+}
+.vs-verdict {
+  grid-column: 1;
+  font-weight: 550;
+  color: #fff;
+}
+.vs-passlb {
+  grid-column: 2;
+  text-align: right;
+}
+@media (max-width: 640px) {
+  .vs-f {
+    padding-left: 18px;
+  }
+  .vs-verdict,
+  .vs-passlb {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+}
+.vs-n .vs-f {
+  grid-template-columns: 92px minmax(0, 1fr);
+}
+.vs-f .tag {
+  white-space: nowrap;
+}
+.vs-f .tag.b {
+  background: var(--c-blue-soft);
+  color: #1b4a9c;
+}
+.vs-sc {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+@media (max-width: 640px) {
+  .vs-n .vs-f {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

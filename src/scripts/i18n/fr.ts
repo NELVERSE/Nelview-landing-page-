@@ -1428,6 +1428,14 @@ export var FR = {
   "Name the studies you're confirming.":
     "Citez les études que vous confirmez.",
   "Methods readiness": "Préparation des méthodes",
+  "issues found in this section": "problèmes détectés dans cette section",
+  "1 critical · 1 major · 1 minor": "1 critique · 1 majeur · 1 mineur",
+  "Statistics · results sentence": "Statistiques · phrase des résultats",
+  "Methodology · sample": "Méthodologie · échantillon",
+  "Referencing · final clause": "Références · fin de phrase",
+  "Not ready to submit yet. Fix the critical issue first.":
+    "Pas encore prêt à soumettre. Corrigez d'abord le problème critique.",
+  "Pass mark 75": "Seuil de réussite : 75",
   "Understands paper structure": "Comprend la structure d'un article",
   "Knows methods from discussion": "Distingue méthodes et discussion",
   "Scores the research itself": "Évalue la recherche elle-même",
